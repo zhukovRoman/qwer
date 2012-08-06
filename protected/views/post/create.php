@@ -1,0 +1,1 @@
+<?php echo $this->renderPartial('create_text', array('model'=>$model)); ?>
