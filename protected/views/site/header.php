@@ -161,7 +161,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'items'=>array(
         array('label'=>'Статья', 'icon'=>'pencil', 'url'=> Yii::app()->createUrl('/post/create'),),
         array('label'=>'Видео', 'icon'=>'film', 'url'=>Yii::app()->createUrl('/post/createvideo')),
-        array('label'=>'Фотоотчет', 'icon'=>'camera', 'url'=>'#'),
+        array('label'=>'Фотоотчет', 'icon'=>'camera', 'url'=>Yii::app()->createUrl('/post/createphoto')),
     ),
 )); ?>
 	

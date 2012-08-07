@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-	<div id="header">
+	<div class="header">
 		<?php include "protected/views/site/header.php";?>
 	</div>
 	<div class="row">
@@ -23,7 +23,7 @@
 	  	</div>
 	</div>
 	<div id="clear"></div>
-<div id="footer">
+<div class="footer">
   <div class="row">
     <div class="span4 offset4">
       <?php include "protected/views/site/footer.php";?>

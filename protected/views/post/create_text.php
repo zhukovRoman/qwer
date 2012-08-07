@@ -1,5 +1,5 @@
 
-<?php  Yii::app()->clientScript->registerScriptFile("js/createpost.js");?>
+<?php  Yii::app()->clientScript->registerScriptFile("js/createpost.js", CClientScript::POS_END);?>
 
 
 
@@ -147,7 +147,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
      </div>   
    
     <?php 
-                Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js");
+                Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js", CClientScript::POS_END);
                 Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redactor.css');
     ?>
     
@@ -208,8 +208,8 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 
 <?php 	
                 //Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js");
-                Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.min.js");
-                Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js");
+                Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.min.js", CClientScript::POS_END);
+                Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js", CClientScript::POS_END);
                
                 Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
 

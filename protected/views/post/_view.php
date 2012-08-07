@@ -1,16 +1,26 @@
-<div class="main-view">
-	<?php 
-		echo CHtml::link(
-				CHtml::image($data->preview_url).
-					"<div><span>".CHtml::encode($data->title).
-								CHtml::encode($data->category_id).
-								"</span></div>", 
-					array('view', 'id'=>$data->id)); 
-	?>
-	<br />
-
-
-	ХЖУЙ!
+<li class="main-view">
+	<div class="inner">
+		<?php 
+			echo CHtml::link(
+					CHtml::image($data->preview_url).
+						"<div><span>".CHtml::encode($data->subtitle).
+									CHtml::encode($data->category_id).
+									"</span></div>", 
+						array('view', 'id'=>$data->id)); 
+		?>
+			<?php echo CHtml::link(CHtml::encode($data->title), 
+						array('view', 'id'=>$data->id));?>
+	</div>
+	<div class="desc">
+		<div class="main-user">
+			<i class="icon-user" rel="tooltip" title="автор"></i>
+			<b><?php echo CHtml::encode($data->author->login);?></b>
+		</div>
+		<i class="icon-star" rel="tooltip" title="рейтинг"></i>
+		<?php echo CHtml::encode($data->getraiting());?>
+		<i class="icon-pencil" rel="tooltip" title="число комментариев"></i>
+		<?php echo CHtml::encode($data->comment_count);?> 
+	</div>
 	<?php /*
 <!-- 	<b><?php echo CHtml::encode($data->getAttributeLabel('text')); ?>:</b>
 	<?php echo CHtml::decode($data->text); ?>
@@ -103,4 +113,4 @@
 
 	*/ ?>
 
-</div>
+</li>

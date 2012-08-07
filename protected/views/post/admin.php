@@ -11,7 +11,7 @@ $('.search-form form').submit(function(){
 	});
 	return false;
 });
-");
+", CClientScript::POS_END);
 ?>
 
 <legend>Модерация</legend>

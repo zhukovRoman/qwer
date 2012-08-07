@@ -1,7 +1,6 @@
 <div class="icons">
-<!-- .user-icon -->
 <i class="icon-user" rel="tooltip" title="автор"></i>
-<!-- /.user-icon --><b><?php echo CHtml::encode($model->author->login);?></b>
+<b><?php echo CHtml::encode($model->author->login);?></b>
 <i class="icon-time" rel="tooltip" title="дата публикации"></i>
 <?php echo date ("d/m/Y", strtotime($model->time_add));?>
 <i class="icon-star" rel="tooltip" title="рейтинг"></i>

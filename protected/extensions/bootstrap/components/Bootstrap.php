@@ -98,13 +98,13 @@ class Bootstrap extends CApplicationComponent
 	 * Registers the Bootstrap responsive CSS.
 	 * @since 0.9.8
 	 */
-	public function registerResponsiveCss()
-	{
+/*	public function registerResponsiveCss()
+	{*/
 		/** @var CClientScript $cs */
-		$cs = Yii::app()->getClientScript();
+		/*$cs = Yii::app()->getClientScript();
 		$cs->registerMetaTag('width=device-width, initial-scale=1.0', 'viewport');
 		$cs->registerCssFile($this->getAssetsUrl().'/css/bootstrap-responsive.min.css');
-	}
+	}*/
 
 	/**
 	 * Registers the Yii-specific CSS missing from Bootstrap.
@@ -124,7 +124,7 @@ class Bootstrap extends CApplicationComponent
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript('jquery');
-		$cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap.min.js');
+		$cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap.min.js', CClientScript::POS_END);
 
 		$this->registerTooltip();
 		$this->registerPopover();
