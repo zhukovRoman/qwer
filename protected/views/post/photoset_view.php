@@ -10,6 +10,7 @@
 )); ?>
 <!-- /.moderate -->
 <!-- .article-title -->
+<div class="article">
 <?php $this->renderPartial('_article_title',array(
   'model'=>$model,
 )); ?>
@@ -32,8 +33,7 @@
 <?php  ?>
 
 <br>
-<?php  //$model->convertCode();  echo $model->code; ?>
-<?php echo CHtml::decode($model->text); ?>
+  <?php echo CHtml::decode($model->text); ?>
 
 <hr>
 <!-- .icons -->
@@ -46,6 +46,7 @@
   'model'=>$model,
 )); ?>
 <!-- /.article-tags -->
+</div>
 <br>
 Блок поделиться? лайки <br>
 комменты

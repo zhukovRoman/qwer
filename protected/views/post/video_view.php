@@ -9,6 +9,7 @@
   'model'=>$model,
 )); ?>
 <!-- /.moderate -->
+<div class="article">
 <!-- .article-title -->
 <?php $this->renderPartial('_article_title',array(
   'model'=>$model,
@@ -28,6 +29,7 @@
   'model'=>$model,
 )); ?>
 <!-- /.article-tags -->
+</div>
 <br>
 Блок поделиться? лайки <br>
 
