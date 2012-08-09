@@ -28,6 +28,7 @@
  * @property integer $order
  * @property string $subtitle
  * @property string $tag
+ * @property string $time_moder
  *
  * The followings are the available model relations:
  * @property PostRating[] $postRatings
@@ -273,11 +274,9 @@ class Post extends CActiveRecord
                             .CHtml::button("Удалить", array(
                             'onclick'=>'js:del_photo_from_set("'.$id.'")', ))
                             .'<img src="'.$i.'"></div>';
-                    $res[$id]= $tmp;
-                    
+                    $res[$id]= $tmp;  
                 }
             }
-            
             return $res;
         }
         
@@ -329,7 +328,7 @@ class Post extends CActiveRecord
                     
                $this->moveImgFromText();
                     
-               return parent::beforeSave();
+               return parent::afterValidate();
         }
         
         public function moveImgFromText()

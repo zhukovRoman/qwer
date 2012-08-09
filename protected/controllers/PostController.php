@@ -337,18 +337,14 @@ class PostController extends Controller
             $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
             $result = $uploader->handleUpload($folder);
         
-        
-        
             //echo $result['code'];
-
-
 
             $end = ".jpg";
             $crop = "_crop";
             $url = $result['filename']; // путь с расширением
             $url = substr($url, 0, strlen($url)-4);
 
-            $result['code']= PostController::photosetItemRet($url.$crop.$end);
+            $result['code']=PostController::photosetItemRet($url.$crop.$end);
             $return = json_encode($result);
 
             Yii::app()->ih
@@ -384,8 +380,8 @@ class PostController extends Controller
             $model=$this->loadModel($id);
             $model->status_id=5;
             $model->save(false);
-           // if ($model->moder_time==NULL)
-                // $model->moder_time=date("Y-m-d H:i:s");
+            if ($model->moder_time==NULL)
+                $model->moder_time=date("Y-m-d H:i:s");
             
             $this->render('view',array(
 			'model'=>$model,));
