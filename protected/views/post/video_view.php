@@ -14,9 +14,6 @@
   'model'=>$model,
 )); ?>
 <!-- .article-title -->
-
-<img src="<?php echo $model->preview_url;?>">
-<hr>
 <?php echo ($model->code); ?>
 <?php echo CHtml::decode($model->text); ?>
 

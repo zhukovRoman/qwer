@@ -29,12 +29,12 @@
    function sort()
    {
        $('#Post_code').val("");
-       $('#Post_code').val($('#items').html());
+       $('#Post_code').val($('#photo-items').html());
    }
    
    function photoset_upload_compleate(item)
    {
-       $('#items').append(item); 
+       $('#photo-items').append(item); 
        sort();
    }
    

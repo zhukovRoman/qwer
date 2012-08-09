@@ -1,5 +1,5 @@
 <li class="main-view">
-	<div class="inner">
+	<div class="main-view-top">
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).
@@ -11,15 +11,28 @@
 			<?php echo CHtml::link(CHtml::encode($data->title), 
 						array('view', 'id'=>$data->id));?>
 	</div>
-	<div class="desc">
+	<div class="main-view-bottom">
 		<div class="main-user">
 			<i class="icon-user" rel="tooltip" title="автор"></i>
-			<b><?php echo CHtml::encode($data->author->login);?></b>
+			<b><?php echo CHtml::encode(substr($data->author->login, 0, 14));?></b>
 		</div>
 		<i class="icon-star" rel="tooltip" title="рейтинг"></i>
 		<?php echo CHtml::encode($data->getraiting());?>
-		<i class="icon-pencil" rel="tooltip" title="число комментариев"></i>
+		<i class="icon-comment" rel="tooltip" title="число комментариев"></i>
 		<?php echo CHtml::encode($data->comment_count);?> 
+			&nbsp;
+		<!--<?php if($data->is_photoset==true)
+					{ 
+						echo '<i class="icon-camera" rel="tooltip" title="Тип"></i>';
+				};?>
+		<?php if($data->is_video==true)
+					{ 
+						echo '<i class="icon-film" rel="tooltip" title="Тип"></i>';
+				};?>
+		<?php if($data->is_video==false&&$data->is_photoset==false)
+					{ 
+						echo '<i class="icon-file" rel="tooltip" title="Тип"></i>';
+				};?>    --> 
 	</div>
 	<?php /*
 <!-- 	<b><?php echo CHtml::encode($data->getAttributeLabel('text')); ?>:</b>

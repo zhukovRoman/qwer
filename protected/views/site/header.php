@@ -5,7 +5,7 @@
 
 <?php $this->widget('bootstrap.widgets.BootNavbar', array(
     'fixed'=>false,
-    'brand'=>'Fresh-i',
+    'brand'=>'<img src="http://fresh-i.ru/templates/skin/simple/images/logo.png">',
     'brandUrl'=>Yii::app()->homeUrl,
     'collapse'=>true, // requires bootstrap-responsive.css
     'items'=>array(
@@ -28,7 +28,6 @@
                 )),*/
             ),
         ),
-        '<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Поиск..."></form>',
     	array(
             'class'=>'bootstrap.widgets.BootMenu',
             'htmlOptions'=>array('class'=>'pull-right'),
@@ -36,7 +35,7 @@
             'items'=>array( 
             		'---',
             		//array('label' => '<img src="'.Yii::app()->request->baseUrl.'/uploads/userpic.gif" />' ),
-            		array('label' => "<img src='$src' class='userpic' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>",
+            		array('label' => "<img src='$src' class='userpic' alt='Личный кабинет' title='Личный кабинет' >",
             			  'visible'=>!Yii::app()->user->isGuest, 'url'=> array('/account/view', 'id' => Yii::app()->user->getId()) ),
             		array('label'=> Yii::app()->user->name, //Account::model()->findByPk(Yii::app()->user->getId())->login,
                 	  'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array(
@@ -59,17 +58,18 @@
             	
                 '---',
             	array('label'=>'Регистрация', 'url'=>array('/account/signup/'), 'visible'=>Yii::app()->user->isGuest),
-            	array('label'=>'Создать', 'url'=>'#postcreate', 'icon'=>'pencil white', 'visible'=>!Yii::app()->user->isGuest,
+            	array('label'=>'Создать', 'url'=>'#postcreate', 'icon'=>'pencil', 'visible'=>!Yii::app()->user->isGuest,
             		  'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',)),
             ),
         ),
     ),
 )); ?>
-
+<form class="navbar-search pull-right" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
 <!-- 	<div id="mainmenu">	 -->
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
 	    'stacked'=>false, // whether this is a stacked menu
+        'htmlOptions'=>array('class'=>'nav-head'),
 	    'items'=>array(
 	    		array('label'=>'Спецпроекты', 'url'=>'#'),
 	    		array('label'=>'Новости', 'url'=>'#'),
@@ -94,6 +94,7 @@
 	    		)),
 	    ),
 	)); ?>
+
 <!-- </div>  --><!-- mainmenu -->
 
 	

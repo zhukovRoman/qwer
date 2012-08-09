@@ -15,16 +15,6 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     <legend> 
         <?php echo ($model->isNewRecord) ? "Добавить" : "Редактировать" ; ?> фото
     </legend>
-   
-  <div id="preview_div" style="display: none; 
-                                padding: 5px; 
-                                border-bottom: 1px solid gray; 
-                                margin-bottom: 5px;
-                                clear: both;">
-            
-  </div>
-  
-
     
  <?php echo $form->textFieldRow($model, 'title', array('hint'=>'Заголовок должен быть наполнен смыслом, чтобы можно было понять, о чем будет топик.')); ?>
     <?php echo $form->textFieldRow($model, 'subtitle', array('hint'=>'подзаголовок должен более глубоко раскрывать смысл статей.')); ?>
@@ -137,16 +127,13 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
                      
                      
                   </div>
-                 
-                 <img src="<?php echo $model->preview_url; ?>" id="preview_post" style="max-width:400px; 
-                                                max-height:400px;
-                                                border: 1px solid;
-                                                padding: 5px;">
+                 <p class="help-block">Картинка, которая будет главной в топике</p>
+                 <img src="<?php echo $model->preview_url; ?>" id="preview_post" class="photo-border">
                   
              </div>
             
              
-             <p class="help-block">Картинка, которая будет главной в топике</p>
+             
          </div>
      </div>   
     <hr>
@@ -192,7 +179,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
                 <?php  
                    
                     $this->widget('zii.widgets.jui.CJuiSortable', array(
-                        'id'=>'items',
+                        'id'=>'photo-items',
                         'items'=>$model->getPhotos(),
                         // additional javascript options for the accordion plugin
                         'options'=>array(

@@ -269,10 +269,9 @@ class Post extends CActiveRecord
                 if ($i!="")
                 {
                     $id = substr ($i, -44, -9);
-                    $tmp = '<div>'
-                            .CHtml::button("Удалить", array(
-                            'onclick'=>'js:del_photo_from_set("'.$id.'")', ))
-                            .'<img src="'.$i.'"></div>';
+                    $tmp = '<div><img src="'.$i.'"></div>'
+                            .CHtml::button("Удалить", array('class'=>'btn-danger btn-mini', 'style'=>'margin: 5px 2px 3px 23px',
+                            'onclick'=>'js:del_photo_from_set("'.$id.'")', ));
                     $res[$id]= $tmp;
                     
                 }
@@ -528,8 +527,8 @@ class Post extends CActiveRecord
                         'subtitle' => 'Подзаголовок',
 			'text' => 'Текст',
 			'code' => 'Код видео:',
-			'category_id' => 'Выберите категорию:',
-			'sub_cat_id' => 'Выберите подкатегорию:',
+			'category_id' => 'Выберите категорию',
+			'sub_cat_id' => 'Выберите подкатегорию',
 			'author_id' => 'Автор',
 			'status_id' => 'Status',
 			'time_add' => 'Добавлено',

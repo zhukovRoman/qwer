@@ -14,9 +14,7 @@
   'model'=>$model,
 )); ?>
 <!-- .article-title -->
-
-<hr>
-
+<br>
 <?php
        $this->beginWidget('ext.prettyPhoto.PrettyPhoto', array(
         'id'=>'pretty_photo',
@@ -24,9 +22,7 @@
         'options'=>array(
             'opacity'=>0.80,
             'modal'=>true,
-            'animation_speed'=> 'fast',
-            
-            
+            'animation_speed'=> 'fast', 
         ),
         ));
         echo $model->getGalleryPhoto();
@@ -35,7 +31,7 @@
 
 <?php  ?>
 
-
+<br>
 <?php  //$model->convertCode();  echo $model->code; ?>
 <?php echo CHtml::decode($model->text); ?>
 

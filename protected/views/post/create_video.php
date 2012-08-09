@@ -17,16 +17,6 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
  <legend> 
         <?php echo ($model->isNewRecord) ? "Добавить" : "Редактировать" ; ?> видео
     </legend>
-   
-    
-   
-  <div id="preview_div" style="display: none; 
-                                padding: 5px; 
-                                border-bottom: 1px solid gray; 
-                                margin-bottom: 5px;
-                                clear: both;">
-            
-  </div>
   
 
  <?php echo $form->textFieldRow($model, 'title', array('hint'=>'Название видео. Должен отражать суть видеоряда.')); ?>

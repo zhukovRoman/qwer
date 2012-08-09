@@ -1,7 +1,8 @@
 <?php  Yii::app()->clientScript->registerScriptFile("js/jquery.hoverdir.js", CClientScript::POS_END);?>
 
 <?php  Yii::app()->clientScript->registerScript(0, "$(function() {
-    $('ul.items > li.main-view .inner').hoverdir();
+    $('ul.items > li.main-view .main-view-top').hoverdir();
+    $('.main-carousel').carousel();
   });", CClientScript::POS_END);?>
 
 <?php
@@ -15,12 +16,4 @@ $this->menu=array(
 );
 ?>
 
-<h1>Posts</h1>
-
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-  'itemsTagName'=>'ul'
-/*  'template'=>'{items}'*/
-)); ?>
-
+<?php echo $this->renderPartial('_carousel', array('dataProvider'=>$dataProvider));?>
