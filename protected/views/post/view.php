@@ -11,6 +11,7 @@
     {
         echo $this->renderPartial('text_view', array('model'=>$model));
     }
+    echo $this->renderPartial('comments', array('model'=>$model));
 ?>
 
 
