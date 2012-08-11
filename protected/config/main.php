@@ -8,7 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Fresh-i.ru',
-        
+   'defaultController' => 'post',  
 	// preloading 'log' component
 	'preload'=>array('log',  'bootstrap'
 			),

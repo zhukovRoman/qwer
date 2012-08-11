@@ -185,8 +185,8 @@ class Post extends CActiveRecord
             
         public static function parseVideoLink ($link)
         {
-           $start_frame_vimeo = '<iframe width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen src="http://player.vimeo.com/video/';
-           $start_frame_youtube ='<iframe width="560" height="315" frameborder="0" allowfullscreen src="http://www.youtube.com/embed/';
+           $start_frame_vimeo = '<iframe class="photo-border" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen src="http://player.vimeo.com/video/';
+           $start_frame_youtube ='<iframe class="photo-border" width="560" height="315" frameborder="0" allowfullscreen src="http://www.youtube.com/embed/';
            $end_frame = '" ></iframe>';
           
     

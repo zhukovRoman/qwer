@@ -15,9 +15,14 @@
   'model'=>$model,
 )); ?>
 <!-- .article-title -->
-<?php echo ($model->code); ?>
-<?php echo CHtml::decode($model->text); ?>
-
+<div class="article-video">
+  <?php echo ($model->code); ?>
+</div>
+<br>
+<div class="article-content content-border span8">
+    <?php echo CHtml::decode($model->text); ?>
+</div>
+<div style="clear:both"></div>
 <hr>
 <!-- .icons -->
 <?php $this->renderPartial('_icons',array(

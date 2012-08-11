@@ -16,25 +16,29 @@
 )); ?>
 <!-- .article-title -->
 <br>
-<?php
-       $this->beginWidget('ext.prettyPhoto.PrettyPhoto', array(
-        'id'=>'pretty_photo',
-        // prettyPhoto options
-        'options'=>array(
-            'opacity'=>0.80,
-            'modal'=>true,
-            'animation_speed'=> 'fast', 
-        ),
-        ));
-        echo $model->getGalleryPhoto();
-        $this->endWidget('ext.prettyPhoto.PrettyPhoto');
-?>
+<div class="content-border span8">
+  <?php
+         $this->beginWidget('ext.prettyPhoto.PrettyPhoto', array(
+          'id'=>'pretty_photo',
+          // prettyPhoto options
+          'options'=>array(
+              'opacity'=>0.80,
+              'modal'=>true,
+              'animation_speed'=> 'fast', 
+          ),
+          ));
+          echo $model->getGalleryPhoto();
+          $this->endWidget('ext.prettyPhoto.PrettyPhoto');
+  ?>  
+</div>
+
 
 <?php  ?>
 
-<br>
-  <?php echo CHtml::decode($model->text); ?>
-
+<div class="article-content content-border span8">
+    <?php echo CHtml::decode($model->text); ?>
+</div>
+<div style="clear:both"></div>
 <hr>
 <!-- .icons -->
 <?php $this->renderPartial('_icons',array(

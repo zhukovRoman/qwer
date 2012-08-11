@@ -20,7 +20,7 @@
         <div class="span10 container-column">
           <?php echo $content;?>
         </div>
-        <div class="span2">
+        <div class="span2 ads">
           <?php include "protected/views/site/left.php";?>
         </div>
     </div>
@@ -31,7 +31,7 @@
     </div>
   </div>  
 <a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a>
-<<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap-modal.js"></script>
 </div>
 </body>
 </html>

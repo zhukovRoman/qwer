@@ -12,7 +12,7 @@
   height: 50px;
 }
 html, body {
-  background: #ee7f85 url('http://www.sports.ru/i/promo/branding/panasonik/panas_pink.jpg') no-repeat 50% 0;
+  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;
   height: 100%;
 
 }
@@ -27,10 +27,15 @@ a.promo-link {
   min-height: 100%;
   height: 100%;
 }
+.ads {
+  /*position: absolute;*/
+ /* right: 10px;*/
+  width: 180px;
+}
 body {
   min-width: 550px;
   min-height: 100%;
-  height: auto !important  height: 100%;
+  height: auto !important;
   position: relative;
   padding-top: 50px; 
 }
@@ -61,9 +66,9 @@ body {
     margin-top: 220px;
   background: white;
   padding: 0 10px;
-  padding-bottom: 40px;
-/*  box-shadow: 5px -5px 5px rgba(0,0,0,0.7);*/
-box-shadow:5px -5px 5px rgba(11,142,54,0.7);
+  /*padding-bottom: 40px;*/
+  box-shadow: 10px -5px 15px rgba(0,0,0,0.4);
+/*box-shadow:5px -5px 5px rgba(11,142,54,0.7);*/
 }
 #pos{
   position: relative;
@@ -92,9 +97,6 @@ box-shadow:5px -5px 5px rgba(11,142,54,0.7);
   color: #236B20;
   text-decoration: underline;
 }
-.nav-head {
-
-}
 .nav-head.nav > li > a:hover {
   background: #236B20;
   text-shadow: 2px -2px -2px rgba(0, 0, 0, 0.3);
@@ -109,8 +111,13 @@ box-shadow:5px -5px 5px rgba(11,142,54,0.7);
 .photo-border {
   border-radius: 4px;
   margin: 3px;
-  float: left; 
+  /*float: left; */
   border: solid 7px #333;
+}
+.content-border {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  padding: 5px;
 }
 .container-column {
   padding:0;
@@ -138,7 +145,8 @@ box-shadow:5px -5px 5px rgba(11,142,54,0.7);
   font-weight: normal;
 }
 .article-content {
-  padding: 5px 0;
+  margin-top: 20px;
+  padding: 7px;
   text-indent: 2em;
 }
 .article-content img {
@@ -148,7 +156,9 @@ box-shadow:5px -5px 5px rgba(11,142,54,0.7);
   float:left;
   padding: 7px;
 }
-
+.article-video {
+  padding-left: 25%;
+}
 .icons {
   padding:15px 0 5px;
 }
@@ -254,17 +264,18 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 
 #pretty_photo {
   display: block;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-  padding: 5px;
-  margin: 5px;
+  margin: 11px;
   color: white;
+  height: 115px;
+  padding: 3px 0 2px 0;
 }
-
-#pretty_photo a:hover {
-  display: none;
+#pretty_photo a {
+  float: left;
+  display: block;
+  width: 100px;
+  height: 100px;
+  padding: 0 15px;
 }
-
 #pretty_photo a img {
   border: solid 7px #333;
   border-radius: 4px;
