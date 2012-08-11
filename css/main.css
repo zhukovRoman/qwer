@@ -39,11 +39,11 @@ body {
 }
 .footer {
   height: 50px;
-  position: absolute;
+ /* position: absolute;*/
   bottom: 0;
   background: #333;
   color: white;
-  width: 100%;
+  width: 102.5%;
   margin-left: -10px;
   padding: 15px 0 5px 0;
   overflow-x: hidden;
@@ -57,13 +57,16 @@ body {
 }
 .contain{
    z-index: 1;
-  position: relative;
+ /* position: relative;*/
     margin-top: 220px;
   background: white;
   padding: 0 10px;
   padding-bottom: 40px;
 /*  box-shadow: 5px -5px 5px rgba(0,0,0,0.7);*/
 box-shadow:5px -5px 5px rgba(11,142,54,0.7);
+}
+#pos{
+  position: relative;
 }
  .nav-head{
   background: #333;
@@ -209,13 +212,13 @@ ul.items li.main-view .main-view-bottom {
 
 ul.items li.main-view .main-view-top {
   margin: 2px;
-  height: 158px;
-  border-bottom: solid white 3px;
+  height: 160px;
+  /*border-bottom: solid white 1px;*/
 }
 
 ul.items li.main-view .main-view-top a:last-child {
   display: block;
-  height: 20px;
+  margin-top: 4px;
   overflow: hidden;
 }
 
