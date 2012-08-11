@@ -211,7 +211,11 @@ class Post extends CActiveRecord
         
         public function getraiting()
         {
-            return $this->positive_vote_count;
+            if ($this->all_vote_count==0) return 0;
+            $z = 1.96;
+            $p = $this->positive_vote_count/$this->all_vote_count;
+            $n = $this->all_vote_count;
+            return round(($p + $z*$z/(2*$n) - $z*sqrt(($p*(1-$p)+$z*$z/(4*$n))/$n))/(1+$z*$z/$n),2)*100;
         }
 
         /**

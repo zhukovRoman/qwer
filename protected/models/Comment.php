@@ -78,7 +78,7 @@ class Comment extends CActiveRecord
 			array('author_id, post_id, time_add, status_id', 'required'),
 			array('author_id, rating, all_vote_count, positive_vote_count, status_id', 'numerical', 'integerOnly'=>true),
 			array('parent_id, text', 'safe'),
-                        array('text','length', 'max'=>1000, 'min'=>1),
+                        array('text','length', 'max'=>500, 'min'=>2),
                         array('text','required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

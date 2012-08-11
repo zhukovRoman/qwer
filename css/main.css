@@ -13,18 +13,27 @@
 }
 .ads-column {
   width: 200px;
-  padding: 20px 0 ;
 }
 html, body {
-  background: black url('back.jpg') repeat-x;
+  background: #ee7f85 url('http://www.sports.ru/i/promo/branding/panasonik/panas_pink.jpg') no-repeat 50% 0;
   height: 100%;
 
+}
+a.promo-link {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  text-decoration: none;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
 }
 body {
   min-width: 550px;
   min-height: 100%;
-  height: auto !important;
-  height: 100%;
+  height: auto !important  height: 100%;
   position: relative;
   padding-top: 50px; 
 }
@@ -35,22 +44,29 @@ body {
   height: 50px;
   position: absolute;
   bottom: 0;
-  background: black;
+  background: #333;
   color: white;
-  width: 1190px;
+  width: 100%;
   margin-left: -10px;
   padding: 15px 0 5px 0;
   overflow-x: hidden;
+  border: solid 3px #333;
+/*  box-shadow:5px -5px 5px rgba(11,142,54,1);*/
+  box-shadow: 5px -5px 5px rgba(0,0,0,0.7);
 }
 .body {
   margin: 0 auto;
   height: 100%;
 }
 .contain{
+   z-index: 1;
+  position: relative;
+    margin-top: 220px;
   background: white;
   padding: 0 10px;
   padding-bottom: 40px;
-  box-shadow: 5px -5px 5px rgba(0,0,0,0.7);
+/*  box-shadow: 5px -5px 5px rgba(0,0,0,0.7);*/
+box-shadow:5px -5px 5px rgba(11,142,54,0.7);
 }
  .nav-head{
   background: #333;

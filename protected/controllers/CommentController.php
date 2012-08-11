@@ -234,10 +234,10 @@ class CommentController extends Controller
         private function saveComment($parent_id, $post_id, $text)
         {
                     // провреряем текст
-//                    $purifier = new CHtmlPurifier();
-//                    $tmp = $purifier->purify($text);
-                   
-                    if ($text!="")
+                    $purifier = new CHtmlPurifier();
+                    $tmp = $purifier->purify($text);
+                 
+                    if (mb_strlen($text,'utf-8')>1)
                     {
                         $text = CHtml::encode($text);
                         if ($parent_id==0) 
@@ -255,7 +255,7 @@ class CommentController extends Controller
                         else {
                             $return = array(
                                     'status'=>"error",
-                                    'description'=>'Приносим свои извинения, но в данный момент серевер перегружен=(',
+                                    'description'=>'Приносим свои извинения, но в данный момент серевер перегружен =('.$text.strlen($text,'utf-8'),
                             );
                             echo json_encode($return);
                             return;
@@ -265,7 +265,7 @@ class CommentController extends Controller
                     else {
                             $return = array(
                                     'status'=>"error",
-                                    'description'=>'Сообщение не может быть пустым!',
+                                    'description'=>'Сообщение не может быть пустым! Минимальная длинна 2 символа!',
                             );
                             echo json_encode($return);
                             return;

@@ -1,7 +1,7 @@
+
 <?php
     foreach ($comments as $comm)
     {
-    
         if ($comm->parent_id==$parent_id)
         {
     ?>
