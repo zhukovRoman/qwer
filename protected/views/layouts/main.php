@@ -20,7 +20,7 @@
         <div class="span10 container-column">
           <?php echo $content;?>
         </div>
-        <div class="span2 ads">
+        <div class="span2 ads visible-desktop">
           <?php include "protected/views/site/left.php";?>
         </div>
     </div>
