@@ -1,5 +1,7 @@
 <li class="main-view">
 	<div class="main-view-top">
+		<?php echo CHtml::link(CHtml::encode(substr($data->title, 0, 44)), 
+						array('view', 'id'=>$data->id));?>
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).
@@ -8,8 +10,6 @@
 									"</span></div>", 
 						array('view', 'id'=>$data->id)); 
 		?>
-			<?php echo CHtml::link(CHtml::encode($data->title), 
-						array('view', 'id'=>$data->id));?>
 	</div>
 	<div class="main-view-bottom">
 		<div class="main-user">

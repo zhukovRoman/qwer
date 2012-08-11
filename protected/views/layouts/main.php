@@ -12,12 +12,11 @@
 <body>
 <div class="body">
   <?php include "protected/views/layouts/_modal.php";?>
-  <div class="container contain">
+  <div id="pos" class="container contain">
     <div class="header">
       <?php include "protected/views/site/header.php";?>
     </div>
     <div class="main row">
-        
         <div class="span10 container-column">
           <?php echo $content;?>
         </div>
@@ -32,8 +31,8 @@
     </div>
   </div>  
 <a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a>
+<<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap-modal.js"></script>
 </div>
-
 </body>
 </html>
 
