@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="body">
+  <?php include "protected/views/layouts/_modal.php";?>
   <div class="container contain">
     <div class="header">
       <?php include "protected/views/site/header.php";?>
@@ -20,7 +21,7 @@
         <div class="span10 container-column">
           <?php echo $content;?>
         </div>
-        <div class="span2 ads-column">
+        <div class="span2">
           <?php include "protected/views/site/left.php";?>
         </div>
     </div>
@@ -30,6 +31,7 @@
         </div>
     </div>
   </div>  
+<a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a>
 </div>
 
 </body>
