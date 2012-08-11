@@ -9,14 +9,13 @@ jQuery(function($){
                 btn.button('reset'); // call the reset function
             }, 3000);
         });
+        
          
  });
  
  function getcomment(data)
  {
-     $('#comment-form').appendTo($('.def-pos-form'));
-     $('.parent_id_form').val(0);
-     $("#Comment_text").val("");
+     
      var resp = $.parseJSON(data);
      if (resp.status=='error')
          {
@@ -24,6 +23,9 @@ jQuery(function($){
          }
     else 
         {
+            $('#comment-form').appendTo($('.def-pos-form'));
+            $('.parent_id_form').val(0);
+            $("#Comment_text").val("");
             if (resp.parentid==null)
                 {
                     $("#comments").append(resp.code);
@@ -54,5 +56,25 @@ jQuery(function($){
  {
    $('#comment-form').appendTo($('#reply-'+id));
    $('.parent_id_form').val(id);
-   
+   $('.button-replay').show();
+   $('#replay-button'+id).hide();
+   resetError();
+ }
+ 
+ function showtree(id)
+ {
+     if ($("#"+id).attr('is_hide')==0)
+     {
+        $("#"+id).attr('is_hide','1');
+        $('.comment-item').hide();
+        while ($("#"+id).attr('parent-id')!=null)
+            {
+                $("#"+id).show();
+                id = $("#"+id).attr('parent-id');
+            }
+     }
+     else {
+        $('.comment-item').attr('is_hide','0') ;
+        $('.comment-item').show() ;
+     }
  }

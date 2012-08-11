@@ -1,13 +1,14 @@
 <div class="comment-item" 
      id ="<?php echo $model->id;?>" 
-     style="margin-left: 10px; border: 1px solid;" >
+     style="margin-left: 10px; border: 1px solid;" 
+     parent-id ="<?php echo $model->parent_id; ?>"
+     is_hide="0">
     <div class="comment-header">
         <img src="<?php echo "uploads/".$model->author->id."/25x25.jpg"?>" 
-            class="userpic" width="25" height="25">
+            class="userpic-comment" width="25" height="25">
         <?php echo Chtml::link($model->author->login, 
                 array('/account/view', 'id'=>$model->author->id)); ?>
-        <?php echo Chtml::link(date("d/m/y в H:i", strtotime($model->time_add)), 
-                array('/account/view', 'id'=>$model->author->id)); ?>
+        <?php echo Chtml::encode(date("d/m/y в H:i", strtotime($model->time_add)))?>
 
         <?php echo Chtml::link("#",Yii::app()->request->url."#".$model->id ); ?>
 
@@ -15,8 +16,10 @@
             Chtml::link("^",Yii::app()->request->url."#".$model->parent_id ) :
             ""; ?>
         <?php echo 'избранное'; ?>
-        <?php echo Chtml::link('↵','#' , array('onclick'=>"js:showtree($model->id)")); ?>
-
+        
+        <?php if ($model->parent_id != Null) {?>
+            <span onclick="js:showtree(<?php echo $model->id; ?>);" >↵</span>
+         <?php } ?>   
         <?php echo $model->getRaiting(); ?>
         <?php echo '+'; ?>
         <?php echo '-'; ?>
@@ -32,6 +35,8 @@
     'label'=>'Oтветить',
     'htmlOptions'=>array(
                         'onclick'=>'js:attachForm('.$model->id.')',
+                        'id'=>'replay-button'.$model->id,
+                        'class'=>'button-replay',
                     )
             )
         ); ?>  

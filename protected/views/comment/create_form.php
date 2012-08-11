@@ -3,10 +3,11 @@
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id'=>'comment-form',
     'type'=>'horizontal',
-    #'enableAjaxValidation'=>true,
+    'enableAjaxValidation'=>false,
         'enableClientValidation'=>true,
             'clientOptions'=>array(
                     'validateOnChange'=>true,
+                    #'validateOnSubmit'=>false,
             ),
 ));
 ?>
@@ -57,7 +58,18 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
         ),
 )); ?>  
 
- 
+<?php $this->widget('bootstrap.widgets.BootButton', array(
+    'buttonType'=>'button',
+    'type'=>'primary',
+    'size'=>'mini',
+    'label'=>'Оставить комментарий',
+    'htmlOptions'=>array(
+                        'onclick'=>'js:attachForm('.$model->id.')',
+                        'id'=>'replay-button0',
+                        'style'=>'display:none;',
+                    )
+            )
+        ); ?>  
 </fieldset>
 
 <?php $this->endWidget(); ?>
