@@ -10,6 +10,7 @@ jQuery(function($){
             }, 3000);
         });
         
+        
          
  });
  
@@ -72,9 +73,12 @@ jQuery(function($){
                 $("#"+id).show();
                 id = $("#"+id).attr('parent-id');
             }
+       
      }
      else {
+        
         $('.comment-item').attr('is_hide','0') ;
         $('.comment-item').show() ;
+        
      }
  }
