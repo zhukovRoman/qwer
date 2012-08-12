@@ -9,7 +9,7 @@
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id'=>'horizontalForm',
-    'type'=>'horizontal',
+    'type'=>'horizontal span7',
 )); ?>
 
 <fieldset>
@@ -56,7 +56,8 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
                 ); ?>
     
     </div>
-     <div class="control-group ">
+     <hr>
+     <div class="control-group">
          <label class="control-label required" for="Post_title">
              Превью <span class="required">*</span>
          </label>
@@ -143,7 +144,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     ?>
     
     <?php echo $form->textFieldRow($model, 'code', array('hint'=>'код видео', 'label'=>'Click me',)); ?>
-    <?php echo $form->textAreaRow($model, 'text', array('class'=>'span5', 'rows'=>15, 'id'=>"redactor")); ?>
+    <?php echo $form->textAreaRow($model, 'text', array('class'=>'span8', 'rows'=>15, 'id'=>"redactor")); ?>
     <?php //echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>50,'id'=>"redactor")); ?>
     
     <?php echo $form->textFieldRow($model, 'tag', array('hint'=>'Теги, разделенные запятой. Например: fasd, asdf.')); ?>

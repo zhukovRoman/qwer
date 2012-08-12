@@ -1,8 +1,8 @@
 /* общие */
 .ads {
   /*margin-left: 10px;*/
-  width: 210px;
-  right: 25px;
+  width: 190px;
+  right: 32px;
   position: absolute;
 }
 .brand {
@@ -67,7 +67,7 @@ body {
 .contain{
    z-index: 1;
  /* position: relative;*/
-    margin-top: 210px;
+    /*margin-top: 210px;*/
   background: white;
   padding: 0 10px;
   /*padding-bottom: 40px;*/
@@ -325,4 +325,8 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 #preview_post img {
   max-width: 400px;
   min-width: 400px;
+}
+
+#sendComment {
+  margin-left: 160px;
 }

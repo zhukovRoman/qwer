@@ -38,7 +38,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 <?php $this->widget('bootstrap.widgets.BootButton', array(
     'buttonType'=>'button',
     'type'=>'primary',
-    'size'=>'mini',
+    'size'=>'',
     'label'=>'Отправить',
     'loadingText'=>'Отправка...',
     'htmlOptions'=>array(

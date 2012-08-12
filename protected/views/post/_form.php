@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form span7">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'post-form',

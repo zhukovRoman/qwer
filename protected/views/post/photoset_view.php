@@ -16,7 +16,7 @@
 )); ?>
 <!-- .article-title -->
 <br>
-<div class="content-border span8">
+<div class="content-border span7">
   <?php
          $this->beginWidget('ext.prettyPhoto.PrettyPhoto', array(
           'id'=>'pretty_photo',
@@ -35,7 +35,7 @@
 
 <?php  ?>
 
-<div class="article-content content-border span8">
+<div class="article-content content-border span7">
     <?php echo CHtml::decode($model->text); ?>
 </div>
 <div style="clear:both"></div>
