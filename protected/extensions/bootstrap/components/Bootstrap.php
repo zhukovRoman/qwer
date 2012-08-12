@@ -91,7 +91,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerCss()
 	{
-		Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/css/bootstrap.min.css');
+		/*Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/css/bootstrap.min.css');*/
 	}
 
 	/**
@@ -112,7 +112,7 @@ class Bootstrap extends CApplicationComponent
 	 */
 	public function registerYiiCss()
 	{
-		Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/css/bootstrap-yii.css');
+		/*Yii::app()->clientScript->registerCssFile($this->getAssetsUrl().'/css/bootstrap-yii.css');*/
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Bootstrap extends CApplicationComponent
 		/** @var CClientScript $cs */
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript('jquery');
-		$cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap.min.js',  CClientScript::POS_END);
+		/*$cs->registerScriptFile($this->getAssetsUrl().'/js/bootstrap.min.js',  CClientScript::POS_END);*/
 
 		$this->registerTooltip();
 		$this->registerPopover();

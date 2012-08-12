@@ -140,7 +140,9 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
    
     <?php 
                 Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js", CClientScript::POS_END);
+                Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CClientScript::POS_HEAD);
                 Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redactor.css');
+                Yii::app()->getClientScript()->registerCssFile('css/fileuploader/uploader.css');
     ?>
     
     <?php echo $form->textFieldRow($model, 'code', array('hint'=>'код видео', 'label'=>'Click me',)); ?>

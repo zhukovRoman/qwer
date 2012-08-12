@@ -149,7 +149,9 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
    
     <?php 
                 Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js", CClientScript::POS_END);
+                Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CClientScript::POS_HEAD);
                 Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redactor.css');
+                Yii::app()->getClientScript()->registerCssFile('css/fileuploader/uploader.css');
     ?>
     
     <?php echo $form->textAreaRow($model, 'text', array(' class'=>'span8', 'rows'=>25, 'id'=>"redactor")); ?>

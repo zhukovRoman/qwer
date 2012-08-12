@@ -50,7 +50,7 @@ class PrettyPhoto extends CWidget {
 	* @property string Name of the CSS file to be published. This must be in the
 	* css directory under the assets URL
 	*/
-	public $cssFile='prettyPhoto.css';
+	public $cssFile=false;
 	/**
 	* @property array HTML options for the enclosing tag
 	*/
@@ -67,7 +67,7 @@ class PrettyPhoto extends CWidget {
 	* @property string Name of the javaScript file to be published. This must be
 	* under the assets URL
 	*/
-	public $scriptFile='jquery.prettyPhoto.js';
+	public $scriptFile=false;
 	/**
 	* @property string The enclosing tag
 	*/

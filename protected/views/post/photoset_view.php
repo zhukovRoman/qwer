@@ -33,7 +33,10 @@
 </div>
 
 
-<?php  ?>
+<?php 
+  Yii::app()->clientScript->registerScriptFile("js/prettyphoto/jquery.prettyPhoto.js", CClientScript::POS_END);
+  Yii::app()->getClientScript()->registerCssFile('css/prettyphoto/prettyPhoto.css');
+?>
 
 <div class="article-content content-border span7">
     <?php echo CHtml::decode($model->text); ?>

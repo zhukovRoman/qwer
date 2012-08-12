@@ -49,7 +49,12 @@ return array(
 
 	// application components
 	'components'=>array(
-			
+		'clientScript' => array(
+			'scriptMap' => array(
+			'jquery.js' => '',
+			'jquery.yiiactiveform.js' => '',
+			)
+		),
 		'bootstrap'=>array(
 				'class'=>'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
 				),

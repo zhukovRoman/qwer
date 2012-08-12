@@ -2,6 +2,9 @@
   'dataProvider'=>$dataProvider,
   'itemView'=>'_view',
   'itemsTagName'=>'ul',
+  'cssFile'=>false,
+  'ajaxUpdate'=>false,
+  'baseScriptUrl'=>Yii::app()->request->baseUrl.'/js',
   'template'=>'<div class="main-carousel carousel photo-border">
                 <div class="carousel-inner">
                   <div class="active item">

@@ -243,14 +243,17 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 ?>
 
 <?php 	
-	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js");
+  Yii::app()->clientScript->registerScriptFile("js/vendor/jquery-ui.min.js", CClientScript::POS_END);
+  Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload.js", CClientScript::POS_END);
+  Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload-ui.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js", CClientScript::POS_END);
 	Yii::app()->getClientScript()->registerCssFile("js/datepicker/css/datepicker.css");
 				
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js");
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js");
+	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js", CClientScript::POS_END);
 	Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
 	//ntcn
-	Yii::app()->clientScript->registerScriptFile("js/crop.js");
+	Yii::app()->clientScript->registerScriptFile("js/crop.js", CClientScript::POS_END);
 ?>	
 
 <!-- --------------------------------------------------------------------- -->
