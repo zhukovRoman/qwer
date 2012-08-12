@@ -1,4 +1,10 @@
 /* общие */
+.ads {
+  /*margin-left: 10px;*/
+  width: 210px;
+  right: 25px;
+  position: absolute;
+}
 .brand {
   display: block;
   margin: 0 50px;
@@ -12,7 +18,8 @@
   height: 50px;
 }
 html, body {
-  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;
+/*  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
+  background: #eee;
   height: 100%;
 
 }
@@ -27,20 +34,17 @@ a.promo-link {
   min-height: 100%;
   height: 100%;
 }
-.ads {
-  position: absolute;
-  right: 32px;
-  width: 203px;
-}
+
 body {
-  min-width: 550px;
+  min-width: 960px;
   min-height: 100%;
   height: auto !important;
   position: relative;
   padding-top: 50px; 
+
 }
 .main {
-  padding-bottom: 350px;
+  padding-bottom: 150px;
 }
 .footer {
   height: 50px;
@@ -63,7 +67,7 @@ body {
 .contain{
    z-index: 1;
  /* position: relative;*/
-    margin-top: 220px;
+    margin-top: 210px;
   background: white;
   padding: 0 10px;
   /*padding-bottom: 40px;*/
@@ -181,8 +185,8 @@ ul.items li.main-view {
   padding: 5px;
   width: 220px;
   height: 182px;
-  border-radius: 4px;
-  background: rgba(75,75,75,0.15);
+  /*border-radius: 4px;
+  background: rgba(75,75,75,0.15);*/
 }
 .items li.main-view a,
 .items li.main-view a img {
@@ -191,7 +195,12 @@ ul.items li.main-view {
 }
 ul.items li.main-view a {
   overflow: hidden;
+  color: #333;
 }
+ul.items li.main-view a:hover {
+  color: #236B20;
+}
+
 ul.items li.main-view .main-view-top a div {
   position: absolute;
   width: 100%;

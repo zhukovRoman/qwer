@@ -51,6 +51,7 @@
         $('body').addClass('modal-open')
         //фикс скрытия контейнера
         $('#pos').css('position', 'inherit')
+        $('.ads').css('right', '190px')
         this.isShown = true
 
         escape.call(this)
@@ -93,6 +94,7 @@
         $('body').removeClass('modal-open')
         //фикс скрытия контейнера
         $('#pos').css('position', '')
+         $('.ads').css('right', '25px')
         escape.call(this)
 
         this.$element.removeClass('in')

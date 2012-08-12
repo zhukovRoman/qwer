@@ -5,12 +5,12 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="">
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
 </head>
 <body>
 <div class="body">
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <?php include "protected/views/layouts/_modal.php";?>
   <div id="pos" class="container contain">
     <div class="header">
@@ -20,7 +20,7 @@
         <div class="span10 container-column">
           <?php echo $content;?>
         </div>
-        <div class="span2 ads visible-desktop">
+        <div class="span2 ads">
           <?php include "protected/views/site/left.php";?>
         </div>
     </div>
@@ -30,7 +30,7 @@
         </div>
     </div>
   </div>  
-<a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a>
+<!-- <a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a> -->
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap-modal.js"></script>
 </div>
 </body>
