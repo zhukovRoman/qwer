@@ -79,7 +79,7 @@ class Post extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, title, text, code, category_id, sub_cat_id, author_id, status_id, time_add, is_video, is_photoset, is_playlist, view_count, favourite_count, comment_count, rating_count, all_vote_count, positive_vote_count, preview_url, important_flag, landscape, order, subtitle, tag, author.login, author.id', 'safe', 'on'=>'search'),
-                        array ('title, subtitle, tag', 'match', 'pattern' => '/^[0-9A-zА-я\s\-\(\)\"\.\,\?]+$/u', 
+                        array ('title, subtitle', 'match', 'pattern' => '/^[0-9A-zА-я\s\-\(\)\"\.\,\?\!]+$/u', 
                                 'message' => 'Поле может содержать только буквы, цифры и символы (-".,?)'),
                         array ('code', 'match' ,
                                 'pattern'=>"/((?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10}))|((?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/)?([\w\-]{6,12})(?:\&.+)?))/i",  

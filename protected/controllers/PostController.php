@@ -125,7 +125,7 @@ class PostController extends Controller
     if(isset($_POST['Post']))
     {
                  //print_r($_POST['Post']);die();
-      $model->attributes=$_POST['Post'];
+                        $model->attributes=$_POST['Post'];
                         $model->author_id =  Yii::app()->user->getId(); // изменить на текущего юзера
                         $model->status_id=1; // изначально статус "на модерации"
                         $model->time_add = date('Y-m-d H:i:s');
