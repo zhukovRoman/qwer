@@ -16,15 +16,15 @@
 <div class="body">
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <?php include "protected/views/layouts/_modal.php";?>
-  <div id="pos" class="container contain">
+  <div id="pos" class="container">
     <div class="header">
       <?php include "protected/views/site/header.php";?>
     </div>
     <div class="main row">
-        <div class="span10 container-column">
+        <div class="span10">
           <?php echo $content;?>
         </div>
-        <div class="span2 ads">
+        <div class="ads">
           <?php include "protected/views/site/left.php";?>
         </div>
     </div>

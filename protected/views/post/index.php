@@ -1,4 +1,4 @@
-<?php  Yii::app()->clientScript->registerScriptFile("js/jquery.hoverdir.js", CClientScript::POS_END);?>
+<?php  Yii::app()->clientScript->registerScriptFile("js/vendor/jquery.hoverdir.js", CClientScript::POS_END);?>
 
 <?php  Yii::app()->clientScript->registerScript(0, "$(function() {
     $('ul.items > li.main-view .main-view-top').hoverdir();

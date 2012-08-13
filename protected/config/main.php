@@ -53,6 +53,8 @@ return array(
 			'scriptMap' => array(
 			'jquery.js' => '',
 			'jquery.yiiactiveform.js' => '',
+			'jquery-ui.min.js' => '',
+			'jquery.ba-bbq.js' => '',
 			)
 		),
 		'bootstrap'=>array(
