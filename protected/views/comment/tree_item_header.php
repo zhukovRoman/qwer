@@ -33,7 +33,7 @@
             // показываем только оценки
             echo $model->getRaiting();
         } else {
-            echo CHtml::ajaxLink("-", $this->createUrl('comment/raiting'), array(
+            echo CHtml::ajaxLink("-", Yii::app()->createUrl('comment/raiting'), array(
                 'type' => 'POST',
                 'data' => "js:'delta=-1&id-comment='+$model->id",
                 'success' => 'js:function(data) {commentvotesuccess(data);}',
@@ -42,7 +42,7 @@
 
             echo $model->getRaiting();
 
-            echo CHtml::ajaxLink("+", $this->createUrl('comment/raiting'), array(
+            echo CHtml::ajaxLink("+", Yii::app()->createUrl('comment/raiting'), array(
                 'type' => 'POST',
                 'data' => "js:'delta=1&id-comment='+$model->id",
                 'success' => 'js:function(data) {commentvotesuccess(data);}',

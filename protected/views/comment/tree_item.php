@@ -1,32 +1,71 @@
 <div class="comment-item" 
-     id ="<?php echo $model->id;?>" 
+     id ="<?php echo $model->id; ?>" 
      style="margin-left: 10px; border: 1px solid;" 
      parent-id ="<?php echo $model->parent_id; ?>"
      is_hide="0">
-    <?php $this->renderPartial("/comment/tree_item_header", 
-                        array('model'=>$model,));
-                                                ?>
-    <div class="comment_text">
-    <?php echo CHtml::encode($model->text); ?>
-    </div>
-    <?php $this->widget('bootstrap.widgets.BootButton', array(
-    'buttonType'=>'button',
-    'type'=>'primary',
-    'size'=>'mini',
-    'label'=>'Oтветить',
-    'htmlOptions'=>array(
-                        'onclick'=>'js:attachForm('.$model->id.')',
-                        'id'=>'replay-button'.$model->id,
-                        'class'=>'button-replay',
-                    )
+         <?php
+         $this->renderPartial("/comment/tree_item_header", array('model' => $model,));
+         ?>
+    <div id="commentbody-<?php echo $model->id; ?>">
+        <div class="comment_text" >
+            <?php
+            if ($model->status_id == 2) {
+                echo CHtml::encode('Коммнетарий удален');
+            }
+            if ($model->status_id == 3) {
+                echo CHtml::encode('Спам!');
+            }
+            if ($model->status_id == 1 || $model->status_id == 4) {
+                     echo CHtml::encode($model->text);
+                 }
+            ?>
+        </div>
+
+        <?php
+        $this->widget('bootstrap.widgets.BootButton', array(
+            'buttonType' => 'button',
+            'type' => 'primary',
+            'size' => 'mini',
+            'label' => 'Oтветить',
+            'htmlOptions' => array(
+                'onclick' => 'js:attachForm(' . $model->id . ')',
+                'id' => 'replay-button' . $model->id,
+                'class' => 'button-replay',
             )
-        ); ?> 
-    
-    
-    <div id="reply-<?php echo $model->id ; ?>"></div>
-    <?php  
-        $this->renderPartial('/comment/tree',array(
-                                    'comments'=>$model->comments,
-                                    'parent_id'=>$model->id));
+                )
+        );
+        ?> 
+        <span id="spam-link-<?php echo $model->id; ?> ">
+            <?php
+            echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
+                'type' => 'POST',
+                'data' => "js:'id-comment='+$model->id",
+                'update' => '#commentbody-' . $model->id,
+            ));
+            ?>
+        </span>
+
+        <?php
+        $this->widget('bootstrap.widgets.BootButton', array(
+            'buttonType' => 'button',
+            'type' => 'danger',
+            'size' => 'mini',
+            'label' => 'Удалить',
+            'htmlOptions' => array(
+                'ajax' => array(
+                    'type' => 'POST',
+                    'data' => "js:'id-comment='+$model->id",
+                    'url' => Yii::app()->createUrl('comment/delete'),
+                    'success' => "js:function(data) {show_preview(data);}",
+                ),
+            )
+        ));
+        ?> 
+    </div>
+    <div id="reply-<?php echo $model->id; ?>"></div>
+    <?php
+    $this->renderPartial('/comment/tree', array(
+        'comments' => $model->comments,
+        'parent_id' => $model->id));
     ?>
 </div>
