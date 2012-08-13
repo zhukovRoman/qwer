@@ -7,7 +7,7 @@
                         array('model'=>$model,));
                                                 ?>
     <div class="comment_text">
-        <?php echo CHtml::encode($model->text); ?>
+    <?php echo CHtml::encode($model->text); ?>
     </div>
     <?php $this->widget('bootstrap.widgets.BootButton', array(
     'buttonType'=>'button',
@@ -20,7 +20,9 @@
                         'class'=>'button-replay',
                     )
             )
-        ); ?>  
+        ); ?> 
+    
+    
     <div id="reply-<?php echo $model->id ; ?>"></div>
     <?php  
         $this->renderPartial('/comment/tree',array(

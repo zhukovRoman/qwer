@@ -40,10 +40,21 @@ class Comment extends CActiveRecord
             $comment ->positive_vote_count = 0;
             $comment ->status_id = 1;
             return ($comment->save())? $comment:false;
-            
-           
+ 
         }
         
+        public static function alreadyVote($iduser, $idcomment)
+        {
+            $criteria=new CDbCriteria;
+            $criteria->addCondition("comment_id=:id");
+            $criteria->addCondition("user_id=:user");
+            $criteria->params=array(':id'=>$idcomment, ':user'=>$iduser);
+            $c = CommentRating::model()->find($criteria);
+            
+            return ($c==null)? false : true;
+        }
+
+
         public function getRaiting ()
         {
             return $this->positive_vote_count;

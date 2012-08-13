@@ -31,7 +31,7 @@ class CommentController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','AddComment'),
+				'actions'=>array('create','update','AddComment','Raiting'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -271,5 +271,61 @@ class CommentController extends Controller
                             return;
                     }
                     
+        }
+        
+        public function actionRaiting()
+        {
+            if (isset($_POST['delta'])&& isset($_POST['id-comment']))
+            {
+                //все параметры заданы
+                $d =  intval($_POST['delta']);
+                $comment_id = intval($_POST['id-comment']);
+                $comment = Comment::model()->find("id=:id", array (":id"=>$comment_id));
+                if (($comment!=NULL)&&
+                        !(Comment::alreadyVote(Yii::app()->user->getId(),$comment_id )))
+                {
+                    $ret = CommentRating::addItem($comment, $d);
+                    
+                    if ($ret)
+                    {
+                        
+                        $return = array(
+                                    'status'=>"success",
+                                    'code'=>$comment->positive_vote_count+$d,
+                                    'id'=>$comment_id,
+                                    
+                        );
+                             echo json_encode($return);
+                             return;
+                    }
+                    else {
+                            $return = array(
+                                'status'=>"error",
+                                'description'=>"Ошбика!",
+                                'id'=>$comment_id,
+                         );
+                        echo json_encode($return);
+                        return;
+                    }
+                }
+                else {
+                    $return = array(
+                        'status'=>"error",
+                        'description'=>"Такой комментарий не найден!",
+                        'id'=>$comment_id,
+                    );
+                    echo json_encode($return);
+                    return;
+                }
+            }
+            else {
+                    $return = array(
+                        'status'=>"error",
+                        'description'=>"Ошибка!"
+                        
+                    );
+                    echo json_encode($return);
+                    return;
+            }
         }
 }

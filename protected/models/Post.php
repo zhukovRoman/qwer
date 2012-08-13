@@ -511,7 +511,8 @@ class Post extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'postRatings' => array(self::HAS_MANY, 'PostRating', 'post_id'),
-			'comments' => array(self::HAS_MANY, 'Comment', 'post_id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'post_id',
+                                    'order'=>'Comments.time_add ASC',),
 			'favourites' => array(self::HAS_MANY, 'Favourites', 'post_id'),
 			'subCat' => array(self::BELONGS_TO, 'Category', 'sub_cat_id'),
 			'author' => array(self::BELONGS_TO, 'Account', 'author_id'),
