@@ -145,7 +145,7 @@ class SiteController extends Controller
        
         Yii::app()->ih
         ->load($url.$end)
-        ->thumb(400, 400 ,true)
+        ->thumb(500, 330 ,true)
         ->save(false,false,99);
         
         $size = getimagesize ($url.$end);
@@ -154,14 +154,14 @@ class SiteController extends Controller
         {
             Yii::app()->ih
             ->load($url.$end)
-            ->adaptiveThumb(280, 180)
+            ->adaptiveThumb(450, 290)
             ->save($url.$crop.$end,false,99);
         }
         else 
         {
             Yii::app()->ih
             ->load($url.$end)
-            ->adaptiveThumb(180, 280)
+            ->adaptiveThumb(290, 450)
             ->save($url.$crop.$end,false,99);
         }
         echo $return;// it's array
@@ -211,7 +211,7 @@ class SiteController extends Controller
                     Yii::app()->ih
                     ->load($url.$end)
                     ->crop($w, $h ,$x, $y)
-                    ->resize(280, 180)
+                    ->resize(450, 290)
                     ->save($url.$crop.$end,false,99);
                     return;// it's array
                 }

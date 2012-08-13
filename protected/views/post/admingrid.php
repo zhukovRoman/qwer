@@ -9,6 +9,7 @@
                 'name'=>'time_add',
                 'sortable' => true,
                 'value' => 'date("d-m-Y", strtotime($data->time_add))',
+                'filter'=>false,
                 
             ),
             array(
@@ -22,7 +23,7 @@
                 //Это и есть вывод названия меню из связанной таблицы
                 'name' => 'title',
                 //'filter' => CHtml::listData(SubmenuParts::model()->findAll(), 'id', 'part_name'),
-                'value' => 'substr($data->title,0,15)."..."',
+                'value' => 'mb_substr($data->title,0,15, "UTF-8")."..."',
                 'sortable' => true,
             ),
             array 
@@ -37,12 +38,18 @@
             
             array(
                 'class'=>'bootstrap.widgets.BootButtonColumn',
-                'template' => '{update}{view}',
+                'template' => '{update}{view}{approve}',
                 'buttons' => array(
                     'approve' => array (
-                        'url' =>  "#",
+                        'label'=>'approve',
+                        'url' =>  'Yii::app()->createUrl("post/approve", array ("id"=>$data->id));',
                         'icon'=>"ok",
-                        )
+                        ),
+                    'time'=> array(
+                        'label'=>'app and time',
+                        'url' =>  'Yii::app()->createUrl("post/approvetime", array ("id"=>$data->id));',
+                        'icon'=>"time",
+                    )
                     ),
             ),
             

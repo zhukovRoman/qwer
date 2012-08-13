@@ -3,10 +3,12 @@
   <div class="article-tags">
       <i class="icon-tags" rel="tooltip" title="теги"></i>
       <?php 
-          foreach ($tags_array as $tag)
+            $c=count($tags_array);
+          for ($i=0; $i<$c; $i++)
           {
-              echo CHtml::link($tag, Yii::app()->createUrl('tag/view',
-                                    array ("tag"=>$tag))).", ";
+              if ($i!=0) echo ",";
+              echo CHtml::link($tags_array[$i], Yii::app()->createUrl('tag/view',
+                                    array ("tag"=>$tags_array[$i])));
           }
       ?>
 </div>
