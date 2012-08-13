@@ -307,3 +307,20 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 #sendComment {
   margin-left: 160px;
 }
+
+/*комменты */
+.comment-item {
+  background: white;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.comment-header {
+  background: #eee;
+}
+.comment-body {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#comment-form {
+  margin-top: 10px;
+}
