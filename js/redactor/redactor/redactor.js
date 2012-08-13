@@ -303,12 +303,12 @@ var RLANG = {
 							title: RLANG.paragraph,
 							exec: 'formatblock'
 						},
-						blockquote:
-						{
-							title: RLANG.quote,
-							exec: 'formatblock',	
-							className: 'redactor_format_blockquote'
-						},
+//						blockquote:
+//						{
+//							title: RLANG.quote,
+//							exec: 'formatblock',	
+//							className: 'redactor_format_blockquote'
+//						},
 						pre:
 						{
 							title: RLANG.code,
