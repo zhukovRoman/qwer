@@ -54,7 +54,9 @@
    
     function cropPreview()
     {
-        $("#preview_post").attr("src",$("#preview_post").attr("src"));
+      var source = $("#preview_post").attr("src");
+      source += '?'+'a';
+      $("#preview_post").attr("src", source);    
     }
     
     

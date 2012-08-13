@@ -129,10 +129,10 @@ class XUploadWidget extends CJuiInputWidget {
 		$assets = dirname(__FILE__) . '/assets';
 		$baseUrl = Yii::app()->assetManager->publish($assets);
 		if (is_dir($assets)) {
-			Yii::app()->clientScript->registerScriptFile($baseUrl . '/fileupload-ui/jquery.fileupload.js', CClientScript::POS_END);
+			/*Yii::app()->clientScript->registerScriptFile($baseUrl . '/fileupload-ui/jquery.fileupload.js', CClientScript::POS_END);
 			Yii::app()->clientScript->registerScriptFile($baseUrl . '/fileupload-ui/jquery.fileupload-ui.js', CClientScript::POS_END);
 			Yii::app()->clientScript->registerCssFile($baseUrl . '/fileupload-ui/jquery.fileupload-ui.css');
-			Yii::app()->clientScript->registerCssFile($baseUrl . '/xuploads.css');
+			Yii::app()->clientScript->registerCssFile($baseUrl . '/xuploads.css');*/
 		} else {
 			throw new CHttpException(500, 'XUpload - Error: Couldn\'t find assets to publish.');
 		}

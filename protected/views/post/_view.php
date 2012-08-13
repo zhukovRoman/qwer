@@ -1,6 +1,6 @@
 <li class="main-view content-border">
 	<div class="main-view-top">
-		<?php echo CHtml::link(CHtml::encode(substr($data->title, 0, 22)), 
+		<?php echo CHtml::link(CHtml::encode(mb_substr($data->title, 0, 24, 'utf-8')), 
 						array('view', 'id'=>$data->id));?>
 		<?php 
 			echo CHtml::link(

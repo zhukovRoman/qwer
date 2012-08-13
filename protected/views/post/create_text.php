@@ -85,71 +85,69 @@ echo $form->dropDownListRow($model, 'sub_cat_id', Post::getSubCategories($model-
                             showCropImage(responseJSON.filename);
 
                         }",
-                    'messages' => array(
-                        'typeError' => "{file} has invalid extension. Only {extensions} are allowed.",
-                        'sizeError' => "{file} is too large, maximum file size is {sizeLimit}.",
-                        'minSizeError' => "{file} is too small, minimum file size is {minSizeLimit}.",
-                        'emptyError' => "{file} is empty, please select files again without it.",
-                        'onLeave' => "The files are being uploaded, if you leave now the upload will be cancelled."
-                    ),
-                    'showMessage' => "js:function(message){ alert(message); }"
-                )
-            ));
-            ?>
+                    'messages'=>array(
+                                        'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
+                                        'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",
+                                        'minSizeError'=>"{file} is too small, minimum file size is {minSizeLimit}.",
+                                        'emptyError'=>"{file} is empty, please select files again without it.",
+                                        'onLeave'=>"The files are being uploaded, if you leave now the upload will be cancelled."
+                                        ),
+                    'showMessage'=>"js:function(message){ alert(message); }"
+                    )
+                )); ?>
+            
+        </div> 
+             <div  id="div_target" style="display:
+                  <?php echo ($model->preview_url=='') ? 'none' : 'block' ?> ;" >
+                 <div style=" padding-bottom: 5px;">  
+                    <?php $this->widget('bootstrap.widgets.BootButton', array(
+                        'label'=>'Обрезать',
+                        'url'=>'#pictureLoad',
+                        'type'=>'primary',
+                        'size'=>'mini',
+                        'htmlOptions'=>array('data-toggle'=>'modal',
+                                            'id'=>'crop_button'),
+                        )); ?>
+                        
+                        <?php $this->widget('bootstrap.widgets.BootButton', array(
+                            'label'=>'Удалить',
+                            'type'=>'danger', 
+                            'size'=>'mini', 
+                            'htmlOptions'=>array(
+                                    'id' => 'del_preview_button',
+                                    'ajax' => array(
+                                                    'type'   => 'POST',
+                                                    'data' => 'js:"params="+$("#target").attr("src")', // тут мы выбираем данные которые нужно передать.
+                                                    'url'    => Yii::app()->createUrl('site/DeletePreview'),
+                                                    'success'=>"js:function(data) {deletePicture();}",// при успехе экшена выполняется это.
+                                                     )
+                                                )
+                        )); ?>
+                     
+                     
+                  </div>
+                 
+                 <img src="<?php echo $model->preview_url; ?>" id="preview_post" style="max-width:400px; 
+                                                max-height:400px;
+                                                border: 1px solid;
+                                                padding: 5px;">
+                  
+             </div>
+            
+             
+             <p class="help-block">Картинка, которая будет главной в топике</p>
+         </div>
+     </div>   
+   
+    <?php 
+                Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js", CClientScript::POS_END);
+                Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CClientScript::POS_HEAD);
+                Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redactor.css');
+                Yii::app()->getClientScript()->registerCssFile('css/fileuploader/uploader.css');
+    ?>
+    
+    <?php echo $form->textAreaRow($model, 'text', array(' class'=>'span8', 'rows'=>25, 'id'=>"redactor")); ?>
 
-            </div> 
-            <div  id="div_target" style="display:
-                <?php echo ($model->preview_url == '') ? 'none' : 'block' ?> ;" >
-                <div style=" padding-bottom: 5px;">  
-                <?php
-                $this->widget('bootstrap.widgets.BootButton', array(
-                    'label' => 'Обрезать',
-                    'url' => '#pictureLoad',
-                    'type' => 'primary',
-                    'size' => 'mini',
-                    'htmlOptions' => array('data-toggle' => 'modal',
-                        'id' => 'crop_button'),
-                ));
-                ?>
-
-                    <?php
-                    $this->widget('bootstrap.widgets.BootButton', array(
-                        'label' => 'Удалить',
-                        'type' => 'danger',
-                        'size' => 'mini',
-                        'htmlOptions' => array(
-                            'id' => 'del_preview_button',
-                            'ajax' => array(
-                                'type' => 'POST',
-                                'data' => 'js:"params="+$("#target").attr("src")', // тут мы выбираем данные которые нужно передать.
-                                'url' => Yii::app()->createUrl('site/DeletePreview'),
-                                'success' => "js:function(data) {deletePicture();}", // при успехе экшена выполняется это.
-                            )
-                        )
-                    ));
-                    ?>
-
-
-                </div>
-
-                <img src="<?php echo $model->preview_url; ?>" id="preview_post" style="max-width:400px; 
-                     max-height:400px;
-                     border: 1px solid;
-                     padding: 5px;">
-
-            </div>
-
-
-            <p class="help-block">Картинка, которая будет главной в топике</p>
-        </div>
-    </div>   
-
-<?php
-Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js", CClientScript::POS_END);
-Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redactor.css');
-?>
-
-    <?php echo $form->textAreaRow($model, 'text', array(' class' => 'span8', 'rows' => 25, 'id' => "redactor")); ?>
     <?php //echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>50,'id'=>"redactor")); ?>
 
     <?php echo $form->textFieldRow($model, 'tag', array('hint' => 'Теги, разделенные запятой. Например: fasd, asdf.')); ?>

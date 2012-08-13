@@ -78,10 +78,10 @@ class EAjaxUpload extends CWidget
 		$assets = dirname(__FILE__).'/assets';
                 $baseUrl = Yii::app()->assetManager->publish($assets);
 
-		Yii::app()->clientScript->registerScriptFile($baseUrl . '/fileuploader.js', CClientScript::POS_HEAD);
+		/*Yii::app()->clientScript->registerScriptFile($baseUrl . '/fileuploader.js', CClientScript::POS_HEAD);*/
 
                 $this->css=(!empty($this->css))?$this->css:$baseUrl.'/fileuploader.css';
-                Yii::app()->clientScript->registerCssFile($this->css);
+                /*Yii::app()->clientScript->registerCssFile($this->css);*/
 
 		$postParams = array('PHPSESSID'=>session_id(),'YII_CSRF_TOKEN'=>Yii::app()->request->csrfToken);
 		if(isset($this->postParams))
