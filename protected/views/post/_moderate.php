@@ -3,7 +3,7 @@
         <?php echo ($model->status_id==1)? "на модерации!" : ""; ?>
         <?php echo ($model->status_id==3)? "Архив!" : ""; ?>
     </div>
-    <div class="span4">
+    <div class="span4" style="float:right">
         <?php 
 
         $this->widget('bootstrap.widgets.BootButton', array(
