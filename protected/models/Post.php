@@ -125,7 +125,9 @@ class Post extends CActiveRecord {
         $res = array();
         $mass_of_tags = explode(",", $tags);
         foreach ($mass_of_tags as $tag) {
-            $tmp = preg_replace("/\+s/", " ", $tag);
+            //$tmp = preg_replace("/\+s/", " ", $tag);
+            
+            $tmp = preg_replace("/[\s]+/", " ", $tag);
             $tmp = trim($tmp);
             if ($tmp != "") {
                 $res [] = mb_strtolower($tmp,"UTF-8");
@@ -552,6 +554,7 @@ class Post extends CActiveRecord {
         $criteria->compare('title', $this->title, true);
         $criteria->compare('time_add', $this->time_add);
         $criteria->compare('category_id', $this->category_id);
+        $criteria->compare('sub_cat_id', $this->sub_cat_id);
         $criteria->with = array('author', 'category');
         $criteria->compare('author.login', $this->author_id, true);
 
@@ -573,6 +576,10 @@ class Post extends CActiveRecord {
             'category_id' => array(
                 'asc' => $expr = 'category.name',
                 'desc' => $expr . ' DESC',
+            ),
+            'sub_cat_id' => array(
+                'asc' => $expr = 'category.name',
+                'desc' => $expr . ' DESC',
             )
         );
 
@@ -580,6 +587,9 @@ class Post extends CActiveRecord {
         return new CActiveDataProvider(get_class($this), array(
                     'criteria' => $criteria,
                     'sort' => $sort,
+                    'pagination' => array(
+                        'pageSize' => 10,
+                    ),
                 ));
     }
 
