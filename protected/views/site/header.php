@@ -69,7 +69,7 @@
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
 	    'stacked'=>false, // whether this is a stacked menu
-        'htmlOptions'=>array('class'=>'nav-head'),
+        'htmlOptions'=>array('class'=>'nav-head span12'),
 	    'items'=>array(
 	    		array('label'=>'Спецпроекты', 'url'=>'#'),
 	    		array('label'=>'Новости', 'url'=>'#'),
@@ -94,5 +94,5 @@
 	    		)),
 	    ),
 	)); ?>
-
+<div style="clear:both"></div>
 <!-- </div>  --><!-- mainmenu -->

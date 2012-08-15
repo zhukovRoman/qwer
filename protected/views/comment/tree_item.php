@@ -1,12 +1,11 @@
 <div class="comment-item" 
      id ="<?php echo $model->id; ?>" 
-     style="margin-left: 10px; border: 1px solid;" 
      parent-id ="<?php echo $model->parent_id; ?>"
      is_hide="0">
          <?php
          $this->renderPartial("/comment/tree_item_header", array('model' => $model,));
          ?>
-    <div id="commentbody-<?php echo $model->id; ?>">
+    <div class="comment-body content-border" id="comment-<?php echo $model->id; ?>">
         <div class="comment_text" >
             <?php
             if ($model->status_id == 2) {

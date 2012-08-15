@@ -4,7 +4,7 @@
         <?php echo ($model->status_id==10)? "Архив!" : ""; ?>
         <?php echo ($model->status_id==3)? "Черновик!" : ""; ?>
     </div>
-    <div class="span4">
+    <div class="span4" style="float:right">
         <?php 
         $this->widget('bootstrap.widgets.BootButton', array(
             'label'=>'Редактировать',

@@ -1,5 +1,3 @@
-
-
 jQuery(function($){
    
     $('#sendComment').click(function() {
@@ -8,10 +6,7 @@ jQuery(function($){
         setTimeout(function() {
             btn.button('reset'); // call the reset function
         }, 3000);
-    });
-        
-        
-         
+    }); 
 });
  
 function getcomment(data)

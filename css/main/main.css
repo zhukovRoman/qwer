@@ -22,7 +22,6 @@ a.promo-link {
   height: 100%;
 }
 body {
-  min-width: 768px;
   min-height: 100%;
   height: auto !important;
   position: relative;
@@ -89,10 +88,7 @@ body {
   color: white;
 }
 .nav-pills {
-  padding-top: 4px;
-}
-.navbar {
-  margin: 0;
+  padding-top: 7px;
 }
 .navbar .nav{
   background: white;
@@ -115,6 +111,7 @@ body {
   border-bottom-color: black;
 }
 .navbar-search {
+  margin: 10px 10px 0 0;
   top: 44px;
 }
 /*посты*/

@@ -51,10 +51,11 @@ return array(
 	'components'=>array(
 		'clientScript' => array(
 			'scriptMap' => array(
-			'jquery.js' => '',
-			'jquery.yiiactiveform.js' => '',
-			'jquery-ui.min.js' => '',
-			'jquery.ba-bbq.js' => '',
+			'jquery.js' => '//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
+			'jquery.yiiactiveform.js' => 'js/vendor/jquery.yiiactiveform.js',
+			'jquery-ui.min.js' => 'js/vendor/jquery-ui.min.js',
+			'jquery.ba-bbq.js' => 'js/vendor/jquery.ba-bbq.js',
+			'jquery.yiigridview.js' => 'js/vendor/jquery.yiigridview.js',
 			)
 		),
 		'bootstrap'=>array(

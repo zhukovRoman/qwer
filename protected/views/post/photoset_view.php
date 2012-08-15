@@ -16,22 +16,22 @@
 )); ?>
 <!-- .article-title -->
 <br>
-<div class="content-border span7">
-  <?php
-         $this->beginWidget('ext.prettyPhoto.PrettyPhoto', array(
-          'id'=>'pretty_photo',
-          // prettyPhoto options
-          'options'=>array(
-              'opacity'=>0.80,
-              'modal'=>true,
-              'animation_speed'=> 'fast', 
-          ),
-          ));
-          echo $model->getGalleryPhoto();
-          $this->endWidget('ext.prettyPhoto.PrettyPhoto');
-  ?>  
+<div class="span8">
+    <?php
+           $this->beginWidget('ext.prettyPhoto.PrettyPhoto', array(
+            'id'=>'pretty_photo',
+            // prettyPhoto options
+            'options'=>array(
+                'opacity'=>0.80,
+                'modal'=>true,
+                'animation_speed'=> 'fast', 
+            ),
+            ));
+            echo $model->getGalleryPhoto();
+            $this->endWidget('ext.prettyPhoto.PrettyPhoto');
+    ?>  
 </div>
-
+<div style="clear:both"></div>
 
 <?php 
   Yii::app()->clientScript->registerScriptFile("js/prettyphoto/jquery.prettyPhoto.js", CClientScript::POS_END);
