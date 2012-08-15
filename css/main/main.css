@@ -22,7 +22,6 @@ a.promo-link {
   height: 100%;
 }
 body {
-  min-width: 768px;
   min-height: 100%;
   height: auto !important;
   position: relative;

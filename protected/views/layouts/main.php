@@ -14,6 +14,7 @@
 <body>
 <div class="body">
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <!--[if lte IE 8]> <style type="text/css">.navbar-search {margin-bottom:40px;}</style>  <![endif]--> 
   <?php include "protected/views/layouts/_modal.php";?>
   <div id="pos" class="container">
     <div class="header">
