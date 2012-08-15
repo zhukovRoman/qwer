@@ -19,7 +19,7 @@
   <?php echo ($model->code); ?>
 </div>
 <br>
-<div class="article-content content-border span7">
+<div class="article-content content-border offset1 span6">
     <?php echo CHtml::decode($model->text); ?>
 </div>
 <div style="clear:both"></div>

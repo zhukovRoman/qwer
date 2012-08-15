@@ -146,7 +146,7 @@ body {
   padding: 7px;
 }
 .article-video {
-  padding-left: 25%;
+  padding-left: 20%;
 }
 .icons {
   padding:15px 0 5px;
@@ -222,7 +222,11 @@ ul.items li.main-view .main-view-top a:last-child {
   margin-top: 4px;
   overflow: hidden;
 }
-
+ul.items li.main-view .main-view-top a:first-child {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 ul.items li.main-view .main-view-bottom .main-user {
   float: left;
 }
@@ -256,15 +260,13 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
   display: block;
   margin: 11px;
   color: white;
-  height: 115px;
-  padding: 3px 0 2px 0;
 }
 #pretty_photo a {
   float: left;
   display: block;
   width: 100px;
   height: 100px;
-  padding: 0 15px;
+  padding: 15px;
 }
 #pretty_photo a img {
   border: solid 7px #333;
@@ -307,3 +309,21 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 #sendComment {
   margin-left: 160px;
 }
+
+/*комменты */
+.comment-item {
+  background: white;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.comment-header {
+  background: #eee;
+}
+.comment-body {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#comment-form {
+  margin-top: 10px;
+}
+
