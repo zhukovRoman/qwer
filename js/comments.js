@@ -7,26 +7,36 @@ jQuery(function($){
             btn.button('reset'); // call the reset function
         }, 3000);
     }); 
+
+    $('.comment-btn').toggle(function() {
+        $('#comment-form').appendTo($('.def-pos-form'))
+                          .fadeIn('slow');
+        $('.button-replay').show();
+        $('.def-pos-form').fadeIn('fast');
+    },
+    function() {
+        $('.def-pos-form').fadeOut('fast');
+    });
 });
  
 function getcomment(data)
 {
      
     var resp = $.parseJSON(data);
-    if (resp.status=='error')
-    {
+    if (resp.status=='error'){
         flashError (resp.description);
-    }
-    else 
-    {
+    }else {
         $('#comment-form').appendTo($('.def-pos-form'));
         $('.parent_id_form').val(0);
         $("#Comment_text").val("");
-        if (resp.parentid==null)
-        {
+        if (resp.parentid==null){
             $("#comments").append(resp.code);
+        }else{
+            $("#"+resp.parentid).append(resp.code);
         }
-        else $("#"+resp.parentid).append(resp.code);
+        $('#'+resp.selfId).ScrollTo()
+                          .css('background', 'green')
+                          .animate({backgroundColor: "#fff"}, 4000);
     }
 }
  
@@ -50,6 +60,7 @@ function resetError ()
  
 function attachForm(id)
 {
+    $('.def-pos-form').hide();
     $('#comment-form').appendTo($('#reply-'+id));
     $('.parent_id_form').val(id);
     $('.button-replay').show();

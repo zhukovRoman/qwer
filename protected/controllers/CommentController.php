@@ -221,6 +221,7 @@ class CommentController extends Controller {
                     'status' => "success",
                     'code' => $this->renderPartial("tree_item", array('model' => $comment,), true),
                     'parentid' => $comment->parent_id,
+                    'selfId' => $comment->id,
                 );
                 echo json_encode($return);
                 return;

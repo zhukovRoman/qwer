@@ -4,6 +4,7 @@
     ?>
 
 </legend>
+<div class="btn comment-btn">Написать комментарий</div>
 <div class="def-pos-form">
 <?php
 $this->renderPartial('/comment/create_form', array(
