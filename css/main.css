@@ -89,7 +89,10 @@ body {
   color: white;
 }
 .nav-pills {
-  padding-top: 7px;
+  padding-top: 4px;
+}
+.navbar {
+  margin: 0;
 }
 .navbar .nav{
   background: white;
@@ -112,7 +115,6 @@ body {
   border-bottom-color: black;
 }
 .navbar-search {
-  margin: 10px 10px 0 0;
   top: 44px;
 }
 /*посты*/
