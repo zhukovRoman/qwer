@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
     $('.header').ScrollTo();
   });
   $('body').bind('mousemove',function(e){  
-    if (e.pageY>1000) {
+    if ($('.arrow-up').offset().top>1000) {
       $('.arrow-up').show();
     }else {
       $('.arrow-up').hide();
