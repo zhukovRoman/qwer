@@ -104,7 +104,7 @@ body {
 }
 .nav-head.nav > li > a:hover {
   background: #236B20;
-  text-shadow: 2px -2px -2px rgba(0, 0, 0, 0.3);
+  /*text-shadow: 2px -2px -2px rgba(0, 0, 0, 0.3);*/
 }
 .caret {
   border-top-color: black;
@@ -185,7 +185,8 @@ ul.items li.main-view .main-view-top a div {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(75,75,75,0.6);
+  background: #4B4B4B;
+  opacity: 0.6;
 }
 ul.items li.main-view .main-view-top a div.da-animate {
   -webkit-transition: all 0.3s ease;
