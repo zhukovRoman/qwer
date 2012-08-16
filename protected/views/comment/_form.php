@@ -3,9 +3,9 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'comment-form',
 	'enableAjaxValidation'=>true,
-        'enableClientValidation'=>true,
+        'enableClientValidation'=>false,
             'clientOptions'=>array(
-                    'validateOnChange'=>true,
+                    'validateOnChange'=>false,
             ),
 )); ?>
 

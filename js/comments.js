@@ -11,6 +11,7 @@ jQuery(function($){
 
     //Отображение и скрытие первой формы комментов
     $('.comment-btn').click(function() {
+        $('.comment-btn').hide();
         if($('.def-pos-form').css('display')!=='none'){
             $('.def-pos-form').fadeOut('fast');
         }else {
@@ -27,21 +28,24 @@ jQuery(function($){
             $('#sendComment').click();
         };
     });
-    
+
     //Aттач формы
     $('.button-replay').click(function() {
-        var attachId = this.id.slice(13);
-        attachForm(attachId);
+        var id = this.id.slice(13);
+        $('.def-pos-form').hide();
+        $('#comment-form').appendTo($('#reply-'+id));
+        $('.parent_id_form').val(id);
+        $('.button-replay').show();
+        $('#replay-button'+id).hide();
+        $('.comment-btn').show();
     });
 
 });
  
-function getcomment(data)
-{
-     
+function getcomment(data){
     var resp = $.parseJSON(data);
     if (resp.status=='error'){
-        flashError (resp.description);
+        notify(resp.description, 'error');
     }else {
         $('#comment-form').appendTo($('.def-pos-form'));
         $('.parent_id_form').val(0);
@@ -55,34 +59,6 @@ function getcomment(data)
                           .css('background', 'green')
                           .animate({backgroundColor: "#fff"}, 4000);
     }
-}
- 
-function flashError (text)
-{
-     
-    $(".error_msg").text(text);
-    $("#allert-box").attr('class', "alert alert-block alert-error fade in");
-    $("#allert-box").show(300);
-    setTimeout(function() {
-        resetError (); // call the reset function
-    }, 5000);
-}
- 
-function resetError ()
-{
-    $(".error_msg").text("");
-    $("#allert-box").attr('class', "alert alert-block alert-error fade out");
-    $("#allert-box").hide(300);
-}
- 
-function attachForm(id)
-{
-    $('.def-pos-form').hide();
-    $('#comment-form').appendTo($('#reply-'+id));
-    $('.parent_id_form').val(id);
-    $('.button-replay').show();
-    $('#replay-button'+id).hide();
-    resetError();
 }
  
 function showtree(id)
