@@ -8,7 +8,7 @@
 html, body {
   /*background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
   background: #eee;
-  min-width: 768px;
+  min-width: 980px;
 }
 a.promo-link {
   display: block;
@@ -80,7 +80,7 @@ body {
   color: white;
 }
 .nav-pills {
-  padding-top: 4px;
+  padding-top: 3px;
 }
 .navbar {
   margin: 20px 0 0 0;
@@ -99,18 +99,19 @@ body {
 }
 .nav-head.nav > li > a:hover {
   background: #236B20;
-  text-shadow: 2px -2px -2px rgba(0, 0, 0, 0.3);
 }
 .caret {
   border-top-color: black;
   border-bottom-color: black;
 }
 .navbar-search {
-  top: 44px;
+  top: 43px;
+  right: -4px;
 }
 /*посты*/
 .article {
   padding: 15px;
+  margin-left: 20px;
 }
 .article-title {
   padding: 10px 0;
@@ -269,12 +270,12 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 .main-carousel {
   width: 450px;
   float: left;
-  height: 375px;
+  height: 376px;
 }
 
 .main-carousel .carousel-inner .carousel-caption{
   position: relative;
-  height: 70px;
+  height: 71px;
 }
 
 .main-carousel .item > img {

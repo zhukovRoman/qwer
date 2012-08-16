@@ -1,5 +1,6 @@
 jQuery(function($){
-   
+
+    //Анимация при отправке
     $('#sendComment').click(function() {
         var btn = $(this);
         btn.button('loading'); // call the loading function
@@ -8,15 +9,31 @@ jQuery(function($){
         }, 3000);
     }); 
 
-    $('.comment-btn').toggle(function() {
-        $('#comment-form').appendTo($('.def-pos-form'))
-                          .fadeIn('slow');
-        $('.button-replay').show();
-        $('.def-pos-form').fadeIn('fast');
-    },
-    function() {
-        $('.def-pos-form').fadeOut('fast');
+    //Отображение и скрытие первой формы комментов
+    $('.comment-btn').click(function() {
+        if($('.def-pos-form').css('display')!=='none'){
+            $('.def-pos-form').fadeOut('fast');
+        }else {
+            $('#comment-form').appendTo($('.def-pos-form'))
+                              .fadeIn('slow');
+            $('.button-replay').show();
+            $('.def-pos-form').fadeIn('fast');
+        }
     });
+
+    //Отправка по Ctrl-Enter
+    $('#comment-form').keypress(function(formElement) {
+        if ((event.ctrlKey)&&((event.keyCode == 0xA) || (event.keyCode == 0xD))) {
+            $('#sendComment').click();
+        };
+    });
+    
+    //Aттач формы
+    $('.button-replay').click(function() {
+        var attachId = this.id.slice(13);
+        attachForm(attachId);
+    });
+
 });
  
 function getcomment(data)

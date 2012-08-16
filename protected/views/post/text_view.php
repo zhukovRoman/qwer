@@ -14,7 +14,7 @@
   'model'=>$model,
 )); ?>
 
-<div class="article-content content-border span7">
+<div class="article-content content-border span8">
     <?php echo CHtml::decode($model->text); ?>
 </div>
 <div style="clear:both"></div>

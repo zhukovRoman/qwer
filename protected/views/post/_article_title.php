@@ -1,4 +1,4 @@
-<div class="row article-title">
+<div class="row article-title span8">
     <h1><span><?php echo CHtml::encode($model->title);?></span></h1>
     <h3><span><?php echo CHtml::encode($model->subtitle);?></span></h3>
     <!-- .icons -->

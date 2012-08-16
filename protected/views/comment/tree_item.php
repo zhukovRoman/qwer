@@ -27,7 +27,7 @@
             'size' => 'mini',
             'label' => 'Oтветить',
             'htmlOptions' => array(
-                'onclick' => 'js:attachForm(' . $model->id . ')',
+               /* 'onclick' => 'js:attachForm(' . $model->id . ')',*/
                 'id' => 'replay-button' . $model->id,
                 'class' => 'button-replay',
             )
