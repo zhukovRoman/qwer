@@ -18,7 +18,7 @@
   <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/vendor/jquery-ui.min.js"></script>
 </head>
 <body>
-<div class="body">
+<div class="wrap">
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <?php include "protected/views/layouts/_modal.php";?>
   <div id="pos" class="container">
