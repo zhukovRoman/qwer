@@ -208,7 +208,7 @@ class Post extends CActiveRecord {
         $z = 1.96;
         $p = $this->positive_vote_count / $this->all_vote_count;
         $n = $this->all_vote_count;
-        return round(($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n), 2) * 100;
+        return ($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n) ;
     }
 
     /**
@@ -541,16 +541,12 @@ class Post extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
-
-
-
         //$criteria->addCondition('status_id=1');
-
         $criteria->condition = "t.status_id=:status";
 
         $criteria->params = array(':status' => $status);
 
-        $criteria->compare('id', $this->id);
+       
         $criteria->compare('title', $this->title, true);
         $criteria->compare('time_add', $this->time_add);
         $criteria->compare('category_id', $this->category_id);
@@ -588,7 +584,7 @@ class Post extends CActiveRecord {
                     'criteria' => $criteria,
                     'sort' => $sort,
                     'pagination' => array(
-                        'pageSize' => 10,
+                        'pageSize' => 20,
                     ),
                 ));
     }

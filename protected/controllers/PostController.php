@@ -198,7 +198,9 @@ class PostController extends Controller {
             $model->sub_cat_id = NULL;
             $model->attributes = $_POST['Post'];
             $model->status_id = 1;
-
+             if (isset($_POST['archive'])){
+                $model->status_id = 3; 
+            }
             if ($model->save()) {
                 $model->modifyTag();
                 $this->redirect(array('view', 'id' => $model->id));

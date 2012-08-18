@@ -77,13 +77,6 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 <div class="form-actions" style="padding-left: 10px;">
     <div style="float:left;">
     <?php
-    $this->widget('bootstrap.widgets.BootButton', array(
-        'buttonType' => 'reset',
-        'icon' => 'remove',
-        'size' => 'small',
-        'label' => 'Отмена'));
-    ?>
-    <?php
         $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit',
         'type' => 'inverse',
         'icon' => 'file white',

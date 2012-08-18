@@ -39,7 +39,8 @@
             (
                 'name' => "sub_cat_id",
                 'value' => '($data->sub_cat_id!=NULL)? $data->subCat->name: ""',
-                'filter' => CHtml::listData(Category::model()->findAll('parent_id=:par',array(':par'=>$model->category_id)),
+                'filter' => ($model->category_id==NULL) ? CHtml::listData(Category::model()->findAll('parent_id!=0'),'id','name') :
+                                CHtml::listData(Category::model()->findAll('parent_id=:par',array(':par'=>$model->category_id)),
                         'id', 'name'),
                 'sortable' => false,
             ),
