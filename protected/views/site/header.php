@@ -7,10 +7,11 @@
     'fixed'=>false,
     'brand'=>'<img src="http://fresh-i.ru/templates/skin/simple/images/logo.png">',
     'brandUrl'=>Yii::app()->homeUrl,
-    'collapse'=>true, // requires bootstrap-responsive.css
+    'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(
         array(
             'class'=>'bootstrap.widgets.BootMenu',
+            'htmlOptions'=>array('class'=>'l-nav'),
             'items'=>array(
             	'---',
                 array('label'=>'Лекторий', 'url'=>'#'), //'active'=>true),
@@ -39,8 +40,7 @@
             			  'visible'=>!Yii::app()->user->isGuest, 'url'=> array('/account/view', 'id' => Yii::app()->user->getId()) ),
             		array('label'=> Yii::app()->user->name, //Account::model()->findByPk(Yii::app()->user->getId())->login,
                 	  'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array(
-                    array('label'=> Yii::app()->user->name),
-                	'---',
+                   
                     array('label'=>'Профиль', 'url'=> array('/account/view', 'id' => Yii::app()->user->getId())),
                     array('label'=>'Созданное', 'url'=>'#'),
                 	array('label'=>'Избранное', 'url'=>'#'),
@@ -64,7 +64,7 @@
         ),
     ),
 )); ?>
-<form class="navbar-search pull-right" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
+<form class="navbar-search pull-right span2" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
 <!-- 	<div id="mainmenu">	 -->
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
@@ -89,7 +89,6 @@
 	    		array('label'=>'Спорт', 'url'=>'#'),
 	    		array('label'=>'Кино', 'url'=>'#'),
 	    		array('label'=>'Hi-tech', 'url'=>'#'),
-	    		array('label'=>'Книги', 'url'=>'#'),
 	    ),
 	)); ?>
 <div style="clear:both"></div>

@@ -23,7 +23,7 @@ class XUploadForm extends CFormModel
         public function attributeLabels()
         {
                 return array(
-                        'file'=>'Upload files',
+                        'file'=>'Загрузить файлы',
                 );
         }
 

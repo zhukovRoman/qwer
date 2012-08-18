@@ -18,7 +18,7 @@ function notify (text, type) {
       text: text,
       type: type,
       dismissQueue: true,
-      layout: 'topRight',
+      layout: 'top',
       theme: 'default',
       timeout: 5000,
     });

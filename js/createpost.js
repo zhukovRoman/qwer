@@ -148,9 +148,6 @@ function cropPreview()
                 $("#target").attr("height", "");
                 
         })
-        
-         
     
-         
  });
 

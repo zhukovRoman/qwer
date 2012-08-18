@@ -19,47 +19,50 @@
                  }
             ?>
         </div>
-
-        <?php
-        $this->widget('bootstrap.widgets.BootButton', array(
-            'buttonType' => 'button',
-            'type' => 'primary',
-            'size' => 'mini',
-            'label' => 'Oтветить',
-            'htmlOptions' => array(
-               /* 'onclick' => 'js:attachForm(' . $model->id . ')',*/
-                'id' => 'replay-button' . $model->id,
-                'class' => 'button-replay',
-            )
-                )
-        );
-        ?> 
-        <span id="spam-link-<?php echo $model->id; ?> ">
+    <?php if (!Yii::app()->user->isGuest) { ?>
+        <div class="comment-resp">
             <?php
-            echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
-                'type' => 'POST',
-                'data' => "js:'id-comment='+$model->id",
-                'update' => '#commentbody-' . $model->id,
-            ));
-            ?>
-        </span>
-
-        <?php
-        $this->widget('bootstrap.widgets.BootButton', array(
-            'buttonType' => 'button',
-            'type' => 'danger',
-            'size' => 'mini',
-            'label' => 'Удалить',
-            'htmlOptions' => array(
-                'ajax' => array(
+            $this->widget('bootstrap.widgets.BootButton', array(
+                'buttonType' => 'button',
+                'type' => 'primary',
+                'size' => 'mini',
+                'label' => 'Oтветить',
+                'htmlOptions' => array(
+                   /* 'onclick' => 'js:attachForm(' . $model->id . ')',*/
+                    'id' => 'replay-button' . $model->id,
+                    'class' => 'button-replay',
+                )
+                    )
+            );
+            ?> 
+            <span id="spam-link-<?php echo $model->id; ?> ">
+                <?php
+                echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
                     'type' => 'POST',
                     'data' => "js:'id-comment='+$model->id",
-                    'url' => Yii::app()->createUrl('comment/delete'),
-                    'success' => "js:function(data) {show_preview(data);}",
-                ),
-            )
-        ));
-        ?> 
+                    'update' => '#commentbody-' . $model->id,
+                ));
+                ?>
+            </span>
+
+            <?php
+            $this->widget('bootstrap.widgets.BootButton', array(
+                'buttonType' => 'button',
+                'type' => 'danger',
+                'size' => 'mini',
+                'label' => 'Удалить',
+                'htmlOptions' => array(
+                    'ajax' => array(
+                        'type' => 'POST',
+                        'data' => "js:'id-comment='+$model->id",
+                        'url' => Yii::app()->createUrl('comment/delete'),
+                        'success' => "js:function(data) {show_preview(data);}",
+                    ),
+                )
+            ));
+            ?> 
+        </div>
+    <?php }; ?>
     </div>
     <div id="reply-<?php echo $model->id; ?>"></div>
     <?php

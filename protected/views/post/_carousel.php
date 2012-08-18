@@ -8,21 +8,21 @@
   'template'=>'<div class="main-carousel carousel photo-border">
                 <div class="carousel-inner">
                   <div class="active item">
-                    <img src="http://potapov.klimgo.com/qwer/topics/2012_08_06/8759b17eeae1a84c_10_crop.jpg" alt="">
+                    <img src="http://cs308728.userapi.com/v308728604/686/qRMuEdog46M.jpg" alt="">
                     <div class="carousel-caption">
                       <h4>First Thumbnail label</h4>
                       <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                   </div>
                       <div class="item">
-                        <img src="http://placehold.it/450x290&amp;text=Second+thumbnail" alt="">
+                        <img src="http://cs10727.userapi.com/u4328604/-6/y_013aa6f5.jpg" alt="">
                         <div class="carousel-caption">
                           <h4>Second Thumbnail label</h4>
                           <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                         </div>
                       </div>
                       <div class="item">
-                        <img src="http://placehold.it/450x290&amp;text=Third+thumbnail" alt="">
+                        <img src="http://cs11128.userapi.com/u4328604/-6/x_593c79c4.jpg" alt="">
                         <div class="carousel-caption">
                           <h4>Third Thumbnail label</h4>
                           <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>

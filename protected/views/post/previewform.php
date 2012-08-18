@@ -69,10 +69,7 @@
 
             </div>
 
-            <img src="<?php echo $model->preview_url; ?>" id="preview_post" style="max-width:400px; 
-                 max-height:400px;
-                 border: 1px solid;
-                 padding: 5px;">
+            <img src="<?php echo $model->preview_url; ?>" id="preview_post" class="photo-border">
 
         </div>
 

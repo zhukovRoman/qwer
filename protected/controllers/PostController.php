@@ -290,6 +290,7 @@ class PostController extends Controller {
         $id = substr($url, -44, -9);
         $res = '<li id="' . $id . '">';
         $res .= '<div><img src="' . $url . '" >';
+        $res .= '<div style="clear:both"></div>';
         $res .= CHtml::button("Удалить", array('class' => 'btn-danger btn-mini', 'style' => 'margin: 5px 2px 3px 23px',
                     'onclick' => 'js:del_photo_from_set("' . $id . '")',
                 ));

@@ -5,8 +5,7 @@
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).
-						"<div><span>".CHtml::encode($data->subtitle).
-									CHtml::encode($data->category_id).
+						"<div><span>".CHtml::encode(mb_substr($data->subtitle, 0, 150, 'utf-8')).'...'.
 									"</span></div>", 
 						array('view', 'id'=>$data->id)); 
 		?>

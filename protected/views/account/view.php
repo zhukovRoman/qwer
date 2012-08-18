@@ -293,7 +293,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 
 <div class="modal-footer">    
     <?php $this->widget('bootstrap.widgets.BootButton', array(
-        'label'=>'Close',
+        'label'=>'Закрыть',
         'url'=>'#',
     	'htmlOptions'=>array('data-dismiss'=>'modal',
     		'ajax' => array(

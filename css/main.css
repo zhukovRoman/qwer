@@ -1,14 +1,13 @@
 /* общие */
 .ads {
   width: 200px;
-  float: left;
-  right: 32px;
   position: absolute;
+  left: 0;
+  margin-top: 12px;
 }
 html, body {
   /*background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
   background: #eee;
-  min-width: 980px;
 }
 a.promo-link {
   display: block;
@@ -21,6 +20,9 @@ a.promo-link {
   min-height: 100%;
   height: 100%;
 }
+#content {
+  padding-left: 225px;
+}
 body {
   min-height: 100%;
   height: auto !important;
@@ -28,16 +30,20 @@ body {
   padding-top: 50px; 
 }
 .main {
-  padding-bottom: 150px;
+  padding: 10px 0 150px;
+  margin-left: -20px;
+  min-height: 300px;
 }
 .footer {
   color: white;
   position: relative;
   background: #333;
-  height: 200px;
+  height: 50px;
+  padding: 20px;
 }
 .body {
   margin: 0 auto;
+  min-width: 960px;
 }
 #pos{
   position: relative; 
@@ -58,6 +64,9 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.4);
   padding: 5px;
 }
+.help-inline {
+  color: red;
+}
 /*нав бар*/
 .brand {
   display: block;
@@ -66,7 +75,7 @@ body {
 .userpic {
   position: absolute;
   margin-left: -50px;
-  margin-top: -17px;
+  margin-top: -19px;
   padding:0;
   width: 50px;
   height: 50px;
@@ -80,22 +89,25 @@ body {
   color: white;
 }
 .nav-pills {
-  padding-top: 3px;
+  margin-left: -10px;
+  padding: 9px 10px;
 }
 .navbar {
   margin: 20px 0 0 0;
 }
-.navbar .nav{
+.navbar .pull-right{
   background: white;
+  font-size: 13px;
+}
+.l-nav {
+  font-size: 24px;
 }
 .navbar .nav > li > a {
   margin-top: 25px;
   color: #333;
-  font-size: 14px;
 }
 .navbar .nav > li > a:hover {
   color: #236B20;
-  text-decoration: underline;
 }
 .nav-head.nav > li > a:hover {
   background: #236B20;
@@ -105,8 +117,12 @@ body {
   border-bottom-color: black;
 }
 .navbar-search {
-  top: 43px;
-  right: -4px;
+  right: 6px;
+  padding:10px 10px 0 10px;
+  background: #333;
+  top: 50px;
+  float: right;
+  margin-top: -10px;
 }
 /*посты*/
 .article {
@@ -139,7 +155,7 @@ body {
   padding: 7px;
 }
 .article-video {
-  padding-left: 20%;
+  padding-left: 14%;
 }
 .icons {
   padding:15px 0 5px;
@@ -147,7 +163,7 @@ body {
 /*главаная*/
 ul.items {
   position: relative;
-  margin: 20px auto;
+  margin: 0;
   padding: 0;
   color: white;
   list-style: none;
@@ -193,9 +209,10 @@ ul.items li.main-view .main-view-top a div.da-animate {
 ul.items li.main-view .main-view-top a div span {
   display: block;
   margin: 15px;
-  padding: 2px 0;
   color: rgba(255,255,255,0.9);
   font-weight: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 ul.items li.main-view .main-view-bottom {
@@ -270,15 +287,17 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 .main-carousel {
   width: 450px;
   float: left;
-  height: 376px;
+  height: 375px;
 }
 
 .main-carousel .carousel-inner .carousel-caption{
   position: relative;
   height: 71px;
+  color: white;
 }
 
 .main-carousel .item > img {
+  margin-top: -1px;
   height: 290px;
   width: 450px;
 }
@@ -299,11 +318,14 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
   max-width: 400px;
   min-width: 400px;
 }
+
+/*комменты */
+#comments {
+  margin: 30px 10px 0 0;
+}
 #sendComment {
   margin-left: 160px;
 }
-
-/*комменты */
 .comment-item {
   background: white;
   margin-left: 20px;
@@ -334,4 +356,3 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 .arrow-up:hover {
   color: #236B20;
 }
-

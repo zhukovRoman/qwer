@@ -107,8 +107,8 @@ class XUploadWidget extends CJuiInputWidget {
 		else{
 			echo CHtml::fileField($name,$this->value, $htmlOptions);
 		}
-		echo CHtml::tag("button", array('class'=>$this->class), "Upload", true);
-		echo CHtml::tag("div", array('class'=>$this->class), "Upload file", true);
+		echo CHtml::tag("button", array('class'=>$this->class), "Загрузка", true);
+		echo CHtml::tag("div", array('class'=>$this->class), "Загрузить файл", true);
 
 		echo CHtml::endForm();
 
@@ -146,7 +146,7 @@ js:function (files, index) {
     	'<td class="file_upload_progress"><div><\/div><\/td>' +
     	'<td class="filesize">'+files.size+'</td>' +
         '<td class="file_upload_cancel">' +
-        '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+        '<button class="ui-state-default ui-corner-all" title="Отмена">' +
         '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
         '<\/button><\/td><\/tr>'
         );

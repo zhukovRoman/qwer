@@ -102,7 +102,7 @@ echo $form->textFieldRow($model, 'tag', array(
 
         <?php
         $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit',
-            'type' => 'primary',
+            'htmlOptions' => array('class'=>'publish-btn'),
             'icon' => 'ok white',
             'size' => 'small',
             'label' => $model->isNewRecord ? 'Опубликовать' : 'Сохранить',
