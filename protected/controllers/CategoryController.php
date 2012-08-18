@@ -50,9 +50,25 @@ class CategoryController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+            $dataProvider = new CActiveDataProvider('Post', array(
+                    'pagination' => array(
+                        'pageSize' => 12,
+                    ),
+                    'criteria' => array(
+                        #'select'=>''
+                        'condition'=>'status_id = 5 AND category_id=:cat',
+                        'order' => 'time_moder DESC',
+                        'params'=>array (":cat"=>$id),
+                    )
+                )
+                    
+                    );
+
+        $this->render('view', array(
+            'dataProvider' => $dataProvider,
+            'category' =>Category::model()->findByPk($id)
+        ));
+	
 	}
 
 	/**

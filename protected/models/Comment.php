@@ -86,7 +86,10 @@ class Comment extends CActiveRecord {
         array('text', 'required'),
         // The following rule is used by search().
         // Please remove those attributes that should not be searched.
-        array('id, author_id, post_id, parent_id, text, time_add, rating, all_vote_count, positive_vote_count, status_id', 'safe', 'on' => 'search'),
+        array('id, author_id, post_id, parent_id, 
+            text, time_add, rating, all_vote_count,
+            positive_vote_count, status_id, 
+            author.login, author.id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -147,6 +150,58 @@ class Comment extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
+                ));
+    }
+    
+     public function searchModer($status) {
+        
+        $criteria = new CDbCriteria;
+        if($status!=0)
+        {
+            $criteria->condition = "t.status_id=:status";
+            $criteria->params = array(':status' => $status);
+        }
+        
+        $criteria->with = array('author', 'post');
+        $criteria->compare('lower(author.login)', mb_strtolower(
+                $this->author_id, "UTF-8"), true);
+        $criteria->compare('lower(t.text)', mb_strtolower(
+                $this->text, "UTF-8"), true);
+        $criteria->compare('lower(post.title)', mb_strtolower(
+                $this->post_id,"UTF-8"), true);
+        
+        $sort = new CSort();
+        $sort->attributes = array(
+            'author_id' => array(
+                'asc' => $expr = 'author.login',
+                'desc' => $expr . ' DESC',
+            ),
+            'text' => array(
+                'asc' => $expr = 't.text',
+                'desc' => $expr . ' DESC',
+            ),
+            'time_add' => array(
+                'asc' => $expr = 't.time_add',
+                'desc' => $expr . ' DESC',
+            ),
+             'post_id' => array(
+                'asc' => $expr = 'post.title',
+                'desc' => $expr . ' DESC',
+            ),
+              'status_id' => array(
+                'asc' => $expr = 't.status_id',
+                'desc' => $expr . ' DESC',
+            ),
+
+        );
+
+
+        return new CActiveDataProvider(get_class($this), array(
+                    'criteria' => $criteria,
+                    'sort' => $sort,
+                    'pagination' => array(
+                        'pageSize' => 30,
+                    ),
                 ));
     }
 
