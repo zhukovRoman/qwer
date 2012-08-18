@@ -77,6 +77,9 @@ class PostController extends Controller {
             $model->attributes = $_POST['Post'];
             $model->author_id = Yii::app()->user->getId();
             $model->status_id = 1; // изначально статус "на модерации"
+            if (isset($_POST['archive'])){
+                $model->status_id = 3; 
+            }
             //$model->time_add= time(); // время добавления стат
             $model->time_add = date('Y-m-d H:i:s');
             $model->is_video = FALSE;
@@ -107,10 +110,14 @@ class PostController extends Controller {
 
 
         if (isset($_POST['Post'])) {
-            //print_r($_POST['Post']);die();
+            print_r($_POST);die();
             $model->attributes = $_POST['Post'];
             $model->author_id = Yii::app()->user->getId(); // изменить на текущего юзера
             $model->status_id = 1; // изначально статус "на модерации"
+            if (isset($_POST['archive'])){
+                $model->status_id = 3; 
+            }
+            
             $model->time_add = date('Y-m-d H:i:s');
             $model->is_video = true;
             $model->is_photoset = FALSE;
@@ -152,6 +159,9 @@ class PostController extends Controller {
             $model->attributes = $_POST['Post'];
             $model->author_id = Yii::app()->user->getId(); // изменить на текущего юзера
             $model->status_id = 1; // изначально статус "на модерации"
+            if (isset($_POST['archive'])){
+                $model->status_id = 3; 
+            }
             //$model->time_add= time(); // время добавления стат
             $model->time_add = date('Y-m-d H:i:s');
             $model->is_video = false;
@@ -188,7 +198,9 @@ class PostController extends Controller {
             $model->sub_cat_id = NULL;
             $model->attributes = $_POST['Post'];
             $model->status_id = 1;
-
+             if (isset($_POST['archive'])){
+                $model->status_id = 3; 
+            }
             if ($model->save()) {
                 $model->modifyTag();
                 $this->redirect(array('view', 'id' => $model->id));
@@ -381,6 +393,7 @@ class PostController extends Controller {
         if (isset($_GET['Post'])) {
             $model->attributes = $_GET['Post'];
         }
+        
         $this->render('manage', array(
             'model' => $model,
             'status' => $status,

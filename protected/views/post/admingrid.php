@@ -33,6 +33,16 @@
                 'filter' => CHtml::listData(Category::model()->findAll('parent_id=0'),
                         'id', 'name'),
                 'sortable' => true,
+                'htmlOptions'=>array('width'=>'100px'),
+            ),
+             array 
+            (
+                'name' => "sub_cat_id",
+                'value' => '($data->sub_cat_id!=NULL)? $data->subCat->name: ""',
+                'filter' => ($model->category_id==NULL) ? CHtml::listData(Category::model()->findAll('parent_id!=0'),'id','name') :
+                                CHtml::listData(Category::model()->findAll('parent_id=:par',array(':par'=>$model->category_id)),
+                        'id', 'name'),
+                'sortable' => false,
             ),
                         
             
@@ -51,6 +61,7 @@
                         'icon'=>"time",
                     )
                     ),
+                'htmlOptions'=>array('width'=>'70px'),
             ),
             
         ),

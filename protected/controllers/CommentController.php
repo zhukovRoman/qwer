@@ -29,12 +29,14 @@ class CommentController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'AddComment', 'Raiting', 'Spam','Delete'),
-                'users' => array('@'),
+                'actions' => array('create', 'update', 
+                    'AddComment', 'Raiting', 
+                    'Spam','Delete', 'manage','itisspam','itisnospam','toarchive'),
+                'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
+                'actions' => array('admin', 'delete', 'manage'),
+                'users' => array('*'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -136,7 +138,17 @@ class CommentController extends Controller {
             'model' => $model,
         ));
     }
+    public function actionManage ($status=0) {
+        $model = new Comment('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Comment']))
+            $model->attributes = $_GET['Comment'];
 
+        $this->render('manage', array(
+            'model' => $model,
+            'status' => $status,
+        ));
+    }
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -295,8 +307,7 @@ class CommentController extends Controller {
             $comment_id = intval($_POST['id-comment']);
             $comment = Comment::model()->findByPk($comment_id);
             $comment->status_id = 2;
-            $comment->save(false);
-            
+            $comment->save(false);   
         }
     }
 
@@ -309,6 +320,28 @@ class CommentController extends Controller {
             }
             echo "Спасибо! Мы обязательно проверим данный комменарий.";
         }
+    }
+    
+    public function actionitisspam($id)
+    {
+            $comment = Comment::model()->findByPk($id);
+            $comment->status_id = 3;
+            $comment->save(false);
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
+    }
+    public function actionitisnospam($id)
+    {
+            $comment = Comment::model()->findByPk($id);
+            $comment->status_id = 4;
+            $comment->save(false);  
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
+    }
+    public function actiontoarchive($id)
+    {
+            $comment = Comment::model()->findByPk($id);
+            $comment->status_id = 2;
+            $comment->save(false); 
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
     }
 
 }
