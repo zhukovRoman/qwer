@@ -1,4 +1,7 @@
 <?php 
+  Yii::app()->clientScript->registerScriptFile("js/post.js", CClientScript::POS_END);
+?>
+<?php 
     if ($model->is_video)
     {
         echo $this->renderPartial('video_view', array('model'=>$model));

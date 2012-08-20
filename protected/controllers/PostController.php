@@ -451,10 +451,12 @@ class PostController extends Controller {
               else {
                   if (PostRating::addNewItem($user, $delta, $post))
                   {
+                      if ($delta>0) $post->positive_vote_count++;
+                      $post->all_vote_count++;
                       $return = array(
                         'status' => "success",
                         'description' => "Спасибо за Ваше голос!",
-                        'code' => $delta,
+                        'code' =>  $post->getRaiting(),
                     );
                     echo json_encode($return);
                     return;
@@ -473,5 +475,37 @@ class PostController extends Controller {
               
            }
        }
+    }
+    
+    public function actionFavorite ()
+    {
+         if ( !isset ($_POST['id-post']) || 
+                Yii::app()->user->isGuest) 
+       {
+           $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы!",
+                    );
+                    echo json_encode($return);
+                    return;
+       }
+       
+       $id = intval ($_POST['id-post']);
+       $post = Post::model()->findbyPk($id);
+       $user = Yii::app()->getId();
+       
+       if ($post==NULL)
+       {
+           $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы корректно!",
+                    );
+                    echo json_encode($return);
+                    return;
+       } 
+       
+       // проверить есть ли в избранном.
+       
+       
     }
 }

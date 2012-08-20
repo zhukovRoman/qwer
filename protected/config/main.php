@@ -109,8 +109,8 @@ return array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
 				array(
-					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'class'=>'CWebLogRoute',
+                                        'levels'=>'trace, info, profile',
 				),
 				// uncomment the following to show log messages on web pages
 				/*

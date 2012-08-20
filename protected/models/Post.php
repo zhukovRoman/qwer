@@ -432,7 +432,9 @@ class Post extends CActiveRecord {
         $criteria->addCondition ("status_id=:status");
         $criteria->addCondition ("time_moder > now() - interval '$f day'");
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
-                                 );        
+                                 );  
+        $criteria->limit=7;
+        $criteria->order='all_vote_count';
         return Post::model()->findAll ($criteria);
     }
     
@@ -617,4 +619,14 @@ class Post extends CActiveRecord {
                 ));
     }
 
+    public static function inFavorite($user, $post_id)
+        {
+           
+            $criteria = new CDbCriteria;
+            $criteria->addCondition("post_id=:id");
+            $criteria->addCondition("user_id=:user");
+            $criteria->params = array(':id' => $post_id, ':user' => $user);
+            $c = PostRating::model()->find($criteria);
+            return ($c == null) ? false : true;
+        }
 }

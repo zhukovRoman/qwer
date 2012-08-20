@@ -106,7 +106,6 @@ class PostRating extends CActiveRecord
         
         public static function allreadyVote($user, $post_id)
         {
-           
             $criteria = new CDbCriteria;
             $criteria->addCondition("post_id=:id");
             $criteria->addCondition("user_id=:user");
@@ -124,5 +123,7 @@ class PostRating extends CActiveRecord
             $model->time_add = date('Y-m-d H:i:s');
             $model->delta = $d;
             return ($model->save(false)) ? $model : false;
+            
+            
         }
 }
