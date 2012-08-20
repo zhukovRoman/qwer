@@ -1,7 +1,7 @@
 <li class="main-view content-border">
 	<div class="main-view-top">
 		<?php echo CHtml::link(CHtml::encode($data->title), 
-						array('view', 'id'=>$data->id));?>
+						array('view', 'id'=>$data->id), array('class'=>'black-a'));?>
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).
@@ -10,10 +10,11 @@
 						array('view', 'id'=>$data->id)); 
 		?>
 	</div>
-	<div class="main-view-bottom">
+	<div class="main-view-bottom color-black">
 		<div class="main-user">
-			<i class="icon-user" rel="tooltip" title="автор"></i>
-			<b><?php echo CHtml::encode(substr($data->author->login, 0, 14));?></b>
+			<b><?php echo CHtml::link('<i class="icon-user" rel="tooltip" title="автор"></i>'.substr($data->author->login, 0, 14),
+    			Yii::app()->createUrl('account/view',
+    			array ("id"=>$data->author->id)), array('class'=>'black-a')); ?></b>
 		</div>
 		<i class="icon-star" rel="tooltip" title="рейтинг"></i>
 		<?php echo CHtml::encode($data->getraiting());?>

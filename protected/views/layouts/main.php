@@ -33,7 +33,7 @@
           <?php echo $content;?>
         </div>
         
-        <div class="arrow-up"><i class=" icon-arrow-up"></i></div>
+        <div class="arrow-up black-a"><i class=" icon-arrow-up"></i></div>
     </div>
     <div class="footer">
         <div class="span5 offset5">

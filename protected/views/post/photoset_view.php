@@ -25,6 +25,7 @@
                 'opacity'=>0.80,
                 'modal'=>true,
                 'animation_speed'=> 'fast', 
+                array('class'=>'df'),
             ),
             ));
             echo $model->getGalleryPhoto();
@@ -44,9 +45,11 @@
 <div style="clear:both"></div>
 <hr>
 <!-- .icons -->
-<?php $this->renderPartial('_icons',array(
-  'model'=>$model,
-)); ?>
+<div class="icons color-black">
+  <?php $this->renderPartial('_icons',array(
+    'model'=>$model,
+  )); ?>  
+</div>
 <!-- /.icons -->
 <!-- .article-tags -->
 <?php $this->renderPartial('_tags',array(

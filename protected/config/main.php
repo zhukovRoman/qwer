@@ -56,6 +56,7 @@ return array(
 			'jquery-ui.min.js' => 'js/vendor/jquery-ui.min.js',
 			'jquery.ba-bbq.js' => 'js/vendor/jquery.ba-bbq.js',
 			'jquery.yiigridview.js' => 'js/vendor/jquery.yiigridview.js',
+			'jquery.yiilistview.js'=>'js/vendor/jquery.yiilistview.js ' 
 			)
 		),
 		'bootstrap'=>array(

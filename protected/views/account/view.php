@@ -4,7 +4,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'type'=>'horizontal',
 )); ?>
 
-<fieldset> 
+<fieldset class="span9"> 
 	<legend><?php echo $model->login; ?></legend>
 
 <?php $this->widget('bootstrap.widgets.BootMenu', array(
