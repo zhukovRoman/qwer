@@ -5,7 +5,7 @@
 
 <?php $this->widget('bootstrap.widgets.BootNavbar', array(
     'fixed'=>false,
-    'brand'=>'<img src="http://fresh-i.ru/templates/skin/simple/images/logo.png">',
+    'brand'=>'<img src="css/img/logo.png">',
     'brandUrl'=>Yii::app()->homeUrl,
     'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(
@@ -36,7 +36,7 @@
             'items'=>array( 
             		'---',
             		//array('label' => '<img src="'.Yii::app()->request->baseUrl.'/uploads/userpic.gif" />' ),
-            		array('label' => "<img src='$src' class='userpic photo-border' alt='Личный кабинет' title='Личный кабинет' >",
+            		array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' >",
             			  'visible'=>!Yii::app()->user->isGuest, 'url'=> array('/account/view', 'id' => Yii::app()->user->getId()) ),
             		array('label'=> Yii::app()->user->name, //Account::model()->findByPk(Yii::app()->user->getId())->login,
                 	  'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array(

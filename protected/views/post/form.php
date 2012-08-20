@@ -1,6 +1,5 @@
 <?php Yii::app()->clientScript->registerScriptFile("js/createpost.js", CClientScript::POS_END); ?>
 <?php
-//Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js");
 Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.min.js", CClientScript::POS_END);
 Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js", CClientScript::POS_END);
 Yii::app()->clientScript->registerScriptFile("js/redactor/redactor/redactor.js", CClientScript::POS_END);
@@ -8,6 +7,8 @@ Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redacto
 Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
 Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CClientScript::POS_HEAD);
 Yii::app()->getClientScript()->registerCssFile('css/fileuploader/uploader.css');
+Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.damnUploader.js", CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScriptFile("js/uploadphoto.js", CClientScript::POS_HEAD);
 ?>
 
 <?php
@@ -17,6 +18,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'type' => 'horizontal span7',
     'enableAjaxValidation' => false,
     'enableClientValidation' => true,
+    'htmlOptions' => array('enctype' => 'multipart/form-data'),
     'clientOptions' => array(
         'validateOnChange' => true,
     #'validateOnSubmit'=>false,
@@ -74,7 +76,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 
 </fieldset>
 
-<div class="form-actions" style="padding-left: 10px;">
+<div class="form-actions span7" style="padding-left: 10px;">
     <div style="float:left;">
     <?php
         $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit',
@@ -114,6 +116,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
             'label' => 'На модерацию',
             'htmlOptions' => array(
                 'name'=>'approve',
+                'id'=>'submit-btn',
                 ),
         ));
         ?>
