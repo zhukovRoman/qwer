@@ -37,11 +37,25 @@
             ?> 
             <span id="spam-link-<?php echo $model->id; ?> ">
                 <?php
-                echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
-                    'type' => 'POST',
-                    'data' => "js:'id-comment='+$model->id",
-                    'update' => '#commentbody-' . $model->id,
-                ));
+                $this->widget('bootstrap.widgets.BootButton', array(
+                'buttonType' => 'button',
+                'type' => 'warning',
+                'size' => 'mini',
+                'label' => 'Спам',
+                'htmlOptions' => array(
+                    'ajax' => array(
+                        'type' => 'POST',
+                        'data' => "js:'id-comment='+$model->id",
+                        'url' => Yii::app()->createUrl('comment/spam'),
+                        'update' => '#commentbody-' . $model->id,
+                    ),
+                )
+            ));
+//                echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
+//                    'type' => 'POST',
+//                    'data' => "js:'id-comment='+$model->id",
+//                    'update' => '#commentbody-' . $model->id,
+//                ));
                 ?>
             </span>
 

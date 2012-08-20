@@ -259,6 +259,18 @@ class CommentController extends Controller {
         if (isset($_POST['delta']) && isset($_POST['id-comment'])) {
             //все параметры заданы
             $d = intval($_POST['delta']);
+            if ($d==0)
+            {
+                $return = array(
+                        'status' => "error",
+                        'description' => "Ошибка!",
+                        'id' => $comment_id,
+                    );
+                    echo json_encode($return);
+                    return;
+            }
+            $d = ($d < 0 )? -1 : 1;
+             
             $comment_id = intval($_POST['id-comment']);
             $comment = Comment::model()->findByPk($comment_id);
             if (($comment != NULL) &&

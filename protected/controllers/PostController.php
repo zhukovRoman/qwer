@@ -38,7 +38,7 @@ class PostController extends Controller {
                     'admin', 'delete',
                     'archive', 'restore',
                     'approve', 'Moderation',
-                    'Manage', 'approveTime'),
+                    'Manage', 'approveTime', 'Raiting'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -401,4 +401,77 @@ class PostController extends Controller {
         ));
     }
 
+    public function actionRaiting()
+    {
+       if ( !isset ($_POST['id-post']) || !isset ($_POST['delta']) || 
+                Yii::app()->user->isGuest) 
+       {
+           $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы!",
+                    );
+                    echo json_encode($return);
+                    return;
+       }
+       else{
+           $id = intval($_POST['id-post']);
+           $delta = intval($_POST['delta']);
+           if ($delta==0)
+           {
+               $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы!",
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+           $delta = ($delta<0) ? -1 : 1;
+           $post = Post::model()->findByPk($id);
+           if ($post==NULL)
+           {
+               $return = array(
+                        'status' => "error",
+                        'description' => "Такая статья не найдена!",
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+           else
+           {            
+              $user = Yii::app()->user->getId();
+              $post_id = $id;
+              if (PostRating::allreadyVote($user, $post_id)){
+                   $return = array(
+                        'status' => "error",
+                        'description' => "Вы уже голосовали",
+                    );
+                    echo json_encode($return);
+                    return;
+              }
+              else {
+                  if (PostRating::addNewItem($user, $delta, $post))
+                  {
+                      $return = array(
+                        'status' => "success",
+                        'description' => "Спасибо за Ваше голос!",
+                        'code' => $delta,
+                    );
+                    echo json_encode($return);
+                    return;
+                  }
+                  else {
+                      $return = array(
+                        'status' => "error",
+                        'description' => "Техническая ошибка!",
+                    );
+                    echo json_encode($return);
+                    return;
+                  }
+                  
+              }
+              
+              
+           }
+       }
+    }
 }

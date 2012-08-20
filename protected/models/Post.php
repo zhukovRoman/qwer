@@ -42,7 +42,10 @@
 class Post extends CActiveRecord {
 
     public $old_tags;
-
+    const APPROVE_STATUS = 5;
+    const DAYS_FOR_BEST = 5;
+    const COUNT_OF_DISSCUS = 5;
+    const DAYS_FOR_DISCUSS = 2;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -421,7 +424,32 @@ class Post extends CActiveRecord {
         }
         return array($for_delete, $for_add);
     }
-
+    
+    public static function getBest ()
+    {
+        $f = Post::DAYS_FOR_BEST;
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ("status_id=:status");
+        $criteria->addCondition ("time_moder > now() - interval '$f day'");
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                 );        
+        return Post::model()->findAll ($criteria);
+    }
+    
+    public static function getDiscussed()
+    {
+        $f = Post::DAYS_FOR_DISCUSS;
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ("status_id=:status");
+        $criteria->addCondition ("time_moder > now() - interval '$f day'");
+        $criteria->limit = Post::COUNT_OF_DISSCUS;
+        $criteria->order = 'comment_count DESC';
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                   // ':time'=> 2222 
+                                 );        
+        return Post::model()->findAll ($criteria);
+    }
+    
     public function afterSave() {
         parent::afterSave();
     }

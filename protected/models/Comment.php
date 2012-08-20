@@ -25,6 +25,7 @@
  */
 class Comment extends CActiveRecord {
 
+    
     static public function createNewComment($text, $parent, $post) {
         $comment = new Comment();
         $comment->text = $text;
@@ -69,6 +70,17 @@ class Comment extends CActiveRecord {
         return 'comment';
     }
 
+    public static function getBest ()
+    {
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ( "status_id=:status");
+        $criteria->addCondition ("time_moder < NOW()");
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                   // ':time'=> "now() - interval '5 day'" 
+                                 );        
+        return Post::model()->findAll ($criteria);
+    }
+    
     /**
      * @return array validation rules for model attributes.
      */

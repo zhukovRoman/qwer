@@ -1,36 +1,11 @@
-<?php $this->widget('zii.widgets.CListView', array(
+<?php 
+$carusel = $this->renderPartial('/post/best_carusel', array('best'=>Post::getBest(),), true);
+$this->widget('zii.widgets.CListView', array(
   'dataProvider'=>$dataProvider,
   'itemView'=>'_view',
   'itemsTagName'=>'ul',
   'cssFile'=>false,
   'ajaxUpdate'=>false,
   'baseScriptUrl'=>Yii::app()->request->baseUrl.'/js',
-  'template'=>'<div class="main-carousel carousel photo-border">
-                <div class="carousel-inner">
-                  <div class="active item">
-                    <img src="http://cs308728.userapi.com/v308728604/686/qRMuEdog46M.jpg" alt="">
-                    <div class="carousel-caption">
-                      <h4>First Thumbnail label</h4>
-                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-                  </div>
-                      <div class="item">
-                        <img src="http://cs10727.userapi.com/u4328604/-6/y_013aa6f5.jpg" alt="">
-                        <div class="carousel-caption">
-                          <h4>Second Thumbnail label</h4>
-                          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        </div>
-                      </div>
-                      <div class="item">
-                        <img src="http://cs11128.userapi.com/u4328604/-6/x_593c79c4.jpg" alt="">
-                        <div class="carousel-caption">
-                          <h4>Third Thumbnail label</h4>
-                          <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        </div>
-                      </div>
-                    </div>
-                    <a class="carousel-control left" href="#yw0" data-slide="prev">‹</a>
-                    <a class="carousel-control right" href="#yw0" data-slide="next">›</a>
-                  </div>
-                  {items}'
+  'template'=>"$carusel{items}",  
 )); ?>

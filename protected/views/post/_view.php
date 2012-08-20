@@ -1,13 +1,13 @@
 <li class="main-view content-border">
 	<div class="main-view-top">
 		<?php echo CHtml::link(CHtml::encode($data->title), 
-						array('view', 'id'=>$data->id));?>
+						array('/post/view', 'id'=>$data->id));?>
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).
 						"<div><span>".CHtml::encode(mb_substr($data->subtitle, 0, 150, 'utf-8')).'...'.
 									"</span></div>", 
-						array('view', 'id'=>$data->id)); 
+						array('/post/view', 'id'=>$data->id)); 
 		?>
 	</div>
 	<div class="main-view-bottom">

@@ -4,5 +4,5 @@
 
 <?php if ($model->subCat!=NULL) {echo " / ".
             CHtml::link($model->subCat->name, 
-                        Yii::app()->createUrl('category/view',
+                        Yii::app()->createUrl('category/subcatview',
                                     array ("id"=>$model->subCat->id))); }?>

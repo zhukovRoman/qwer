@@ -17,7 +17,7 @@
 
     <?php if ($model->parent_id != Null) { ?>
         <span onclick="js:showtree(<?php echo $model->id; ?>);" >↵</span>
-<?php } ?>  
+    <?php } ?>  
 
     <span id="vote-error-<?php echo $model->id; ?>" 
           style="display: none;">Ошибка!</span>
@@ -31,23 +31,24 @@
                 (Yii::app()->user->isGuest) ||
                 (Comment::alreadyVote(Yii::app()->user->getId(), $model->id))) {
             // показываем только оценки
-            echo $model->getRaiting();
+            echo CHtml::encode($model->getRaiting());
         } else {
+             echo CHtml::ajaxLink("+", Yii::app()->createUrl('comment/raiting'), array(
+                'type' => 'POST',
+                'data' => "js:'delta=1&id-comment='+$model->id",
+                'success' => 'js:function(data) {commentvotesuccess(data);}',
+                'error' => 'js:function(data) {commentvoteeror(data);}',
+            ));
+            
+            echo CHtml::encode($model->getRaiting());
+
             echo CHtml::ajaxLink("-", Yii::app()->createUrl('comment/raiting'), array(
                 'type' => 'POST',
                 'data' => "js:'delta=-1&id-comment='+$model->id",
                 'success' => 'js:function(data) {commentvotesuccess(data);}',
                 'error' => 'js:function(data) {commentvoteeror(data);}',
             ));
-
-            echo $model->getRaiting();
-
-            echo CHtml::ajaxLink("+", Yii::app()->createUrl('comment/raiting'), array(
-                'type' => 'POST',
-                'data' => "js:'delta=1&id-comment='+$model->id",
-                'success' => 'js:function(data) {commentvotesuccess(data);}',
-                'error' => 'js:function(data) {commentvoteeror(data);}',
-            ));
+           
         }
         ?>
 
