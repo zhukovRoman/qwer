@@ -1,18 +1,24 @@
 <?php 	
-	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js");
 	Yii::app()->getClientScript()->registerCssFile("js/datepicker/css/datepicker.css");
 				
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js", CClientScript::POS_END);
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js");
+	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js");
 	Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
 	//ntcn
-	Yii::app()->clientScript->registerScriptFile("js/crop.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/crop.js");
 ?>
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id'=>'horizontalForm',
     'type'=>'horizontal',
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>true,
+	'clientOptions'=>array(
+			'validateOnSubmit'=>true,
+			'validateOnChange'=>true,
+	),
 )); ?>
 	 
 <fieldset> 
@@ -23,33 +29,51 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	<?php if (!file_exists($path)) $src = Account::ACCOUNT_DIR . Account::DEFAULT_DIR . Account::AVATAR_NAME; else $src = $path ?>		
 
 		
-	<div class="row">  
+	  
 	<br>
 	 	<?php echo $form->textFieldRow($model, 'first_name'); ?>
 	 	<?php echo $form->textFieldRow($model, 'last_name'); ?>
 	 	<?php echo $form->radioButtonListRow($model, 'sex', array(1 => 'Мужской', 0 => 'Женский')); ?>
-	    <?php echo $form->textFieldRow($model, 'phone'); ?>
-	    
-	            <?php /* $this->widget('CMaskedTextField',array(
+  
+		<div class="control-group">
+			<label class="control-label"> <?php echo $model->getAttributeLabel('phone'); ?></label>
+			<div class="controls">	 
+				<span id ="dateselect">
+	            <?php $this->widget('CMaskedTextField',array(
         			'model' => $model,
         			'attribute' => 'phone',
         			'mask'=>'+7(999)999-9999',
-	           		'htmlOptions' => array('style'=>'display:none;')));*/ ?> 
+	            )); ?> 
+				</span>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label"> <?php echo $model->getAttributeLabel('birth_date'); ?></label>
+			<div class="controls">	 
+				<span id ="dateselect">
+					<?php $this->widget('ext.ActiveDateSelect', array(
+				   		'model'=>$model,
+				      	'attribute'=>'birth_date',
+				      	'reverse_years'=>true,
+				      	'field_order'=>'DMY',
+				      	'start_year'=>1910,
+					  	'field_separator' => '&nbsp;&nbsp;',
+				      	'end_year'=>date("Y",time()),
+				    	)
+					); ?>
+				</span>
+			</div>
+		</div>
+	    
+	    	    <?php  //$this->widget( 'ext.EChosen.EChosen' ); ?>
+	    
 	     
-	    <span id ="dateselect">
-			<?php /*$this->widget('ext.ActiveDateSelect', array(
-		   		'model'=>$model,
-		      	'attribute'=>'birth_date',
-				'name' => 'День Рождения',
-		      	'reverse_years'=>true,
-		      	'field_order'=>'DMY',
-		      	'start_year'=>1910,
-		      	//'prefix'=>' yhtyt',
-			  	//'field_separator' => '---',
-		      	'end_year'=>date("Y",time()),
-		    	)
-			);*/ ?>
-		</span>
+	     <?php /*$this->widget( 'ext.EChosen.EChosen', array(
+			  'target' => 'select',
+			  'useJQuery' => false,
+			  'debug' => true,
+			));*/ ?>
 	    
 <!-- 	    <div class="control-group ">
 	    	<label class="control-label" for="Account_phone">Phone</label>
@@ -58,7 +82,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	    	</div>
 	    </div> -->
 	    
-        <?php // echo $form->labelEx($model, 'phone'); ?>:
+        <?php // echo $form->labelEx($model, 'phone'); ?><!-- : -->
 
 	    
 	 <!--   <br><br>
@@ -75,8 +99,105 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	    
 	    <?php //echo $form->MaskTextField($model, 'phone', array('class'=>'span2', 'mask'=>'+7(999)999-9999')); ?>
 	    
-	    <?php echo $form->textFieldRow($model, 'vk_url'); ?>
-	 	<?php echo $form->textFieldRow($model, 'tw_url'); ?>
+	    <?php /*$this->widget('bootstrap.widgets.BootDetailView', array(
+		    		'data'=> $model,
+		    		'attributes'=> array(
+		    				array(
+		    						'label'=>$model->getAttributeLabel('vk_url'),
+		    						'type'=>'raw',
+		    						'value'=> CHtml::link(substr($model->fb_url, strrpos($model->fb_url, '/')+1), $model->fb_url),
+		    				),
+		    				array(
+		    						'label'=>$model->getAttributeLabel('fb_url'),
+		    						'type'=>'raw',
+		    						'value'=> CHtml::link(substr($model->fb_url, strrpos($model->fb_url, '/')+1), $model->fb_url),
+		    				),
+		    				array(
+		    						'label'=>$model->getAttributeLabel('fb_url'),
+		    						'type'=>'raw',
+		    						'value'=> CHtml::link(substr($model->fb_url, strrpos($model->fb_url, '/')+1), $model->fb_url),
+		    				),
+		    				array(
+		    						'label'=>$model->getAttributeLabel('fb_url'),
+		    						'type'=>'raw',
+		    						'value'=> CHtml::link(substr($model->fb_url, strrpos($model->fb_url, '/')+1), $model->fb_url),
+		    				),	
+		    		),
+		    	));
+	    */ ?>
+	    
+<!--  	    <div class="control-group">
+			<label class="control-label"> <?php /* echo $model->getAttributeLabel('vk_url'); ?></label>
+			<div class="controls">	 
+				<?php 
+				if (!empty($model->vk_id)) 
+				{
+					echo CHtml::link(substr($model->vk_url, strrpos($model->vk_url, '/')+1), $model->vk_url);
+					$this->widget('bootstrap.widgets.BootButton', array(
+										'label'=>'Обновить', 'type'=>'success', 'icon' => 'refresh',
+										'url' => Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_VKONTAKTE))));}
+				else
+				{
+					$this->widget('bootstrap.widgets.BootButton', array(
+										'label'=>'Привязать', 'type'=>'success', 'icon' => 'magnet',
+										'url' => Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_VKONTAKTE))));
+				}
+				?>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label"> <?php echo $model->getAttributeLabel('fb_url'); ?></label>
+			<div class="controls">	 
+				<?php 
+				if (!empty($model->fb_id)) 
+				{
+					echo CHtml::link(substr($model->fb_url, strrpos($model->fb_url, '/')+1), $model->fb_url);
+					$this->widget('bootstrap.widgets.BootButton', array(
+										'label'=>'Обновить', 'type'=>'success', 'icon' => 'refresh',
+										'url' => Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_FACEBOOK))));
+				}
+				else
+				{
+					$this->widget('bootstrap.widgets.BootButton', array(
+										'label'=>'Привязать', 'type'=>'success', 'icon' => 'magnet',
+										'url' => Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_FACEBOOK))));
+				}
+				?>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label"> <?php echo $model->getAttributeLabel('tw_url'); ?></label>
+			<div class="controls">	 
+				<?php 
+				if (!empty($model->tw_id)) 
+				{
+					echo CHtml::link(substr($model->tw_url, strrpos($model->tw_url, '/')+1), $model->tw_url);
+					$this->widget('bootstrap.widgets.BootButton', array(
+										'label'=>'Обновить', 'type'=>'success', 'icon' => 'refresh',
+										'url' => Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_TWITTER))));
+				}
+				else
+				{
+					$this->widget('bootstrap.widgets.BootButton', array(
+										'label'=>'Привязать', 'type'=>'success', 'icon' => 'magnet',
+										'url' => Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_TWITTER))));
+				}
+*/				?>
+			</div>
+		</div>
+-->	    
+	    <?php #echo $form->textFieldRow($model, 'vk_url'); ?>
+	    <?php #echo $form->textFieldRow($model, 'fb_url'); ?>
+	 	<?php #echo $form->textFieldRow($model, 'tw_url'); ?>
+	 	<?php #echo $form->textFieldRow($model, 'ok_url'); ?>
 	 	
 	 	<?php echo $form->textAreaRow($model, 'about', array('class'=>'span3', 'rows'=>5)); ?>
 	
@@ -96,7 +217,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 		
 		<?php echo Chtml::errorSummary($model); ?>
 		
-	</div>	
+
 	
 
 	

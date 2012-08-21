@@ -4,15 +4,15 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'type'=>'horizontal',
 )); ?>
 
-<fieldset> 
+<fieldset class="span9"> 
 	<legend><?php echo $model->login; ?></legend>
 
-<?php $this->widget('bootstrap.widgets.BootMenu', array(
+<?php /* $this->widget('bootstrap.widgets.BootMenu', array(
     'type'=>'list',
     'items'=>array(
         array('label'=>'Редактировать профиль', 'icon'=>'pencil', 'url'=>array('update', 'id'=>$model->id)),
     ),
-)); ?>
+));*/ ?>
 
 <?php $this->widget('bootstrap.widgets.BootMenu', array(
     'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
@@ -26,22 +26,21 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 )); ?>
 
 
-
-
 <div class="span3">	
 
 		<?php $path = Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME ; ?>
 		<?php $new_path = Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::NEW_AVATAR_NAME ; ?>
-		<?php if (!file_exists($path)) $src = Account::ACCOUNT_DIR . Account::DEFAULT_DIR . Account::AVATAR_NAME; else $src = $path ?>				
-		<?php echo "<img src='$src' style='width: 200px;' alt='Avatar'>"; ?>
+		<?php if (!file_exists($path)) $src = Account::ACCOUNT_DIR . Account::DEFAULT_DIR . Account::AVATAR_NAME; else $src = $path ?>
+		<img class="img-polaroid" src='<?php echo $src?>' style='width: 200px;' alt='Avatar'>
 	<p>
 		<?php $this->widget('bootstrap.widgets.BootMenu', array(
 		    'type'=>'list',
 		    'items'=>array(
-		    	array('label'=>'Изменить фотографию', 'url'=>'#', 'items'=>array(
-			        array('label'=>'Загрузить аватар', 'icon'=>'home', 'url'=>'#AvatarLoad', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',)),
-			        array('label'=>'Удалить аватар', 'icon'=>'book', 'url'=>'#AvatarDelete', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path))),
-			        array('label'=>'Редактировать юзерпик', 'icon'=>'pencil', 'url'=>'#UserPic', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path)),),
+		    	array('label'=>'Редактировать профиль', 'icon'=>'pencil', 'url'=>array('update', 'id'=>$model->id)),
+		    	array('label'=>'Изменить фотографию', 'icon' => 'camera','url'=>'#', 'items'=>array(
+			        array('label'=>'Обновить фотографию', 'icon'=>'arrow-up', 'url'=>'#AvatarLoad', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',)),
+			        array('label'=>'Удалить фотографию', 'icon'=>'remove', 'url'=>'#AvatarDelete', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path))),
+			        array('label'=>'Изменить миниатюру', 'icon'=>'move', 'url'=>'#UserPic', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path)),),
 		    	)),
 		    )
 		)); ?>
@@ -50,11 +49,13 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 
 <div class="span4">
 
+<?php $this->widget('bootstrap.widgets.BootAlert'); ?>
+
 <?php /* Формируем массивы для вывода информации о пользователе */
 
 	// 1. Заголовок (фамилия и имя пользователя)
 	$header = '';
-	if ( ($model->last_name !== '' ) or ($model->first_name !== '') )
+	if ( ($model->last_name != '' ) or ($model->first_name != '') )
 	{
 		$header .= '<hr style="margin:0px;">';
 		$header .= '<h1><em><small>' . $model->last_name.' '. $model->first_name . '</small></em></h1>';
@@ -68,11 +69,11 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 		array(
 			'label'=>$model->getAttributeLabel('birth_date'),
 			'type'=>'raw',
-			'value'=> date('d.m.Y', strtotime($model->birth_date)),
+			'value'=> Yii::app()->dateFormatter->format('d MMMM yyyy', strtotime($model->birth_date)),
 		));
 			
 	if (!empty($model->city_id))    array_push($personal, 'city_id');
-	if (!empty($model->sex))        array_push($personal, //'sex'); 
+	if (isset($model->sex))        array_push($personal, //'sex'); 
 	
 	array(
 			'label'=>$model->getAttributeLabel('sex'),
@@ -83,21 +84,135 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	if (!empty($model->about))      array_push($personal, 'about');
 	
 	// 3. Контактная информация
+	function setValue($model, $service)
+	{
+		switch($service)
+		{
+			/* ----------------------------------------------- */
+			case Account::SCENARIO_VKONTAKTE:
+				$label = $model->getAttributeLabel('vk_url');
+				$url = $model->vk_url;
+				$service_id = $model->vk_id;
+				
+				break;
+			/* ----------------------------------------------- */
+			case Account::SCENARIO_FACEBOOK:
+				$label = $model->getAttributeLabel('fb_url');
+				$url = $model->fb_url;
+				$service_id = $model->fb_id;		
+				
+				break;
+			/* ----------------------------------------------- */
+			case Account::SCENARIO_TWITTER:
+				$label = $model->getAttributeLabel('tw_url');
+				$url = $model->tw_url;
+				$service_id = $model->tw_id;
+				
+				break;
+			/* ----------------------------------------------- */
+			case Account::SCENARIO_ODNOKLASSNIKI:
+				$label = $model->getAttributeLabel('ok_url');
+				$url = $model->ok_url;
+				$service_id = $model->ok_id;
+				
+				break;
+		}
+		
+		$properties = array();
+		$properties['label'] = $label;
+		$properties['type'] = 'raw';
+		
+		if (!empty($url))
+		{
+			$link = CHtml::link(substr($url, strrpos($url, '/')+1), $url);
+			$icon = CHtml::link('<i class="icon-refresh"></i>', // Формировать!!!!!!!!
+								Yii::app()->createUrl('account/linking/', array('id'=>$model->id, 'service' => $service)), 
+								array('class' => 'update', 'rel'=> 'tooltip', 'data-original-title' => 'Изменить аккаунт')); // Формировать!!!!!!!! 
+			
+			$icon .= CHtml::link('<i class="icon-remove"></i>', // Формировать!!!!!!!!
+								 Yii::app()->createUrl('account/unlinking/', array('id'=>$model->id, 'service' => $service)),
+								 array('class' => 'delete', 'rel'=> 'tooltip', 'data-original-title' => 'Удалить аккаунт'));
+			
+			$properties['value'] =  $link . '<div style="float:right;">'.$icon.'</div>';
+		}
+		else
+		{
+			$link = CHtml::link('<i class="icon-magnet"></i> Привязать аккаунт',
+								Yii::app()->createUrl('account/linking/', array('id'=>$model->id, 'service' => $service)));
+			
+			$properties['value'] =  $link;
+		}
+			
+		return  $properties;
+	}
+	
 	$contacts = array();
 	if (!empty($model->phone))  array_push($contacts, 'phone');
-	if (!empty($model->vk_url)) array_push($contacts, //'vk_url');
-			array(
+	array_push($contacts, setValue($model, Account::SCENARIO_VKONTAKTE));
+	array_push($contacts, setValue($model, Account::SCENARIO_FACEBOOK));
+	array_push($contacts, setValue($model, Account::SCENARIO_TWITTER));
+	
+	/*if (!empty($model->vk_url)) array_push($contacts, setValue($model, Account::SCENARIO_VKONTAKTE)); //'vk_url'); setValue($model, $service)
+		/*	array(
 					'label'=>$model->getAttributeLabel('vk_url'),
 					'type'=>'raw',
-					'value'=> CHtml::link($model->vk_url, $model->vk_url),
+					'value'=> setValue($model, Account::SCENARIO_VKONTAKTE), /*CHtml::link(substr($model->vk_url, strrpos($model->vk_url, '/')+1), $model->vk_url)
+					//. CHtml::link(substr($model->vk_url, strrpos($model->vk_url, '/')+1), $model->vk_url, array('class' => 'icon-eye-open', 'icon' => 'magnet'))
+					//. CHtml::button('Button Text', array('submit' => array('controller/action')))
+					.'<a class="view" rel="tooltip" href="/cube/qwer/index.php?r=account/view&amp;id=99" data-original-title="Просмотреть"><i class="icon-eye-open"></i></a>'
+					. CHtml::link('<i class="icon-eye-open"></i>', "/cube/qwer/index.php?r=account/view&amp;id=99", array('class' => 'view', 'rel'=> "tooltip", 'data-original-title' => 'Просмотреть'))
+					. CHtml::link('<i class="icon-eye-open"></i>', "/cube/qwer/index.php?r=account/view&amp;id=99", array('class' => 'view', 'rel'=> "tooltip", 'data-original-title' => 'Просмотреть'))
+					. '<a class="update" rel="tooltip" href="/cube/qwer/index.php?r=account/update&amp;id=99" data-original-title="Редактировать"><i class="icon-pencil"></i></a>'
+			 ));*/
+	/*else array_push($contacts, //'vk_url');
+				array(
+						'label'=>$model->getAttributeLabel('vk_url'),
+						'type'=>'raw',
+						'value'=> CHtml::link('Привязать аккаунт', Yii::app()->createUrl('account/linking/', 
+												array('id'=>$model->id, 'service' => Account::SCENARIO_VKONTAKTE))),
+				));
+	
+	if (!empty($model->fb_url)) array_push($contacts,// 'fb_url');
+			array(
+					'label'=>$model->getAttributeLabel('fb_url'),
+					'type'=>'raw',
+					'value'=> CHtml::link(substr($model->fb_url, strrpos($model->fb_url, '/')+1), $model->fb_url),
+			));
+	else array_push($contacts, //'fb_url');
+			array(
+					'label'=>$model->getAttributeLabel('fb_url'),
+					'type'=>'raw',
+					'value'=> CHtml::link('Привязать аккаунт', Yii::app()->createUrl('account/linking/',
+							array('id'=>$model->id, 'service' => Account::SCENARIO_FACEBOOK))),
 			));
 	
 	if (!empty($model->tw_url)) array_push($contacts,// 'tw_url');
 			array(
 					'label'=>$model->getAttributeLabel('tw_url'),
 					'type'=>'raw',
-					'value'=> CHtml::link($model->tw_url, $model->tw_url),
+					'value'=> CHtml::link(substr($model->tw_url, strrpos($model->tw_url, '/')+1), $model->tw_url)
 			));
+	else array_push($contacts, //'tw_url');
+			array(
+					'label'=>$model->getAttributeLabel('tw_url'),
+					'type'=>'raw',
+					'value'=> CHtml::link('Привязать аккаунт', Yii::app()->createUrl('account/linking/',
+							array('id'=>$model->id, 'service' => Account::SCENARIO_TWITTER))),
+			));
+
+	if (!empty($model->ok_url)) array_push($contacts,// 'ok_url');
+			array(
+					'label'=>$model->getAttributeLabel('ok_url'),
+					'type'=>'raw',
+					'value'=> CHtml::link(substr($model->ok_url, strrpos($model->ok_url, '/')+1), $model->ok_url),
+			));
+	/*else array_push($contacts, //'ok_url');
+			array(
+					'label'=>$model->getAttributeLabel('ok_url'),
+					'type'=>'raw',
+					'value'=> CHtml::link('Привязать аккаунт', Yii::app()->createUrl('account/linking/',
+							array('id'=>$model->id, 'service' => Account::SCENARIO_ODNOKLASSNIKI))),
+			)); */
 	
 	// 4. Активность
 	$activity = array();
@@ -106,13 +221,13 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 			array(
 					'label'=>$model->getAttributeLabel('register_date'),
 					'type'=>'raw',
-					'value'=> date('H:m d.m.Y', strtotime($model->register_date)),
+					'value'=> Yii::app()->dateFormatter->format('d MMMM yyyy', strtotime($model->register_date)),//date('H:m d.m.Y', strtotime($model->register_date)),
 			));
 	if (!empty($model->last_login)) array_push($activity, //'last_login');
 			array(
 					'label'=>$model->getAttributeLabel('last_login'),
 					'type'=>'raw',
-					'value'=> date('H:m d.m.Y', strtotime($model->last_login)),
+					'value'=> Yii::app()->dateFormatter->format('HH:mm d MMMM yyyy', strtotime($model->last_login)),//date('H:m d.m.Y', strtotime($model->last_login)),
 			));
 ?>
 
@@ -141,7 +256,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 				'data'=>$model,
 				'attributes'=> $personal,
 				)); 
-			}
+		}
 		?>
 		
 		<h5>Контакты</h5>
@@ -243,18 +358,14 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 ?>
 
 <?php 	
-  Yii::app()->clientScript->registerScriptFile("js/vendor/jquery-ui.min.js", CClientScript::POS_END);
-  Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload.js", CClientScript::POS_END);
-  Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload-ui.js", CClientScript::POS_END);
-	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js");
 	Yii::app()->getClientScript()->registerCssFile("js/datepicker/css/datepicker.css");
 				
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js", CClientScript::POS_END);
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js");
+	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js");
 	Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
-  Yii::app()->getClientScript()->registerCssFile('css/fileuploader/jquery.fileupload-ui.css');
 	//ntcn
-	Yii::app()->clientScript->registerScriptFile("js/crop.js", CClientScript::POS_END);
+	Yii::app()->clientScript->registerScriptFile("js/crop.js");
 ?>	
 
 <!-- --------------------------------------------------------------------- -->
@@ -265,11 +376,15 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
  
 <div class="modal-header">
     <a class="close" data-dismiss="modal">&times;</a>
-    <h3>Загрузка аватара</h3>
+    <h3>Загрузка фотографии</h3>
 </div>
  
 <div class="modal-body">
-    <div id="UploadButton">
+	<div class="well">
+		Вы можете загрузить фотографию. Поддерживаются форматы JPG, PNG и GIF.
+	</div>
+
+    <div id="UploadButton" style="align:center;">
 	<?php
 		$id = $model->id;
 		$upload = new XUploadForm;
@@ -277,6 +392,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 			'url' => Yii::app()->createUrl('site/upload/', array('parent_id' =>$id ) ),
 			'model' => $upload,
 			'attribute' => 'file',
+			'multiple' => false,
 			'options'=>array(
 				'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) 
 				{		
@@ -370,7 +486,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 <?php $this->beginWidget('bootstrap.widgets.BootModal', array('id'=>'NewUserPic', )); ?>
  
 <div class="modal-header">
-    <a class="close" data-dismiss="modal" onclick="$('#NewUserPicClose').onclick ">&times;</a>
+    <a class="close" data-dismiss="modal" onclick='jQuery("#AvatarLoad").modal({"show": true});'>&times;</a>
     <h3>Изменение миниатюры</h3>
 </div>
  

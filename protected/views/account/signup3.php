@@ -3,8 +3,10 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	'id'=>'selectlogin-form',
 	'type'=>'horizontal',
 	'enableClientValidation'=>true,
+	'enableAjaxValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
+		'validateOnChange'=>true,
 	),
 )); ?>
 

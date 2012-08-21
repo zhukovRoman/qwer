@@ -119,7 +119,7 @@ class ActiveDateSelect extends CInputWidget
 		
 		list($name) = $this->resolveNameID();
 
-		$this->month_names_locale=Yii::app()->getLocale()->getMonthNames('wide',true);
+		$this->month_names_locale=Yii::app()->getLocale('ru')->getMonthNames('wide',true);
 		$this->time = $this->model[$this->attribute];
 		if(!isset($this->prefix) or empty($this->prefix)) $this->prefix = "";
 		if(!isset($this->start_year) or empty($this->start_year)) $this->start_year = strftime("%Y");

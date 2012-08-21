@@ -1,18 +1,22 @@
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
-    'id'=>'account-form',
+    'id'=>'passrecovery-form',
     'type'=>'horizontal',
+	'enableAjaxValidation'=>true,
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 			'validateOnSubmit'=>true,
+			'validateOnChange'=>true,
 	),
 )); ?>
 	 
 <fieldset> 
 	<legend>Восстановление пароля</legend>
+	
+	<p>Пожалуйста, введите адрес Вашей электронной почты.</p>
 
-	<br><p>Пожалуйста, введите адрес Вашей электронной почты.</p>
-
+	<?php //$this->widget('bootstrap.widgets.BootAlert'); ?>
+		
 	<?php echo $form->textFieldRow($model, 'mail'); ?>
 
     <div class="form-actions">

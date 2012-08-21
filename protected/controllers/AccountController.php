@@ -14,7 +14,7 @@ class AccountController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+			'accessControl',//'rights',// // perform access control for CRUD operations
 		);
 	}
 
@@ -28,7 +28,7 @@ class AccountController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','signup','activation','selectlogin','update','passrecovery','selectpass', 
-									'update', 'avatarload', 'avatardelete', 'userpic'),
+									'update', 'avatarload', 'avatardelete', 'userpic','admin', 'linking', 'unlinking'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -37,7 +37,7 @@ class AccountController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('@'),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -94,8 +94,9 @@ class AccountController extends Controller
 		if(isset($_POST['Account']))
 		{
 			$model->attributes=$_POST['Account'];
-			
+			ActiveDateSelect::sanitize($model, 'birth_date');
 		
+
 			//$model->first_name=$_POST['Account']['first_name'];
 			
 		/*	echo $model->scenario;
@@ -108,6 +109,8 @@ class AccountController extends Controller
 			
 			print_r($model->safeAttributeNames);
 			die();*/
+			
+			//print_r($model->birth_date);die();
 			
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
@@ -189,7 +192,7 @@ class AccountController extends Controller
 				// Сохранить полученные данные
 				// false нужен для того, чтобы не производить повторную проверку
 				$model->save(false);
-	
+				
 				// Отправляем письмо с активационным кодом
 				$this->sendActivationKey($model);
 				
@@ -233,6 +236,7 @@ class AccountController extends Controller
 					{
 						$model->status_id = $userId;		// Изменяем статус пользователя
 						$model->activate_key = 'activated'; // Убираем ключ из базы
+						$model->last_login = date('Y-m-d H:i:s');
 						$model->save();						// Сохраняем изменения
 					}
 					else 
@@ -282,7 +286,8 @@ class AccountController extends Controller
 				// Сохранить полученные данные
 				// false нужен для того, чтобы не производить повторную проверку
 				$model->save(false);
-		
+				Yii::app()->user->setState('name', $model->login);
+				
 				// Перенаправить на редактирование личных данных
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -296,6 +301,13 @@ class AccountController extends Controller
 	public function actionPassrecovery()
 	{
 		$model = new Account(Account::SCENARIO_PASSRECOVERY);
+		
+		// В случае запроса аякс-валидации
+		if(isset($_POST['ajax']) && $_POST['ajax']==='passrecovery-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
 		
 		if(isset($_POST['Account']))
 		{
@@ -315,6 +327,7 @@ class AccountController extends Controller
 					
 					$this->render('send_newpasskey');
 					return;
+					//Yii::app()->user->setFlash('success', "На указанный email было отправленно письмо для подтверждения регистрации!");
 				}
 				else
 				{
@@ -348,7 +361,8 @@ class AccountController extends Controller
 					
 					if ($model->validate())
 					{
-						$query->password = $model->hashPassword($model->password);
+						//$query->password = $model->hashPassword($model->password);
+						$query->password = crypt($model->password,  Randomness::blowfishSalt());
 						$query->newpass_key = 'recovered'; // Убираем ключ из базы
 						$query->save();
 						$this->render('pass_selected');
@@ -448,11 +462,148 @@ class AccountController extends Controller
 	public function actionAvatardelete($id)
 	{
 		$model = $this->loadModel($id);
+		$model->scenario = Account::SCENARIO_LINKING;
 		
 		if (file_exists(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME))
 			unlink(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME);
 		if (file_exists(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME))
 			unlink(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME);
+	}
+	
+	// Действие привязки сайта к аккаунту
+	public function actionLinking($id, $service)
+	{
+		$model = $this->loadModel($id); // !!! СЦЕНАРИЙ !!!  и валидация для него! (Уникальность)
+		$model->scenario = Account::SCENARIO_LINKING;
+		
+		if (isset($service))
+		{
+			
+			$authIdentity = Yii::app()->eauth->getIdentity($service);
+			$authIdentity->redirectUrl = Yii::app()->user->returnUrl;
+			$authIdentity->cancelUrl = Yii::app()->createAbsoluteUrl('site/login');
+		
+			if ($authIdentity->authenticate())
+			{
+				$identity = new EAuthUserIdentity($authIdentity);
+		
+				// успешная авторизация
+				if ($identity->authenticate())
+				{	
+					// Осуществляем привязку пользователя
+					switch($service)
+					{
+						/* ----------------------------------------------- */
+						case Account::SCENARIO_VKONTAKTE:
+							$account = Account::model()->findByAttributes(array ('vk_id' => $identity->getId()));
+							if (empty($account))
+							{
+								$model->vk_url = $authIdentity->getAttribute('url');
+								$model->vk_id = $identity->getId();
+							}
+							break;
+							/* ----------------------------------------------- */
+						case Account::SCENARIO_FACEBOOK:
+							$account = Account::model()->findByAttributes(array ('fb_id' => $identity->getId()));
+							if (empty($account))
+							{
+								$model->fb_url = $authIdentity->getAttribute('url');
+								$model->fb_id = $identity->getId();
+							}
+							break;
+							/* ----------------------------------------------- */
+						case Account::SCENARIO_TWITTER:
+							$account = Account::model()->findByAttributes(array ('tw_id' => $identity->getId()));
+							if (empty($account))
+							{
+								$model->tw_url = $authIdentity->getAttribute('url');
+								$model->tw_id = $identity->getId();
+							}
+							break;
+							/* ----------------------------------------------- */
+						case Account::SCENARIO_ODNOKLASSNIKI:
+							$account = Account::model()->findByAttributes(array ('ok_id' => $identity->getId()));
+							if (empty($account))
+							{
+								$model->ok_url = $authIdentity->getAttribute('url');
+								$model->ok_id = $identity->getId();
+							}
+							break;
+					}
+					// Выводим сообщение об ошибке
+					if (!empty($account))					
+						Yii::app()->user->setFlash('error', 'Ошибка! Аккаунт занят другим пользователем.');
+					else 
+					{
+						// Проверка данных
+						if($model->validate())
+						{
+							// Сохранить полученные данные
+							// false нужен для того, чтобы не производить повторную проверку
+							$model->save(false);
+						
+							// специальное перенаправления для корректного закрытия всплывающего окна
+							$authIdentity->redirect(array('view','id'=>$model->id));
+						}
+					}
+				}
+				else
+				{
+					// закрытие всплывающего окна и перенаправление на cancelUrl
+					$authIdentity->cancel();
+				}
+			}
+			// авторизация не удалась, перенаправляем на страницу входа
+			// $this->redirect(array('site/login'));
+		} 
+		// Вывести форму
+		$this->redirect(array('view','id'=>$model->id));//render('view', array('model'=>$model));	
+	}
+	
+	// Действие отвязки сайта от аккаунта
+	public function actionUnlinking($id, $service)
+	{
+		$model = $this->loadModel($id); // !!! СЦЕНАРИЙ !!!  и валидация для него! (Уникальность)
+		//$model->scenario = Account::SCENARIO_LINKING;
+	
+		if (isset($service))
+		{
+			switch($service)
+			{
+				/* ----------------------------------------------- */
+				case Account::SCENARIO_VKONTAKTE:
+					$model->vk_url = null;
+					$model->vk_id = null;
+					break;
+					/* ----------------------------------------------- */
+				case Account::SCENARIO_FACEBOOK:
+					$model->fb_url = null;
+					$model->fb_id = null;
+					break;
+					/* ----------------------------------------------- */
+				case Account::SCENARIO_TWITTER:
+					$model->tw_url = null;
+					$model->tw_id = null;
+					break;
+					/* ----------------------------------------------- */
+				case Account::SCENARIO_ODNOKLASSNIKI:
+					$model->ok_url = null;
+					$model->ok_id = null;
+					break;
+			}
+			// Проверка данных
+			if($model->validate())
+			{
+				// Сохранить полученные данные
+				// false нужен для того, чтобы не производить повторную проверку
+				$model->save(false);
+
+				// Направляем в профиль
+				$this->redirect(array('view','id'=>$model->id));
+			}
+		}
+
+		$this->render('update', array('model'=>$model));
 	}
 	
 	/**
@@ -493,20 +644,19 @@ class AccountController extends Controller
 		// Тема 
 		$subject = 'Регистрация';
 		
-		// Сообщение
-		$nameApp = Yii::app()->params['basePath'];//'http://iskuskov.klimgo.com';
-		$path = $nameApp . CController::CreateUrl('account/activation');
-		$link = $path.'&key='.$model->activate_key;
+		// Ссылки
+		$main = Yii::app()->createAbsoluteUrl('site/index');												// на главную страницу
+		$link = Yii::app()->createAbsoluteUrl('account/activation', array('key' =>$model->activate_key));	// на страницу активации
 
 		$message = "
 			<html>
 				<head><title>Регистрация</title></head>
 				<body>
-					Вы успешно зарегистрировались на портале <a href='.$nameApp.' target='_blank'>".Yii::app()->name."</a>
-					<br>Для завершения регистрации вам необходимо активировать аккаунт пройдя по <a href=".$link." target='_blank'>ссылке</a>
+					Вы успешно зарегистрировались на портале <a href='$main' target='_blank'>".Yii::app()->name."</a>
+					<br>Для завершения регистрации вам необходимо активировать аккаунт, пройдя по <a href=".$link." target='_blank'>ссылке</a>
 					
 					<br><br>
-					<i>С уважением, администрация <a href='.$nameApp.' target='_blank'>".Yii::app()->name."</a></i>
+					<i>С уважением, администрация <a href='$main' target='_blank'>".Yii::app()->name."</a></i>
 				</body>
 			</html>
 		";
@@ -534,20 +684,19 @@ class AccountController extends Controller
 		// Тема
 		$subject = 'Восстановление пароля';
 	
-		// Сообщение
-		$nameApp = 'http://iskuskov.klimgo.com';
-		$path = $nameApp . CController::CreateUrl('account/selectpass');
-		$link = $path.'&key='.$model->newpass_key;
+		// Ссылки
+		$main = Yii::app()->createAbsoluteUrl('site/index');												// на главную страницу
+		$link = Yii::app()->createAbsoluteUrl('account/selectpass', array('key' =>$model->newpass_key));	// на страницу восстановления
 		
 		$message = "
 			<html>
 				<head><title>Восстановление пароля</title></head>
 				<body>
-					Если Вы хотите сменить себе пароль на портале <a href='.$nameApp.' target='_blank'>".Yii::app()->name."</a>,
+					Если Вы хотите сменить себе пароль на портале <a href='$main' target='_blank'>".Yii::app()->name."</a>,
 					то перейдите по <a href=".$link." target='_blank'>данной ссылке</a>
 				
 					<br><br>
-					<i>С уважением, администрация <a href='.$nameApp.' target='_blank'>".Yii::app()->name."</a></i>
+					<i>С уважением, администрация <a href='$main' target='_blank'>".Yii::app()->name."</a></i>
 				</body>
 			</html>
 		";

@@ -2,6 +2,9 @@
 
 class SiteController extends Controller
 {
+	//public $authIdentity;
+	//public $identity;
+	
 	/**
 	 * Declares class-based actions.
 	 */
@@ -24,10 +27,10 @@ class SiteController extends Controller
 					'subfolderVar' => 'parent_id',
 					'path' => realpath(Yii::app() -> getBasePath() . '/../' . Account::ACCOUNT_DIR),
 			),
-                       
+                        
 		);
 	}
-
+	
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -76,27 +79,123 @@ class SiteController extends Controller
 	/**
 	 * Displays the login page
 	 */
-	public function actionLogin()
-	{
+	public function actionLogin($linkService = null)
+	{	
+		// 1. В случае входа для привязки аккаунта, выводим сообщение
+		$linking = Yii::app()->request->getQuery('linkService');	
+		if (isset($linking)) Yii::app()->user->setFlash('warning', 'Уважаемый пользователь! Для того, чтобы привязать аккаунт к уже существующему, войдите в него');
+		
+		// 2. Осуществляем AJAX-валидацию
 		$model=new LoginForm;
-
+		
 		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+		if(isset($_POST['ajax']) && ($_POST['ajax']==='window-login-form' || $_POST['ajax']==='modal-login-form' ))
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+		
+		// 3. Осуществляем аутентификацию через сторонние сервисы
+		$service = Yii::app()->request->getQuery('service');
+		
+		if (isset($service)) 
+		{
+			$authIdentity = Yii::app()->eauth->getIdentity($service);
+			$authIdentity->redirectUrl = Yii::app()->user->returnUrl;
+			$authIdentity->cancelUrl = Yii::app()->createAbsoluteUrl('site/login');
+		
+			if ($authIdentity->authenticate()) 
+			{				
+				$identity = new EAuthUserIdentity($authIdentity);
+		
+				// успешная авторизация
+				if ($identity->authenticate()) 
+				{
+					// Осуществляем поиск пользователя
+					switch($service)
+					{
+						/* ----------------------------------------------- */
+						case Account::SCENARIO_VKONTAKTE:
+							$account = Account::model()->findByAttributes(array ('vk_id' => $identity->getId()));
+							
+							break;
+							/* ----------------------------------------------- */
+						case Account::SCENARIO_FACEBOOK:
+							$account = Account::model()->findByAttributes(array ('fb_id' => $identity->getId()));
+							
+							break;
+							/* ----------------------------------------------- */
+						case Account::SCENARIO_TWITTER:
+							$account = Account::model()->findByAttributes(array ('tw_id' => $identity->getId()));
+							
+							break;
+							/* ----------------------------------------------- */
+						case Account::SCENARIO_ODNOKLASSNIKI:
+							$account = Account::model()->findByAttributes(array ('ok_id' => $identity->getId()));
+							
+							break;
+					}
+					// Если такой аккаунт не найден - регистрируем нового пользователя в системе
+					if (empty($account))
+					{	
+						// Выводим модальное окно с вопросом о существовании аккаунта
+						$authIdentity->redirect(Yii::app()->createUrl('site/newaccount', array('service' => $service)));
 
+						//$this->render('new_account');
+						//return;
+					}
+					// Логинимся
+					Yii::app()->user->login($identity);
+					Yii::app()->user->setId($account->id);
+					Yii::app()->user->setState('name', $account->login);
+					
+					// специальное перенаправления для корректного закрытия всплывающего окна	
+					if (!empty($linkService))
+					{
+						//echo $linkService; die();
+						$authIdentity->redirect(Yii::app()->createUrl('account/linking', array('id' => $account->id, 'service' => $linkService)));
+					}
+					$authIdentity->redirect(Yii::app()->createUrl('account/view', array('id' => $account->id)));//$this->createAbsoluteUrl('site/registration', array('identity' => $authIdentity)));
+				}
+				else 
+				{
+					// закрытие всплывающего окна и перенаправление на cancelUrl
+					$authIdentity->cancel();
+				}
+			}
+			// авторизация не удалась, перенаправляем на страницу входа
+			if (!empty($linkService)) 
+					$this->redirect(array('site/login', 'linkService' => $linkService));
+					else $this->redirect(array('site/login'));
+		}
+
+		
+		// 4. Осуществляем стандартную аутентификацию
 		// collect user input data
 		if(isset($_POST['LoginForm']))
 		{	
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+			{
+				//echo $linkService; die();
+				
+				if (!empty($linkService))
+					$this->redirect(Yii::app()->createUrl('account/linking', array('id' => Yii::app()->user->getId(), 'service' => $linkService)));
+				$this->redirect(Yii::app()->user->returnUrl);	
+			}
+			else
+			{
+				//Yii::app()->user->setFlash('login', 'Login error');
+				if (!empty($linkService)) 
+					$this->redirect(array('site/login', 'linkService' => $linkService));
+					else $this->redirect(array('site/login'));
+			}
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		 $this->render('login', array('model'=>$model, 'linkService' => $linkService));
+		//$this->renderPartial('modal_login', array('model'=>$model), false, true);
+		//$('#dialogLogin').modal('show'); 
 	}
 
 	/**
@@ -108,11 +207,130 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
-   /**
+	
+	public function actionNewAccount($service)
+	{
+		$this->render('new_account', array('service' => $service));
+	}
+	
+	public function actionRegistration($service) // $authIdentity, $identity ????????????????????
+	{
+		$authIdentity = Yii::app()->eauth->getIdentity($service);
+		$authIdentity->authenticate();
+		$identity = new EAuthUserIdentity($authIdentity);
+		$identity->authenticate();
+		
+		
+		// Регистрация
+		$account = new Account($service);
+		$account->mail = '';
+		$account->password = '';
+		$account->status_id = 3;
+		$account->register_date = date('Y-m-d H:i:s');
+		$account->last_login = date('Y-m-d H:i:s');
+		
+		switch($account->scenario)
+		{
+			/* ----------------------------------------------- */
+			case Account::SCENARIO_VKONTAKTE:
+				$account->setLogin($authIdentity->getAttribute('username'));				
+				$account->last_name = $authIdentity->getAttribute('last_name');
+				$account->first_name = $authIdentity->getAttribute('first_name');
+				$account->birth_date = $authIdentity->getAttribute('birth_date');
+				$account->sex = $authIdentity->getAttribute('gender');
+				$account->vk_url = $authIdentity->getAttribute('url');
+				$account->avatar_url = '200;200;0;0';
+				$account->vk_id = $identity->getId();
+				
+				$account->save(); 	// Сохраняем пользователя
+				
+				// Создаем пользователю личную папку
+				mkdir(Account::ACCOUNT_DIR . $account->id, 0777, true);
+				// Загружаем и сохраняем аватарку
+				Yii::app()->ih
+					->load($authIdentity->getAttribute('photo_big'))
+					->save(Account::ACCOUNT_DIR . $account->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME, IMG_JPEG, 100);
+				// Загружаем и сохраняем юзерпик
+				Yii::app()->ih
+					->load($authIdentity->getAttribute('photo_rec'))
+					->save(Account::ACCOUNT_DIR . $account->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME, IMG_JPEG, 100);
+
+				
+				break;
+				/* ----------------------------------------------- */
+			case Account::SCENARIO_FACEBOOK:
+				$account->setLogin($authIdentity->getAttribute('name'));
+				$account->last_name = $authIdentity->getAttribute('last_name');
+				$account->first_name = $authIdentity->getAttribute('first_name');
+				$account->birth_date = $authIdentity->getAttribute('birth_date');
+				$account->sex = $authIdentity->getAttribute('gender');
+				$account->fb_url = $authIdentity->getAttribute('url');
+				$account->avatar_url = '200;200;0;0';
+				$account->fb_id = $identity->getId();
+				
+				$account->save(); 	// Сохраняем пользователя
+				
+				// Создаем пользователю личную папку
+				mkdir(Account::ACCOUNT_DIR . $account->id, 0777, true);
+				// Загружаем и сохраняем аватарку
+				Yii::app()->ih
+					->load($authIdentity->getAttribute('picture'))
+					->save(Account::ACCOUNT_DIR . $account->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME, IMG_JPEG, 100);
+				// Загружаем и сохраняем юзерпик
+				Yii::app()->ih
+					->load($authIdentity->getAttribute('userpic'))
+					->save(Account::ACCOUNT_DIR . $account->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME, IMG_JPEG, 100);
+
+				break;
+				/* ----------------------------------------------- */
+			case Account::SCENARIO_TWITTER:
+				$account->setLogin($authIdentity->getAttribute('username'));
+				$account->last_name = $authIdentity->getAttribute('last_name');
+				$account->first_name = $authIdentity->getAttribute('first_name');
+				$account->tw_url = $authIdentity->getAttribute('url');
+				$account->avatar_url = '200;200;0;0';
+				$account->tw_id = $identity->getId();
+				
+				$account->save(); 	// Сохраняем пользователя
+				
+				// Создаем пользователю личную папку
+				mkdir(Account::ACCOUNT_DIR . $account->id, 0777, true);
+				// Загружаем и сохраняем аватарку
+				Yii::app()->ih
+					->load($authIdentity->getAttribute('picture'))
+				//	->thumb(200,200)
+					->save(Account::ACCOUNT_DIR . $account->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME, IMG_JPEG, 100);
+				// Загружаем и сохраняем юзерпик
+				Yii::app()->ih
+					->load($authIdentity->getAttribute('userpic'))
+					->save(Account::ACCOUNT_DIR . $account->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME, IMG_JPEG, 100);
+
+				break;
+				/* ----------------------------------------------- */
+			case Account::SCENARIO_ODNOKLASSNIKI:
+			
+				break;
+		}
+		$account->save();	
+
+		// Логинимся
+		Yii::app()->user->login($identity);
+		Yii::app()->user->setId($account->id);
+		Yii::app()->user->setState('name', $account->login);
+		
+		// Открываем профиль нового пользователя - Осуществляем подтверждение логина пользователя
+		$authIdentity->redirect(Yii::app()->createUrl('account/selectlogin', array('id' => $account->id)));
+	}
+	
+/*****************************************************************************/
+/*					Работа с изображениями и тому подобным					 */
+/*****************************************************************************/
+	
+	/**
      * @return void
      */
      public function actionCropAvatat()
-     {           
+    {           
 		/* Yii::import('ext.cropzoom.JCropZoom');
         $saveToFilePath = Yii::getPathOfAlias('webroot.uploads').DIRECTORY_SEPARATOR .'cropZoomTest';
        	JCropZoom::getHandler()->process($saveToFilePath.'.jpeg');    */  
@@ -168,7 +386,7 @@ class SiteController extends Controller
     }
     
     public function actionDeletePreview()
-     {        
+    {        
             $end = ".jpg";
             $crop = "_crop";
             $url = $_POST['params'];

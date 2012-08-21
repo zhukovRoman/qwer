@@ -107,6 +107,20 @@ class Account extends CActiveRecord
 	const SCENARIO_SELECTPASS = 'selectpass';
 	// Сценарий обновления профиля
 	const SCENARIO_UPDATE = 'update';
+	// Сценарий привязки аккаунтов
+	const SCENARIO_LINKING = 'linking';
+	/***************************************************************************/
+	/*             4. Описание констант сценариев для регистрациии             */
+	/***************************************************************************/
+	// ВКонтакте
+	const SCENARIO_VKONTAKTE = 'vkontakte';
+	// Facebook
+	const SCENARIO_FACEBOOK = 'facebook';
+	// Twitter
+	const SCENARIO_TWITTER = 'twitter';
+	// Одноклассники
+	const SCENARIO_ODNOKLASSNIKI = 'odnoklassniki';
+	
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -159,7 +173,7 @@ class Account extends CActiveRecord
 				// Пароль - обязательное поле
 				array('password', 'required', 'on'=>array(self::SCENARIO_SIGNUP, self::SCENARIO_SELECTPASS)),
 				// Длина пароля не менее 6 символов
-				array('password', 'length', 'min'=>6, 'max'=>30, 'on'=>array(self::SCENARIO_SIGNUP, self::SCENARIO_SELECTPASS)),
+				array('password', 'length', 'min'=>6, 'max'=>32, 'on'=>array(self::SCENARIO_SIGNUP, self::SCENARIO_SELECTPASS)),
 				
 				
 				/***************************************************************************/
@@ -167,13 +181,16 @@ class Account extends CActiveRecord
 				/***************************************************************************/
 				// Логин обязателен для сценария выбора логина
 				array('login', 'required', 'on'=>self::SCENARIO_SELECTLOGIN),
-				// Логин должен быть уникальным для сценария выбора логина
-				array('login', 'unique', 'on'=>self::SCENARIO_SELECTLOGIN),
+				// Логин должен быть уникальным для сценария выбора логина и сценария привязки аккаунта
+				array('login', 'unique', 'on'=>array(self::SCENARIO_SELECTLOGIN, self::SCENARIO_LINKING)),
 				// Длина логина должна быть в пределах от 5 до 30 символов для сценария выбора логина
 				array('login', 'length', 'min'=>5, 'max'=>30, 'on'=>self::SCENARIO_SELECTLOGIN),
 				// Логин должен соответствовать шаблону
 				array('login', 'match', 'pattern'=>'/^[A-z][\w]+$/', 'on'=>self::SCENARIO_SELECTLOGIN),
-				
+			//	'/^[A-Za-z0-9_]+$/u'
+			//	'/^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/'
+
+			//   array('login', 'match', 'pattern' => '/^[A-Za-z0-9А-Яа-я\s,]+$/u','message' => 'Логин содержит недопустимые символы.'),
 				
 				/***************************************************************************/
 				/*                       Сценарий обновления данных                        */
@@ -192,7 +209,8 @@ class Account extends CActiveRecord
 				// Номер города должен быть числовым значением для сценария обновления данных
 				array('city_id', 'numerical', 'on'=>self::SCENARIO_UPDATE),
 				// Дата рождения должна быть датой для сценария обновления данных
-				array('city_id', 'date', 'on'=>self::SCENARIO_UPDATE),
+				//array('birth_date', 'date', 'on'=>self::SCENARIO_UPDATE),
+				array('birth_date', 'safe', 'on'=>self::SCENARIO_UPDATE),
 				// Длина номера телефона должна быть 15-16 символов ( +__(xxx)yyy-zzzz ) для сценария обновления данных
 				array('phone', 'length', 'min'=>15, 'max'=>17, 'on'=>self::SCENARIO_UPDATE),
 				// Длина поля "Обо мне" должна быть в пределах от 2 до 255 символов для сценария обновления данных
@@ -202,9 +220,19 @@ class Account extends CActiveRecord
 				// Ссылка на аккаунт twitter.com должна быть корректной ссылкой для сценария обновления данных
 				array('tw_url', 'url', 'on'=>self::SCENARIO_UPDATE),
 				
+				
+				//array('birth_date', 'date', 'format' => array('d', 'MM','YYYY'), 'on'=>self::SCENARIO_UPDATE),
+				
 				// Ссылка на аватар должна быть корректной ссылкой для сценария обновления данных
 				//array('avatar_url', 'url', 'on'=>self::SCENARIO_UPDATE),
 				
+				/***************************************************************************/
+				/*                       Сценарий привязки аккаунтов                       */
+				/***************************************************************************/
+				// Идентификаторы в социальных сетях должны быть уникальными
+				array('vk_id, fb_id, tw_id, ok_id', 'unique', 'on'=>self::SCENARIO_LINKING),
+				// Ссылки на социальные сети должны быть уникальными
+				array('vk_url, fb_url, tw_url, ok_url', 'unique', 'on'=>self::SCENARIO_LINKING),
 				
 				
 				array('id, login, password, mail, avatar_url, first_name, last_name, 
@@ -318,7 +346,9 @@ class Account extends CActiveRecord
 			'badge' => 'Badge',
 			
 			'vk_url' => 'ВКонтакте',//'Vk Url',
+			'fb_url' => 'Facebook',
 			'tw_url' => 'Twitter',//'Tw Url',
+			'ok_url' => 'Одноклассники',
 			
 			'post_count' => 'Post Count',
 			'comment_count' => 'Comment Count',
@@ -341,7 +371,7 @@ class Account extends CActiveRecord
 	{		
 		return array('avatar_url', 'first_name', 'last_name', 'sex', 
 				     'country_id', 'region_id', 'city_id', 'birth_date', 
-				     'phone', 'about', 'vk_url', 'tw_url');
+				     'phone', 'about', 'vk_url', 'fb_url', 'tw_url', 'ok_url');
 				    // 'on'=>self::SCENARIO_UPDATE);
 			    
 		return array('mail', 'password', 'on'=>self::SCENARIO_SIGNUP);
@@ -402,23 +432,57 @@ class Account extends CActiveRecord
 				* @property integer $badge
 
 			*/
-
-				// Логин			
-				$this->login = $this->setLogin($this->mail);				
 			
-				// Пароль - хэшируем
-				$this->password = $this->hashPassword($this->password);
-				
-				// Время регистрации
-				$this->register_date = date('Y-m-d H:i:s');
-
-				// Статус - присваиваем статус пользователя - не активированный
-				$this->status_id = UserStatus::model()->findByAttributes(array ('name' => Account::ROLE_NOTACTIVATED))->id;;
-				
-				// Активационный код
-				$this->activate_key = md5(time().$this->mail);
-				
-				// Аватарка 
+				switch($this->scenario)
+				{
+				/* ----------------------------------------------- */
+					case Account::SCENARIO_SIGNUP:
+						// Адрес электронной почты - приводим  нижнему регистру
+						$this->mail = strtolower($this->mail);
+						
+						// Логин
+						$mass = split("@", $this->mail);
+						//$this->login = 
+						$this->setLogin($mass[0]);
+						
+						// Время регистрации
+						$this->register_date = date('Y-m-d H:i:s');
+						
+						// Пароль - хэшируем
+						$pass = $this->password;
+						$salt = $this->mail . $this->register_date;
+						$commonSalt = Yii::app()->params['commonSalt'];
+						//$this->password = $this->hashPassword( md5($pass) . md5($salt) . md5($commonSalt) );
+						$this->password = crypt($this->password,  Randomness::blowfishSalt());
+						
+						// Статус - присваиваем статус пользователя - не активированный
+						$this->status_id = UserStatus::model()->findByAttributes(array ('name' => Account::ROLE_NOTACTIVATED))->id;;
+						
+						// Активационный код
+						$this->activate_key = md5(time().$this->mail);
+						
+						// Пол
+						$this->sex = NULL;
+						
+						break;
+					
+					/* ----------------------------------------------- */
+					case Account::SCENARIO_VKONTAKTE:
+						
+						break;
+					/* ----------------------------------------------- */
+					case Account::SCENARIO_FACEBOOK:
+						
+						break;
+					/* ----------------------------------------------- */
+					case Account::SCENARIO_TWITTER:
+						
+						break;
+					/* ----------------------------------------------- */
+					case Account::SCENARIO_ODNOKLASSNIKI:
+						
+						break;
+				}
 			}
 	
 			return true;
@@ -427,7 +491,21 @@ class Account extends CActiveRecord
 		return false;
 	}
 	
-	public function setLogin($email)
+	public function setLogin($login)
+	{
+		$i = 0; // Счетчик
+		$newLogin = $login;
+		
+		while (Account::model()->findByAttributes(array ('login' => $newLogin)))
+		{
+			$i++;
+			$newLogin = $login . $i;
+		}
+		//return $newLogin;
+		$this->login = $newLogin;
+	}
+	
+/*	public function setLogin($email)
 	{		
 		$mass = split("@", $email);
 		$i = 0; // Счетчик
@@ -439,9 +517,9 @@ class Account extends CActiveRecord
 			$newLogin = $mass[0] . $i;  	
 		}
 		return $newLogin;
-	}
+	}*/
 	
-	public function validatePassword($password)
+/*	public function validatePassword($password)
 	{
 		return $this->hashPassword($password)===$this->password;
 	}
@@ -449,8 +527,18 @@ class Account extends CActiveRecord
 	public function hashPassword($password)
 	{
 		return md5($password);
-	}
+	}*/
+	/**
+	 * Checks if the given password is correct.
+	 * @param string the password to be validated
+	 * @return boolean whether the password is valid
+	 */
 	
+	public function validatePassword($password, $bf_hash)
+	{
+		return crypt($password, $bf_hash) === $bf_hash;
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -487,7 +575,9 @@ class Account extends CActiveRecord
 		$criteria->compare('referral',$this->referral,true);
 		$criteria->compare('badge',$this->badge);
 		$criteria->compare('vk_url',$this->vk_url,true);
+		$criteria->compare('fb_url',$this->tw_url,true);
 		$criteria->compare('tw_url',$this->tw_url,true);
+		$criteria->compare('ok_url',$this->tw_url,true);
 		$criteria->compare('post_count',$this->post_count);
 		$criteria->compare('comment_count',$this->comment_count);
 		$criteria->compare('friend_count',$this->friend_count);
