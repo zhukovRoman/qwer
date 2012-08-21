@@ -1,6 +1,8 @@
-<div class="icons">
 <i class="icon-user" rel="tooltip" title="автор"></i>
-<b><?php echo CHtml::encode($model->author->login);?></b>
+<b><?php echo CHtml::link($model->author->login, 
+    Yii::app()->createUrl('account/view',
+    array ("id"=>$model->author->id)), array('class'=>'gray-a')); ?>
+</b>
 <i class="icon-time" rel="tooltip" title="дата публикации"></i>
 <?php echo date ("d/m/Y", strtotime($model->time_add));?>
 <i class="icon-star" rel="tooltip" title="рейтинг"></i>
@@ -37,4 +39,4 @@ else {
 }
 ?>
 <?php echo  $model->favourite_count;?>
-</div>
+
