@@ -26,13 +26,12 @@
       <?php include "protected/views/site/header.php";?>
     </div>
     <div class="main row">
-      <div class="ads">
-            <?php include "protected/views/site/left.php";?>
-          </div>
-        <div class="span12">
+        <div class="span10">
           <?php echo $content;?>
         </div>
-        
+        <div class="ads">
+          <?php include "protected/views/site/left.php";?>
+        </div>
         <div class="arrow-up black-a"><i class=" icon-arrow-up"></i></div>
     </div>
     <div class="footer">

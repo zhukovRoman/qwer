@@ -1,8 +1,15 @@
 /* общие */
 .ads {
+  width: 190px;
+ /* position: absolute;*/
+ /* left: 0;*/
+/*  margin-left: 20px;*/
+float: left;
+margin-left: -20px;
+}
+.left-column {
   width: 200px;
-  position: absolute;
-  left: 0;
+  position: relative;
 }
 html, body {
   /*background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
@@ -18,9 +25,9 @@ a.promo-link {
   width: 100%;
   height: 100%;
 }
-#content {
+/*#content {
   padding-left: 225px;
-}
+}*/
 body {
   min-height: 100%;
   height: auto !important;
@@ -29,8 +36,9 @@ body {
 }
 .main {
   padding: 10px 0 150px;
-  margin-left: -20px;
+  /*margin-left: -20px;*/
   min-height: 300px;
+  margin-left: -32px;
 }
 .footer {
   color: white;
@@ -47,7 +55,7 @@ body {
   position: relative; 
   /* z-index: 1;*/
   /*margin-top: 210px;*/
-  padding: 0 10px;
+  padding: 0 20px;
   background: white;
   box-shadow: 10px -5px 15px rgba(0,0,0,0.4);
 }
@@ -178,9 +186,8 @@ a.menu:after, .dropdown-toggle:after {
 }
 .userpic {
   position: absolute;
-  margin-left: -50px;
+  margin-left: -55px;
   margin-top: -27px;
-  padding:0;
   width: 50px;
   height: 50px;
   left: 20px;
@@ -190,12 +197,12 @@ a.menu:after, .dropdown-toggle:after {
   padding: 3px 5px;
   margin: 0;
 }
-/*.nav-head >li >a {*/
-  /*color: white;*/
-/*}*/
+.nav-head >li >a {
+  color: white;
+}
 .nav-pills {
-  margin-left: -10px;
-  padding: 9px 10px;
+  margin-left: -20px;
+  padding: 9px 20px;
 }
 .navbar {
   margin: 30px 0 0 0;
