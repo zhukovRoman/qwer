@@ -9,10 +9,11 @@
         <div class="comment_text" >
             <?php
             if ($model->status_id == 2) {
-                echo CHtml::encode('Коммнетарий удален');
+                echo "<div style='color:red'> Коммнетарий удален </div>";
+                echo Chtml::encode($model->text);
             }
             if ($model->status_id == 3) {
-                echo CHtml::encode('Спам!');
+                echo CHtml::encode('Здесь был спам!');
             }
             if ($model->status_id == 1 || $model->status_id == 4) {
                      echo CHtml::encode($model->text);

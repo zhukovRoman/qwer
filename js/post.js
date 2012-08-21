@@ -14,9 +14,29 @@ function postvotesuccess(data)
     }
 }
 
-function postvoteeror ()
+function posterror ()
 {
     notify('Ошибка! Попробуйте позже.', 'error');
 }
 
+
+function postfavsuccess(data)
+{
+    var resp = $.parseJSON(data);
+  
+    if (resp.status=='error')
+    {
+        notify(resp.description, 'error');
+    }
+    else 
+    {
+        if (resp.direction=='in')
+        {    
+            notify(resp.description, 'success');
+        }
+        else {
+            notify(resp.description, 'success');
+        }
+    }   
+}
 

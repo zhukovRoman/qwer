@@ -9,7 +9,7 @@
         'type' => 'POST',
         'data' => "js:'delta=1&id-post='+$model->id",
         'success' => 'js:function(data) {postvotesuccess(data);}',
-        'error' => 'js:function(data) {postvoteeror();}',
+        'error' => 'js:function(data) {posterror();}',
     ));
 
     echo CHtml::encode($model->getRaiting());
@@ -18,7 +18,7 @@
         'type' => 'POST',
         'data' => "js:'delta=-1&id-post='+$model->id",
         'success' => 'js:function(data) {postvotesuccess(data);}',
-        'error' => 'js:function(data) {postvoteeror();}',
+        'error' => 'js:function(data) {posterror();}',
     ));
     }
     else {

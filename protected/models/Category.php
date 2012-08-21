@@ -96,4 +96,14 @@ class Category extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getSubCats($cat)
+        {
+            return Category::model()->findAll('parent_id=:sel', array(':sel' => $cat->id));
+        }
+        
+        public function getParent($cat)
+        {
+            return Category::model()->findByPk($cat->parent_id);
+        }
 }

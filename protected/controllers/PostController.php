@@ -38,7 +38,7 @@ class PostController extends Controller {
                     'admin', 'delete',
                     'archive', 'restore',
                     'approve', 'Moderation',
-                    'Manage', 'approveTime', 'Raiting'),
+                    'Manage', 'approveTime', 'Raiting', 'Favorite'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -437,9 +437,10 @@ class PostController extends Controller {
                     return;
            }
            else
-           {            
+           {   
               $user = Yii::app()->user->getId();
               $post_id = $id;
+              
               if (PostRating::allreadyVote($user, $post_id)){
                    $return = array(
                         'status' => "error",
@@ -449,7 +450,8 @@ class PostController extends Controller {
                     return;
               }
               else {
-                  if (PostRating::addNewItem($user, $delta, $post))
+                  
+                  if (PostRating::addNewItem( $delta, $post))
                   {
                       if ($delta>0) $post->positive_vote_count++;
                       $post->all_vote_count++;
@@ -505,7 +507,60 @@ class PostController extends Controller {
        } 
        
        // проверить есть ли в избранном.
-       
+       $fav = Post::inFavorite($id);
+       if (!$fav)
+       {
+//        статьи нет в избранном
+            $fav = new Favourites();
+            $fav->post_id = $id;
+            $fav->user_id = Yii::app()->user->getId();
+            $fav->status = 1;
+            $fav->time_add = date ("Y-m-d H:i:s");
+            
+           //if (true)
+            if ($fav->save())
+            {
+                $return = array(
+                        'status' => "success",
+                        'description' => "Статья добавлена в избранное!",
+                        'direction' => "in"
+                    );
+                    echo json_encode($return);
+                    return;
+            }
+            else 
+            {
+                $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы корректно!",
+                    );
+                    echo json_encode($return);
+                    return;
+            }
+       }
+       else {
+//         статьи есть в избранном
+           if ($fav->delete())
+           {
+               $return = array(
+                        'status' => "success",
+                        'description' => "Статья удалена из избранного!",
+                        'direction' => "out"
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+           else {
+               $return = array(
+                        'status' => "error",
+                        'description' => "Статья не была добавлена в избранное!",
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+               
+           
+       }
        
     }
 }

@@ -95,7 +95,7 @@ class Comment extends CActiveRecord {
             'tooLong' => 'Длинна комментария должна быть больше 2 и меньше 500 символов',
             'tooShort' => 'Длинна комментария должна быть больше 2 и меньше 500 символов',
         ),
-        array('text', 'required'),
+        //array('text', 'required'),
         // The following rule is used by search().
         // Please remove those attributes that should not be searched.
         array('id, author_id, post_id, parent_id, 

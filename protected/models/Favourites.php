@@ -1,27 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "post_rating".
+ * This is the model class for table "public.favourites".
  *
- * The followings are the available columns in table 'post_rating':
- * @property string $id
+ * The followings are the available columns in table 'public.favourites':
+ * @property integer $id
+ * @property integer $post_id
  * @property integer $user_id
- * @property integer $author_id
- * @property string $post_id
  * @property string $time_add
- * @property integer $delta
+ * @property integer $status
  *
  * The followings are the available model relations:
  * @property Post $post
  * @property Account $user
- * @property Account $author
  */
-class PostRating extends CActiveRecord
+class Favourites extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return PostRating the static model class
+	 * @return Favourites the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -33,7 +31,7 @@ class PostRating extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'post_rating';
+		return 'public.favourites';
 	}
 
 	/**
@@ -44,11 +42,11 @@ class PostRating extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, author_id, post_id, time_add, delta', 'required'),
-			array('user_id, author_id, delta', 'numerical', 'integerOnly'=>true),
+			array('post_id, user_id, time_add, status', 'required'),
+			array('post_id, user_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, author_id, post_id, time_add, delta', 'safe', 'on'=>'search'),
+			array('id, post_id, user_id, time_add, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +60,6 @@ class PostRating extends CActiveRecord
 		return array(
 			'post' => array(self::BELONGS_TO, 'Post', 'post_id'),
 			'user' => array(self::BELONGS_TO, 'Account', 'user_id'),
-			'author' => array(self::BELONGS_TO, 'Account', 'author_id'),
 		);
 	}
 
@@ -73,11 +70,10 @@ class PostRating extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'user_id' => 'User',
-			'author_id' => 'Author',
 			'post_id' => 'Post',
+			'user_id' => 'User',
 			'time_add' => 'Time Add',
-			'delta' => 'Delta',
+			'status' => 'Status',
 		);
 	}
 
@@ -92,39 +88,14 @@ class PostRating extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('post_id',$this->post_id);
 		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('author_id',$this->author_id);
-		$criteria->compare('post_id',$this->post_id,true);
 		$criteria->compare('time_add',$this->time_add,true);
-		$criteria->compare('delta',$this->delta);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-        
-        public static function allreadyVote($user, $post_id)
-        {
-            $user = Yii::app()->user->getId();
-            $criteria = new CDbCriteria;
-            $criteria->addCondition("post_id=:id");
-            $criteria->addCondition("user_id=:user");
-            $criteria->params = array(':id' => $post_id, ':user' => $user);
-            $c = PostRating::model()->find($criteria);
-            return ($c == null) ? false : true;
-        }
-        
-        public static function addNewItem ($d, $post)
-        {
-            $model = new PostRating();
-            $model->user_id = Yii::app()->user->getId();
-            $model->author_id = $post->author_id;
-            $model->post_id = $post->id;
-            $model->time_add = date('Y-m-d H:i:s');
-            $model->delta = $d;
-            return ($model->save(false)) ? $model : false;
-            
-            
-        }
 }

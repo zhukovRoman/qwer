@@ -211,7 +211,7 @@ class Post extends CActiveRecord {
         $z = 1.96;
         $p = $this->positive_vote_count / $this->all_vote_count;
         $n = $this->all_vote_count;
-        return ($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n) ;
+        return round(($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n), 2)*10 ;
     }
 
     /**
@@ -619,14 +619,15 @@ class Post extends CActiveRecord {
                 ));
     }
 
-    public static function inFavorite($user, $post_id)
-        {
-           
+    public static function inFavorite($post_id)
+        { 
+            $user = Yii::app()->user->getId();
             $criteria = new CDbCriteria;
             $criteria->addCondition("post_id=:id");
             $criteria->addCondition("user_id=:user");
             $criteria->params = array(':id' => $post_id, ':user' => $user);
-            $c = PostRating::model()->find($criteria);
-            return ($c == null) ? false : true;
+            $c = Favourites::model()->find($criteria);
+            return ($c == null) ? false : $c;
+           
         }
 }
