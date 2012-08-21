@@ -1,20 +1,6 @@
-<!-- .crumbs -->
-<?php $this->renderPartial('_crumbs',array(
+<?php $this->renderPartial('view_header',array(
   'model'=>$model,
 )); ?>
-<!-- /.crumbs -->
-<br>
-<!-- .moderate -->
-<?php $this->renderPartial('_moderate',array(
-  'model'=>$model,
-)); ?>
-<!-- /.moderate -->
-<!-- .article-title -->
-<div class="article">
-<?php $this->renderPartial('_article_title',array(
-  'model'=>$model,
-)); ?>
-<!-- .article-title -->
 <br>
 <div class="span8">
     <?php
@@ -41,18 +27,6 @@
 <div class="article-content content-border span8">
     <?php echo CHtml::decode($model->text); ?>
 </div>
-<div style="clear:both"></div>
-<hr>
-<!-- .icons -->
-<?php $this->renderPartial('_icons',array(
+<?php $this->renderPartial('view_footer',array(
   'model'=>$model,
 )); ?>
-<!-- /.icons -->
-<!-- .article-tags -->
-<?php $this->renderPartial('_tags',array(
-  'model'=>$model,
-)); ?>
-<!-- /.article-tags -->
-</div>
-<br>
-Блок поделиться? лайки <br>

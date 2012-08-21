@@ -1,24 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "public.favourites".
  *
- * The followings are the available columns in table 'category':
+ * The followings are the available columns in table 'public.favourites':
  * @property integer $id
- * @property integer $parent_id
- * @property string $name
- * @property integer $order
+ * @property integer $post_id
+ * @property integer $user_id
+ * @property string $time_add
+ * @property integer $status
  *
  * The followings are the available model relations:
- * @property Post[] $posts
- * @property Post[] $posts1
+ * @property Post $post
+ * @property Account $user
  */
-class Category extends CActiveRecord
+class Favourites extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Category the static model class
+	 * @return Favourites the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +31,7 @@ class Category extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'category';
+		return 'public.favourites';
 	}
 
 	/**
@@ -41,12 +42,11 @@ class Category extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('parent_id, order', 'required'),
-			array('parent_id, order', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>50),
+			array('post_id, user_id, time_add, status', 'required'),
+			array('post_id, user_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, parent_id, name, order', 'safe', 'on'=>'search'),
+			array('id, post_id, user_id, time_add, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,8 +58,8 @@ class Category extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'posts' => array(self::HAS_MANY, 'Post', 'category_id'),
-			'posts1' => array(self::HAS_MANY, 'Post', 'sub_cat_id'),
+			'post' => array(self::BELONGS_TO, 'Post', 'post_id'),
+			'user' => array(self::BELONGS_TO, 'Account', 'user_id'),
 		);
 	}
 
@@ -70,9 +70,10 @@ class Category extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'parent_id' => 'Parent',
-			'name' => 'Name',
-			'order' => 'Order',
+			'post_id' => 'Post',
+			'user_id' => 'User',
+			'time_add' => 'Time Add',
+			'status' => 'Status',
 		);
 	}
 
@@ -88,22 +89,13 @@ class Category extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('parent_id',$this->parent_id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('order',$this->order);
+		$criteria->compare('post_id',$this->post_id);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('time_add',$this->time_add,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-        
-        public function getSubCats($cat)
-        {
-            return Category::model()->findAll('parent_id=:sel', array(':sel' => $cat->id));
-        }
-        
-        public function getParent($cat)
-        {
-            return Category::model()->findByPk($cat->parent_id);
-        }
 }

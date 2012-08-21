@@ -9,10 +9,11 @@
         <div class="comment_text" >
             <?php
             if ($model->status_id == 2) {
-                echo CHtml::encode('Коммнетарий удален');
+                echo "<div style='color:red'> Коммнетарий удален </div>";
+                echo Chtml::encode($model->text);
             }
             if ($model->status_id == 3) {
-                echo CHtml::encode('Спам!');
+                echo CHtml::encode('Здесь был спам!');
             }
             if ($model->status_id == 1 || $model->status_id == 4) {
                      echo CHtml::encode($model->text);
@@ -37,11 +38,25 @@
             ?> 
             <span id="spam-link-<?php echo $model->id; ?> ">
                 <?php
-                echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
-                    'type' => 'POST',
-                    'data' => "js:'id-comment='+$model->id",
-                    'update' => '#commentbody-' . $model->id,
-                ));
+                $this->widget('bootstrap.widgets.BootButton', array(
+                'buttonType' => 'button',
+                'type' => 'warning',
+                'size' => 'mini',
+                'label' => 'Спам',
+                'htmlOptions' => array(
+                    'ajax' => array(
+                        'type' => 'POST',
+                        'data' => "js:'id-comment='+$model->id",
+                        'url' => Yii::app()->createUrl('comment/spam'),
+                        'update' => '#commentbody-' . $model->id,
+                    ),
+                )
+            ));
+//                echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
+//                    'type' => 'POST',
+//                    'data' => "js:'id-comment='+$model->id",
+//                    'update' => '#commentbody-' . $model->id,
+//                ));
                 ?>
             </span>
 

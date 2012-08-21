@@ -38,7 +38,7 @@ class PostController extends Controller {
                     'admin', 'delete',
                     'archive', 'restore',
                     'approve', 'Moderation',
-                    'Manage', 'approveTime'),
+                    'Manage', 'approveTime', 'Raiting', 'Favorite'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -401,4 +401,166 @@ class PostController extends Controller {
         ));
     }
 
+    public function actionRaiting()
+    {
+       if ( !isset ($_POST['id-post']) || !isset ($_POST['delta']) || 
+                Yii::app()->user->isGuest) 
+       {
+           $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы!",
+                    );
+                    echo json_encode($return);
+                    return;
+       }
+       else{
+           $id = intval($_POST['id-post']);
+           $delta = intval($_POST['delta']);
+           if ($delta==0)
+           {
+               $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы!",
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+           $delta = ($delta<0) ? -1 : 1;
+           $post = Post::model()->findByPk($id);
+           if ($post==NULL)
+           {
+               $return = array(
+                        'status' => "error",
+                        'description' => "Такая статья не найдена!",
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+           else
+           {   
+              $user = Yii::app()->user->getId();
+              $post_id = $id;
+              
+              if (PostRating::allreadyVote($user, $post_id)){
+                   $return = array(
+                        'status' => "error",
+                        'description' => "Вы уже голосовали",
+                    );
+                    echo json_encode($return);
+                    return;
+              }
+              else {
+                  
+                  if (PostRating::addNewItem( $delta, $post))
+                  {
+                      if ($delta>0) $post->positive_vote_count++;
+                      $post->all_vote_count++;
+                      $return = array(
+                        'status' => "success",
+                        'description' => "Спасибо за Ваше голос!",
+                        'code' =>  $post->getRaiting(),
+                    );
+                    echo json_encode($return);
+                    return;
+                  }
+                  else {
+                      $return = array(
+                        'status' => "error",
+                        'description' => "Техническая ошибка!",
+                    );
+                    echo json_encode($return);
+                    return;
+                  }
+                  
+              }
+              
+              
+           }
+       }
+    }
+    
+    public function actionFavorite ()
+    {
+         if ( !isset ($_POST['id-post']) || 
+                Yii::app()->user->isGuest) 
+       {
+           $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы!",
+                    );
+                    echo json_encode($return);
+                    return;
+       }
+       
+       $id = intval ($_POST['id-post']);
+       $post = Post::model()->findbyPk($id);
+       $user = Yii::app()->getId();
+       
+       if ($post==NULL)
+       {
+           $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы корректно!",
+                    );
+                    echo json_encode($return);
+                    return;
+       } 
+       
+       // проверить есть ли в избранном.
+       $fav = Post::inFavorite($id);
+       if (!$fav)
+       {
+//        статьи нет в избранном
+            $fav = new Favourites();
+            $fav->post_id = $id;
+            $fav->user_id = Yii::app()->user->getId();
+            $fav->status = 1;
+            $fav->time_add = date ("Y-m-d H:i:s");
+            
+           //if (true)
+            if ($fav->save())
+            {
+                $return = array(
+                        'status' => "success",
+                        'description' => "Статья добавлена в избранное!",
+                        'direction' => "in"
+                    );
+                    echo json_encode($return);
+                    return;
+            }
+            else 
+            {
+                $return = array(
+                        'status' => "error",
+                        'description' => "Не все данные заданы корректно!",
+                    );
+                    echo json_encode($return);
+                    return;
+            }
+       }
+       else {
+//         статьи есть в избранном
+           if ($fav->delete())
+           {
+               $return = array(
+                        'status' => "success",
+                        'description' => "Статья удалена из избранного!",
+                        'direction' => "out"
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+           else {
+               $return = array(
+                        'status' => "error",
+                        'description' => "Статья не была добавлена в избранное!",
+                    );
+                    echo json_encode($return);
+                    return;
+           }
+               
+           
+       }
+       
+    }
 }

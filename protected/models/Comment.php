@@ -25,6 +25,7 @@
  */
 class Comment extends CActiveRecord {
 
+    
     static public function createNewComment($text, $parent, $post) {
         $comment = new Comment();
         $comment->text = $text;
@@ -69,6 +70,17 @@ class Comment extends CActiveRecord {
         return 'comment';
     }
 
+    public static function getBest ()
+    {
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ( "status_id=:status");
+        $criteria->addCondition ("time_moder < NOW()");
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                   // ':time'=> "now() - interval '5 day'" 
+                                 );        
+        return Post::model()->findAll ($criteria);
+    }
+    
     /**
      * @return array validation rules for model attributes.
      */
@@ -83,7 +95,7 @@ class Comment extends CActiveRecord {
             'tooLong' => 'Длинна комментария должна быть больше 2 и меньше 500 символов',
             'tooShort' => 'Длинна комментария должна быть больше 2 и меньше 500 символов',
         ),
-        array('text', 'required'),
+        //array('text', 'required'),
         // The following rule is used by search().
         // Please remove those attributes that should not be searched.
         array('id, author_id, post_id, parent_id, 

@@ -42,7 +42,10 @@
 class Post extends CActiveRecord {
 
     public $old_tags;
-
+    const APPROVE_STATUS = 5;
+    const DAYS_FOR_BEST = 5;
+    const COUNT_OF_DISSCUS = 5;
+    const DAYS_FOR_DISCUSS = 2;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -208,7 +211,7 @@ class Post extends CActiveRecord {
         $z = 1.96;
         $p = $this->positive_vote_count / $this->all_vote_count;
         $n = $this->all_vote_count;
-        return ($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n) ;
+        return round(($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n), 2)*10 ;
     }
 
     /**
@@ -421,7 +424,34 @@ class Post extends CActiveRecord {
         }
         return array($for_delete, $for_add);
     }
-
+    
+    public static function getBest ()
+    {
+        $f = Post::DAYS_FOR_BEST;
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ("status_id=:status");
+        $criteria->addCondition ("time_moder > now() - interval '$f day'");
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                 );  
+        $criteria->limit=7;
+        $criteria->order='all_vote_count';
+        return Post::model()->findAll ($criteria);
+    }
+    
+    public static function getDiscussed()
+    {
+        $f = Post::DAYS_FOR_DISCUSS;
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ("status_id=:status");
+        $criteria->addCondition ("time_moder > now() - interval '$f day'");
+        $criteria->limit = Post::COUNT_OF_DISSCUS;
+        $criteria->order = 'comment_count DESC';
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                   // ':time'=> 2222 
+                                 );        
+        return Post::model()->findAll ($criteria);
+    }
+    
     public function afterSave() {
         parent::afterSave();
     }
@@ -589,4 +619,15 @@ class Post extends CActiveRecord {
                 ));
     }
 
+    public static function inFavorite($post_id)
+        { 
+            $user = Yii::app()->user->getId();
+            $criteria = new CDbCriteria;
+            $criteria->addCondition("post_id=:id");
+            $criteria->addCondition("user_id=:user");
+            $criteria->params = array(':id' => $post_id, ':user' => $user);
+            $c = Favourites::model()->find($criteria);
+            return ($c == null) ? false : $c;
+           
+        }
 }

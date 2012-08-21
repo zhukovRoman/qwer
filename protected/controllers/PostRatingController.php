@@ -1,12 +1,12 @@
 <?php
 
-class CategoryController extends Controller
+class PostRatingController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/main';
+	public $layout='//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -27,11 +27,11 @@ class CategoryController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'SubcatView'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','SubcatView'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -48,65 +48,27 @@ class CategoryController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionSubcatView($id)
+	public function actionView($id)
 	{
-            $dataProvider = new CActiveDataProvider('Post', array(
-                    'pagination' => array(
-                        'pageSize' => 12,
-                    ),
-                    'criteria' => array(
-                        #'select'=>''
-                        'condition'=>'status_id = 5 AND sub_cat_id=:cat',
-                        'order' => 'time_moder DESC',
-                        'params'=>array (":cat"=>$id),
-                    )
-                )
-                    
-                    );
-
-        $this->render('view', array(
-            'dataProvider' => $dataProvider,
-            'category' =>Category::model()->findByPk($id)
-        ));
-	
+		$this->render('view',array(
+			'model'=>$this->loadModel($id),
+		));
 	}
-        
-        public function actionView($id)
-	{
-            $dataProvider = new CActiveDataProvider('Post', array(
-                    'pagination' => array(
-                        'pageSize' => 12,
-                    ),
-                    'criteria' => array(
-                        #'select'=>''
-                        'condition'=>'status_id = 5 AND category_id=:cat',
-                        'order' => 'time_moder DESC',
-                        'params'=>array (":cat"=>$id),
-                    )
-                )
-                    
-                    );
 
-        $this->render('view', array(
-            'dataProvider' => $dataProvider,
-            'category' =>Category::model()->findByPk($id)
-        ));
-	
-	}
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate()
 	{
-		$model=new Category;
+		$model=new PostRating;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Category']))
+		if(isset($_POST['PostRating']))
 		{
-			$model->attributes=$_POST['Category'];
+			$model->attributes=$_POST['PostRating'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -128,9 +90,9 @@ class CategoryController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Category']))
+		if(isset($_POST['PostRating']))
 		{
-			$model->attributes=$_POST['Category'];
+			$model->attributes=$_POST['PostRating'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -165,7 +127,7 @@ class CategoryController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Category');
+		$dataProvider=new CActiveDataProvider('PostRating');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -176,10 +138,10 @@ class CategoryController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Category('search');
+		$model=new PostRating('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Category']))
-			$model->attributes=$_GET['Category'];
+		if(isset($_GET['PostRating']))
+			$model->attributes=$_GET['PostRating'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -193,7 +155,7 @@ class CategoryController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Category::model()->findByPk($id);
+		$model=PostRating::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -205,7 +167,7 @@ class CategoryController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='category-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='post-rating-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

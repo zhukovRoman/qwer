@@ -9,6 +9,32 @@
 <?php echo  $model->comment_count;?> 
 <i class="icon-eye-open" rel="tooltip" title="число просмотров"></i>
 <?php echo  $model->view_count;?> 
-<i class="icon-heart" rel="tooltip" title="добавили в избранное"></i>
+<?php 
+if (Post::inFavorite($model->id))
+{
+//если статья уже в избранном 
+    echo CHtml::ajaxLink('<i class="icon-heart" 
+                                rel="tooltip" 
+                                title="добавили в избранное"></i>',
+        Yii::app()->createUrl('post/favorite'), array(
+        'type' => 'POST',
+        'data' => "js:'id-post='+$model->id",
+        'success' => 'js:function(data) {postfavsuccess(data);}',
+        'error' => 'js:function(data) {posterror();}',
+    ));
+}
+else {
+//  если статья не в избранном
+    echo CHtml::ajaxLink('<i class="icon-heart" 
+                                rel="tooltip" 
+                                title="добавили в избранное"></i>',
+        Yii::app()->createUrl('post/favorite'), array(
+        'type' => 'POST',
+        'data' => "js:'id-post='+$model->id",
+        'success' => 'js:function(data) {postfavsuccess(data);}',
+        'error' => 'js:function(data) {posterror();}',
+    ));
+}
+?>
 <?php echo  $model->favourite_count;?>
 </div>
