@@ -35,9 +35,24 @@ jQuery(function($){
         $('.def-pos-form').hide();
         $('#comment-form').appendTo($('#reply-'+id));
         $('.parent_id_form').val(id);
-        $('.button-replay').show();
+        $('.button-replay, .comment-btn').show();
         $('#replay-button'+id).hide();
-        $('.comment-btn').show();
+    });
+
+    //Свертка дерева комментов
+    $('.comment-item .showtree').click(function() {
+        var id = this.id;
+        if ($("#"+id).attr('is_hide')==0){
+            $("#"+id).attr('is_hide','1');
+            $('.comment-item').hide();
+            while ($("#"+id).attr('parent-id')!=null){
+                $("#"+id).show();
+                id = $("#"+id).attr('parent-id');
+            }
+        } else {  
+            $('.comment-item').attr('is_hide','0') ;
+            $('.comment-item').show() ;
+        }
     });
 
 });
@@ -58,27 +73,6 @@ function getcomment(data){
         $('#'+resp.selfId).ScrollTo()
                           .css('background', 'green')
                           .animate({backgroundColor: "#fff"}, 4000);
-    }
-}
- 
-function showtree(id)
-{
-    if ($("#"+id).attr('is_hide')==0)
-    {
-        $("#"+id).attr('is_hide','1');
-        $('.comment-item').hide();
-        while ($("#"+id).attr('parent-id')!=null)
-        {
-            $("#"+id).show();
-            id = $("#"+id).attr('parent-id');
-        }
-       
-    }
-    else {
-        
-        $('.comment-item').attr('is_hide','0') ;
-        $('.comment-item').show() ;
-        
     }
 }
  

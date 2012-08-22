@@ -1,7 +1,7 @@
 <i class="icon-user" rel="tooltip" title="автор"></i>
 <b><?php echo CHtml::link($model->author->login, 
     Yii::app()->createUrl('account/view',
-    array ("id"=>$model->author->id)), array('class'=>'gray-a')); ?>
+    array ("id"=>$model->author->id))); ?>
 </b>
 <i class="icon-time" rel="tooltip" title="дата публикации"></i>
 <?php echo date ("d/m/Y", strtotime($model->time_add));?>
@@ -15,7 +15,7 @@
 if (Post::inFavorite($model->id))
 {
 //если статья уже в избранном 
-    echo CHtml::ajaxLink('<i class="icon-heart" 
+    echo CHtml::ajaxLink('<i class="icon-heart gray-a" 
                                 rel="tooltip" 
                                 title="добавили в избранное"></i>',
         Yii::app()->createUrl('post/favorite'), array(
@@ -27,7 +27,7 @@ if (Post::inFavorite($model->id))
 }
 else {
 //  если статья не в избранном
-    echo CHtml::ajaxLink('<i class="icon-heart" 
+    echo CHtml::ajaxLink('<i class="icon-heart black-a" 
                                 rel="tooltip" 
                                 title="добавили в избранное"></i>',
         Yii::app()->createUrl('post/favorite'), array(

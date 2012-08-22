@@ -16,7 +16,8 @@
 
 
     <?php if ($model->parent_id != Null) { ?>
-        <span onclick="js:showtree(<?php echo $model->id; ?>);" >↵</span>
+        <!-- <span onclick="js:showtree(<?php echo $model->id; ?>);" >↵</span> -->
+        <span class="showtree" id="<?php echo $model->id; ?>">↵</span>
     <?php } ?>  
 
     <span id="vote-error-<?php echo $model->id; ?>" 
