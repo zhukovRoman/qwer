@@ -1,5 +1,5 @@
 
-<div class="comment-header content-border">
+<div class="bg-gray content-border">
     <img src="<?php echo "uploads/" . $model->author->id . "/25x25.jpg" ?>" 
          class="userpic-comment" width="25" height="25">
          <?php echo Chtml::link($model->author->login, array('/account/view', 'id' => $model->author->id));
@@ -16,7 +16,8 @@
 
 
     <?php if ($model->parent_id != Null) { ?>
-        <span onclick="js:showtree(<?php echo $model->id; ?>);" >↵</span>
+        <!-- <span onclick="js:showtree(<?php echo $model->id; ?>);" >↵</span> -->
+        <span class="showtree" id="<?php echo $model->id; ?>">↵</span>
     <?php } ?>  
 
     <span id="vote-error-<?php echo $model->id; ?>" 

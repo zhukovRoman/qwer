@@ -245,7 +245,7 @@ class Post extends CActiveRecord {
         foreach ($items as $i) {
             if ($i != "") {
                 echo '<a href="' . $i . '">
-                    <img src="' . substr($i, 0, -4) . '_crop.jpg' . '" 
+                    <img class="photo-border" src="' . substr($i, 0, -4) . '_crop.jpg' . '" 
                     width="100" height="100" />
                     </a>';
                 // echo '<img src="'.substr($i, 0, -4).'.jpg'.'">';

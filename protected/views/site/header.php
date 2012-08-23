@@ -11,7 +11,7 @@
 				//'visible'=>Yii::app()->user->checkAccess(Rights::module()->superuserName ) 
 		));
 		
-		array_push($bar, array('label' => "<img src='$src' class='userpic photo-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
+		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
 							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));
 				
 		array_push($bar, array('label'=> Yii::app()->user->name,//Account::model()->findByPk(Yii::app()->user->getId())->login, 
@@ -48,7 +48,7 @@
     'fixed'=>false,
     'brand'=>'<img src="http://fresh-i.ru/templates/skin/simple/images/logo.png">',
     'brandUrl'=>Yii::app()->homeUrl,
-    'collapse'=>true, // requires bootstrap-responsive.css
+    'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(
         array(
             'class'=>'bootstrap.widgets.BootMenu',

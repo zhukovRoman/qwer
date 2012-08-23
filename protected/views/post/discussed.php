@@ -1,4 +1,3 @@
-<legend> Обсуждаемое </legend>
 <?php
 
     foreach ($items as $item)
