@@ -10,7 +10,7 @@
 		),
 	));
 	
-	$model = new LoginForm;
+$model = new LoginForm;
 
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id'=>'modal-login-form',
@@ -51,13 +51,13 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
         	//'url' => array('site/login'),
     	)
     ); ?>
+    
+    
 </fieldset> 	
 </div> 
 
 <div class="modal-footer">
-
-    	
-    <h4>Нажмите на иконку для входа через один из сайтов:</h4>
+    <h4>Войти, как пользователь:</h4>
     <br>
 	<?php $this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login', 'popup' => true )); ?>
 	
