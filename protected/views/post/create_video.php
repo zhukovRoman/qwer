@@ -1,10 +1,9 @@
 
     
     <?php echo $form->textFieldRow($model, 'code', 
-            array('hint'=>'код видео', 
-                'class'=>'span7')); ?>
+            array('class'=>'span7')); ?>
 
-    <?php echo $form->textAreaRow($model, 'text', array('class'=>'span8', 'rows'=>15, 'id'=>"redactor")); ?>
+    <?php echo $form->textAreaRow($model, 'text', array('class'=>'span10', 'rows'=>15, 'id'=>"redactor")); ?>
     <script type="text/javascript">
     $(document).ready(
         function()

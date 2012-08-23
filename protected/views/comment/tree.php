@@ -1,16 +1,18 @@
 <?php
 
-if (Yii::app()->user->getId()) {
+if (!Yii::app()->user->getId()) {
+// //админский вид
     foreach ($comments as $comm) {
-        if ($comm->parent_id == $parent_id && $comm->status_id != 2) {
+        if ($comm->parent_id == $parent_id ) {
             $this->renderPartial("/comment/tree_item", array('model' => $comm,));
         }
     }
 }
 else {
-    //админский вид
-     if ($comm->parent_id == $parent_id ) {
+    foreach ($comments as $comm) {
+     if ($comm->parent_id == $parent_id && $comm->status_id !=2) {
             $this->renderPartial("/comment/tree_item", array('model' => $comm,));
         }
+    }
 }
 ?>

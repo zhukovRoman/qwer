@@ -84,28 +84,7 @@
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
 	    'stacked'=>false, // whether this is a stacked menu
 		'htmlOptions'=>array('class'=>'nav-head span12'),
-	    'items'=>array(
-				array('label'=>'Спецпроекты', 'url'=>'#', 'items'=>array(
-	    				array('label'=>'Action', 'url'=>'#'),
-	    				array('label'=>'Another action', 'url'=>'#'),
-	    				array('label'=>'Something else here', 'url'=>'#'),
-	    				'---',
-	    				array('label'=>'NAV HEADER'),
-	    				array('label'=>'Separated link', 'url'=>'#'),
-	    				array('label'=>'One more separated link', 'url'=>'#'),
-	    		)),
-	    		array('label'=>'Новости', 'url'=>'#'),
-	    		array('label'=>'Слово', 'url'=>'#'),
-	    		array('label'=>'Музыка', 'url'=>'#'),
-	    		array('label'=>'Путешествия', 'url'=>'#'),
-	    		array('label'=>'Фото', 'url'=>'#'),
-	    		array('label'=>'Спорт', 'url'=>'#'),
-	    		array('label'=>'Кино', 'url'=>'#'),
-	    		array('label'=>'Hi-tech', 'url'=>'#'),
-	    		array('label'=>'Книги', 'url'=>'#'),
-	    		array('label'=>'Start-Up', 'url'=>'#'),
-	    		array('label'=>'Афиша', 'url'=>'#'),
-	    ),
+	    'items'=>  Category::getCategories(),
 	)); ?>
 <div style="clear:both"></div>
 <!-- </div>  --><!-- mainmenu -->

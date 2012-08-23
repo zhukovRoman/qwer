@@ -1,8 +1,11 @@
 <div class="<?php echo ($i==0)? "active" : "" ?> item">
-                    <?php echo CHtml::image($item->preview_url);?>
-                    
+                   <?php echo CHtml::link(
+					CHtml::image($item->preview_url),
+						array('/post/view', 'id'=>$item->id)); 
+                    ?>
                     <div class="carousel-caption">
-                        <h4><?php echo CHtml::encode($item->title);?></h4>
+                        <?php echo CHtml::link(CHtml::encode($item->title), 
+						array('/post/view', 'id'=>$item->id));?>
                       <p><?php echo CHtml::encode($item->subtitle);?></p>
                     </div>
 </div>

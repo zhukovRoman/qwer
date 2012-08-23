@@ -19,7 +19,7 @@ $(document).ready(function() {
 
     fileInput.damnUploader({
         // куда отправлять
-        url: '/qwer/serverLogic.php',
+        url: '/cube/qwer/index.php?r=post/photoItemUpload',
         // имитация имени поля с файлом (будет ключом в $_FILES, если используется PHP)
         fieldName:  'my-pic',
         // максимальное кол-во выбранных файлов (если не указано - без ограничений)

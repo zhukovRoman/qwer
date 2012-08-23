@@ -20,7 +20,7 @@
                  }
             ?>
         </div>
-    <?php if (!Yii::app()->user->isGuest) { ?>
+    <?php if (!(Yii::app()->user->isGuest || $model->status_id == 2)) { ?>
         <div class="comment-resp">
             <?php
             $this->widget('bootstrap.widgets.BootButton', array(
@@ -29,7 +29,6 @@
                 'size' => 'mini',
                 'label' => 'Oтветить',
                 'htmlOptions' => array(
-                   /* 'onclick' => 'js:attachForm(' . $model->id . ')',*/
                     'id' => 'replay-button' . $model->id,
                     'class' => 'button-replay',
                 )
@@ -52,12 +51,7 @@
                     ),
                 )
             ));
-//                echo CHtml::ajaxLink("Спам", Yii::app()->createUrl('comment/spam'), array(
-//                    'type' => 'POST',
-//                    'data' => "js:'id-comment='+$model->id",
-//                    'update' => '#commentbody-' . $model->id,
-//                ));
-                ?>
+            ?>
             </span>
 
             <?php

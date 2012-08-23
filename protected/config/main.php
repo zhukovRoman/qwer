@@ -229,7 +229,8 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CWebLogRoute',
-                                        'levels'=>'trace, info, profile',
+                                        //'levels'=>'trace, info, profile',
+                                        'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
 				/*

@@ -73,6 +73,7 @@ class CategoryController extends Controller
         
         public function actionView($id)
 	{
+            
             $dataProvider = new CActiveDataProvider('Post', array(
                     'pagination' => array(
                         'pageSize' => 12,

@@ -69,14 +69,17 @@ class Post extends CActiveRecord {
             array('title, category_id, text', 'required',
                 'on' => 'create_text',
                 'message' => 'Поле {attribute} обязательно для заполнения'),
-            array('title, category_id, code', 'required', 'on' => 'create_video'),
-            array('title, category_id, code', 'required', 'on' => 'create_photo'),
-            array('category_id, sub_cat_id, author_id, status_id, view_count, favourite_count, comment_count, rating_count, all_vote_count, positive_vote_count, order', 'numerical', 'integerOnly' => true),
+            array('title, category_id', 'required', 'on' => 'create_video'),
+            array('title, category_id', 'required', 'on' => 'create_photo'),
+            array('category_id, sub_cat_id, author_id, 
+                status_id, view_count, favourite_count,
+                comment_count, rating_count, all_vote_count,
+                positive_vote_count, order', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 130, 'min' => 3,
                 'tooLong' => 'Длинна заголовка должна быть больше 2 и меньше 130 символов',
                 'tooShort' => 'Длинна заголовка должна быть больше 2 и меньше 130 символов',
             ),
-            array('title, subtitle', 'length', 'max' => 300, 'min' => 3,
+            array(' subtitle', 'length', 'max' => 300, 'min' => 3,
                 'tooLong' => 'Длинна подзаголовка должна быть больше 2 и меньше 300 символов',
                 'tooShort' => 'Длинна подзаголовка должна быть больше 2 и меньше 300 символов',
             ),
@@ -90,12 +93,17 @@ class Post extends CActiveRecord {
             array('text, preview_url, title, subtitle, sub_cat_id, category_id, tag, code', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, title, text, code, category_id, sub_cat_id, author_id, status_id, time_add, is_video, is_photoset, is_playlist, view_count, favourite_count, comment_count, rating_count, all_vote_count, positive_vote_count, preview_url, important_flag, landscape, order, subtitle, tag, author.login, author.id', 'safe', 'on' => 'search'),
+            array('id, title, text, category_id, sub_cat_id, author_id,
+                status_id, time_add, is_video, is_photoset, is_playlist, subtitle, 
+                author.login, author.id', 'safe', 'on' => 'search'),
             array('title, subtitle', 'match', 'pattern' => '/^[0-9A-zА-я\s\-\(\)\"\.\,\?\!№%]+$/u',
                 'message' => 'Поле может содержать только буквы, цифры и символы (-".,?!№%)'),
             array('code', 'match',
                 'pattern' => "/((?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10}))|((?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/)?([\w\-]{6,12})(?:\&.+)?))/i",
                 'message' => 'Неверный формат видео', 'on' => 'create_video'),
+            array ('code', 'required',
+                'on' => 'create_video',
+                'message' => 'Поле не может быть пустым. Вставьте сюда код видео')
         );
     }
 
@@ -434,7 +442,7 @@ class Post extends CActiveRecord {
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
                                  );  
         $criteria->limit=7;
-        $criteria->order='all_vote_count';
+        $criteria->order='all_vote_count DESC';
         return Post::model()->findAll ($criteria);
     }
     
@@ -577,7 +585,7 @@ class Post extends CActiveRecord {
         $criteria->params = array(':status' => $status);
 
        
-        $criteria->compare('title', $this->title, true);
+        $criteria->compare('lower(title)', mb_strtolower($this->title, "UTF-8") , true);
         $criteria->compare('time_add', $this->time_add);
         $criteria->compare('category_id', $this->category_id);
         $criteria->compare('sub_cat_id', $this->sub_cat_id);

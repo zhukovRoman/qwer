@@ -345,12 +345,11 @@ class SiteController extends Controller
              
         $folder = "topics/tmp/";         
         $allowedExtensions = array("jpg");//array("jpg","jpeg","gif","exe","mov" and etc...
-        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
+        $sizeLimit = 7 * 1024 * 1024;// maximum file size in bytes
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
         $result = $uploader->handleUpload($folder);
         
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-        
         
         //$fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
         //$fileName=$result['filename'];//GETTING FILE NAME
@@ -365,23 +364,14 @@ class SiteController extends Controller
         ->load($url.$end)
         ->thumb(500, 330 ,true)
         ->save(false,false,99);
-        
+        //echo "dsfa"; die();
         $size = getimagesize ($url.$end);
-        
-        if ($size[0]>$size[1])
-        {
-            Yii::app()->ih
-            ->load($url.$end)
-            ->adaptiveThumb(450, 290)
-            ->save($url.$crop.$end,false,99);
-        }
-        else 
-        {
-            Yii::app()->ih
-            ->load($url.$end)
-            ->adaptiveThumb(290, 450)
-            ->save($url.$crop.$end,false,99);
-        }
+
+        Yii::app()->ih
+        ->load($url.$end)
+        ->adaptiveThumb(450, 290)
+        ->save($url.$crop.$end,false,99);
+       
         echo $return;// it's array
     }
     

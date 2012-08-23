@@ -1,18 +1,5 @@
 <?php
 
-
-$status = '404 Not Found';
-
-if(rand(1, 4) == 4) {
-    // Имитируем ошибку каждый четвертый раз
-    header("HTTP/1.0 {$status}");
-    header("HTTP/1.1 {$status}");
-    header("Status: {$status}");
-    die();
-}
-
-
-
 if(!empty($_FILES)) {
     // Файл передан через обычный массив $_FILES
     echo 'Contents of $_FILES:<br/><pre>'.print_r($_FILES, true).'</pre>';

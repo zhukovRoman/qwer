@@ -35,7 +35,7 @@ function postfavsuccess(data)
             notify(resp.description, 'success');
         }
         else {
-            notify(resp.description, 'success');
+            notify(resp.description, 'warning');
         }
     }   
 }

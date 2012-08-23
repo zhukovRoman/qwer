@@ -169,6 +169,7 @@ class CImageHandler extends CApplicationComponent
 			imagedestroy($this->image);
 		
 		$this->image = imagecreatetruecolor($this->width, $this->height);
+                
 		$this->preserveTransparency($this->image);
 		imagecopy($this->image, $image['image'], 0, 0, 0, 0, $this->width, $this->height);
 	}
@@ -176,12 +177,13 @@ class CImageHandler extends CApplicationComponent
 	public function load($file)
 	{
 		$this->freeImage();
-
+                
 		if(($this->originalImage = $this->loadImage($file)))
 		{
+                        
 			$this->initImage();
 			$this->fileName = $file;
-
+                       
 
 			return $this;
 		}
@@ -233,6 +235,7 @@ class CImageHandler extends CApplicationComponent
 
 	public function resize($toWidth, $toHeight, $proportional = true)
 	{
+            
 		$this->checkLoaded();
 		
 		$toWidth = $toWidth !== false ? $toWidth : $this->width;
@@ -257,7 +260,7 @@ class CImageHandler extends CApplicationComponent
 		}
 
 		$newImage = imagecreatetruecolor($newWidth, $newHeight);
-
+                
 		$this->preserveTransparency($newImage);
 
 		imagecopyresampled($newImage, $this->image, 0, 0, 0, 0, $newWidth, $newHeight, $this->width, $this->height);
@@ -276,7 +279,8 @@ class CImageHandler extends CApplicationComponent
 
 	public function thumb($toWidth, $toHeight, $proportional = true)
 	{
-		$this->checkLoaded();
+		
+                    $this->checkLoaded();
 
 		if($toWidth !== false)
 			$toWidth = min($toWidth, $this->width);

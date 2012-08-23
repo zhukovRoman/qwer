@@ -13,97 +13,121 @@
  * @property Post[] $posts
  * @property Post[] $posts1
  */
-class Category extends CActiveRecord
-{
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Category the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+class Category extends CActiveRecord {
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'category';
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return Category the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('parent_id, order', 'required'),
-			array('parent_id, order', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>50),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, parent_id, name, order', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'category';
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'posts' => array(self::HAS_MANY, 'Post', 'category_id'),
-			'posts1' => array(self::HAS_MANY, 'Post', 'sub_cat_id'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('parent_id, order', 'required'),
+            array('parent_id, order', 'numerical', 'integerOnly' => true),
+            array('name', 'length', 'max' => 50),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, parent_id, name, order', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'parent_id' => 'Parent',
-			'name' => 'Name',
-			'order' => 'Order',
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'posts' => array(self::HAS_MANY, 'Post', 'category_id'),
+            'posts1' => array(self::HAS_MANY, 'Post', 'sub_cat_id'),
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id' => 'ID',
+            'parent_id' => 'Parent',
+            'name' => 'Name',
+            'order' => 'Order',
+        );
+    }
 
-		$criteria=new CDbCriteria;
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search() {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('parent_id',$this->parent_id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('order',$this->order);
+        $criteria = new CDbCriteria;
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        $criteria->compare('id', $this->id);
+        $criteria->compare('parent_id', $this->parent_id);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('order', $this->order);
+
+        return new CActiveDataProvider($this, array(
+                    'criteria' => $criteria,
+                ));
+    }
+
+    public function getSubCats($cat) {
+        return Category::model()->findAll('parent_id=:sel', array(':sel' => $cat->id));
+    }
+
+    public function getParent($cat) {
+        return Category::model()->findByPk($cat->parent_id);
+    }
+
+    public static function getCategories($id_par = 0) {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('parent_id=:sel');
+        $criteria->order = "id DESC";
+        $criteria->params = array(':sel' => $id_par);
+        $cats = Category::model()->findAll($criteria);
         
-        public function getSubCats($cat)
-        {
-            return Category::model()->findAll('parent_id=:sel', array(':sel' => $cat->id));
+        $url = ($id_par==0)? 'category/view':'category/subcatview';
+        $res = array();
+        foreach ($cats as $cat) {
+            
+            $subcats = Category::getCategories($cat->id);
+            if (count ($subcats)!=0)
+            $res[] = array(
+                'label' => $cat->name,
+                'url' => Yii::app()->createUrl($url, array(
+                    'id' => $cat->id,
+                )),
+                'items' => $subcats,    
+            );
+            else 
+                $res[] = array(
+                'label' => $cat->name,
+                'url' => Yii::app()->createUrl($url, array(
+                    'id' => $cat->id,
+                )),  
+            );
         }
-        
-        public function getParent($cat)
-        {
-            return Category::model()->findByPk($cat->parent_id);
-        }
+        return $res;
+    }
+
 }

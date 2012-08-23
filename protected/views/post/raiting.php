@@ -2,7 +2,8 @@
     
     <?php
    
-    if (($model->author_id != Yii::app()->user->getId()) && 
+    if (    Yii::app()->user->getId() &&
+            ($model->author_id != Yii::app()->user->getId()) && 
             !PostRating::allreadyVote(Yii::app()->user->getId(), $model->id))
     {
     echo CHtml::ajaxLink("+", Yii::app()->createUrl('post/raiting'), array(
@@ -13,6 +14,7 @@
     ));
 
     echo CHtml::encode($model->getRaiting());
+    echo "(".$model->all_vote_count.")";
 
     echo CHtml::ajaxLink("-", Yii::app()->createUrl('post/raiting'), array(
         'type' => 'POST',
@@ -23,6 +25,7 @@
     }
     else {
         echo CHtml::encode($model->getRaiting());
+        echo "(".$model->all_vote_count.")";
     }
     ?>
 </div>

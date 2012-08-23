@@ -31,7 +31,8 @@ class CommentController extends Controller {
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'update', 
                     'AddComment', 'Raiting', 
-                    'Spam','Delete', 'manage','itisspam','itisnospam','toarchive'),
+                    'Spam','Delete', 'manage','itisspam','itisnospam',
+                    'toarchive'),
                 'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -337,23 +338,34 @@ class CommentController extends Controller {
     public function actionitisspam($id)
     {
             $comment = Comment::model()->findByPk($id);
-            $comment->status_id = 3;
-            $comment->save(false);
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
+            if($comment!=null)
+            {
+                $comment->status_id = 3;
+                $comment->save(false);
+            }
+            
     }
     public function actionitisnospam($id)
     {
             $comment = Comment::model()->findByPk($id);
-            $comment->status_id = 4;
-            $comment->save(false);  
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
+            if($comment!=null)
+            {
+                $comment->status_id = 4;
+                $comment->save(false); 
+            }
+            
     }
     public function actiontoarchive($id)
     {
             $comment = Comment::model()->findByPk($id);
-            $comment->status_id = 2;
-            $comment->save(false); 
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
+            if($comment!=null)
+            {
+                $comment->status_id = 2;
+                $comment->save(false); 
+            }
+            
     }
+    
+    
 
 }

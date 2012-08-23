@@ -13,7 +13,7 @@
                 'config' => array(
                     'action' => Yii::app()->createUrl('site/uploadpreview'),
                     'allowedExtensions' => array("jpg"), //array("jpg","jpeg","gif","exe","mov" and etc...
-                    'sizeLimit' => 10 * 1024 * 1024, // maximum file size in bytes
+                    'sizeLimit' => 7 * 1024 * 1024, // maximum file size in bytes
                     'minSizeLimit' => 5 * 1024, // minimum file size in bytes
                     'onComplete' => "js:function(id, fileName, responseJSON)
                         { 

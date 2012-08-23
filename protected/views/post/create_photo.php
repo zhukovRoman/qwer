@@ -1,4 +1,4 @@
-    <div style="display:none;">
+    <div style="display:block;">
         <?php echo $form->textAreaRow($model, 'code', array(' class'=>'span5', 'rows'=>10)); ?>
     </div>
    <div class="control-group ">

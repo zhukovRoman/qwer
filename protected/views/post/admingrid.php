@@ -57,7 +57,8 @@
                         ),
                     'time'=> array(
                         'label'=>'app and time',
-                        'url' =>  'Yii::app()->createUrl("post/approvetime", array ("id"=>$data->id));',
+                        'ajax' => true,
+                        'click' =>  'function(){alert (123);}',
                         'icon'=>"time",
                     )
                     ),

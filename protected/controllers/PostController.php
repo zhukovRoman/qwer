@@ -110,10 +110,9 @@ class PostController extends Controller {
 
 
         if (isset($_POST['Post'])) {
-            print_r($_POST);die();
             $model->attributes = $_POST['Post'];
-            $model->author_id = Yii::app()->user->getId(); // изменить на текущего юзера
-            $model->status_id = 1; // изначально статус "на модерации"
+            $model->author_id = Yii::app()->user->getId(); 
+            $model->status_id = 1; 
             if (isset($_POST['archive'])){
                 $model->status_id = 3; 
             }
@@ -313,40 +312,63 @@ class PostController extends Controller {
 
     public function actionphotoItemUpload() {
 
-        Yii::import("ext.EAjaxUpload.qqFileUploader");
-        $folder = "topics/tmp/";
-
-
-        $allowedExtensions = array("jpg", "jpeg"); //array("jpg","jpeg","gif","exe","mov" and etc...
-        $sizeLimit = 10 * 1024 * 1024; // maximum file size in bytes
-        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-        $result = $uploader->handleUpload($folder);
-
-        //echo $result['code'];
-
-        $end = ".jpg";
-        $crop = "_crop";
-        $url = $result['filename']; // путь с расширением
-        $url = substr($url, 0, strlen($url) - 4);
-
-        $result['code'] = PostController::photosetItemRet($url . $crop . $end);
-        $return = json_encode($result);
-
-        Yii::app()->ih
-                ->load($url . $end)
+        if(!empty($_FILES)) {
+    // Файл передан через обычный массив $_FILES
+    
+    $file = $_FILES['my-pic'];
+    $name =  "topics/tmp/".substr(md5($file['tmp_name']. rand(12, 323). time()),0)."_".rand(0,100).".jpg";
+    Yii::app()->ih
+                ->load($file['tmp_name'])
                 ->thumb(1200, 1200, true)
-                ->save();
-
-        $size = getimagesize($url . $end);
-
-        Yii::app()->ih
-                ->load($url . $end)
-                ->adaptiveThumb(100, 100)
-                ->save($url . $crop . $end);
-
-
-
-        echo $return; // it's array
+                ->save($name);
+   echo $name;
+} else {
+    // Надо выцеплять файл из входного потока php
+    // (такое встречается только в очень экзотических браузерах,
+    //  поэтому можно не предусматривать этот способ вовсе)
+    $headers = getallheaders();
+    if(array_key_exists('Upload-Filename', $headers)) {
+        $data = file_get_contents('php://input');
+        echo 'File recieved: '.$headers['Upload-Filename'];
+        echo '<br/>Size: '.$headers['Upload-Size'].' ('.strlen($data).' b)';
+        echo '<br/>Type: '.$headers['Upload-Type'];
+    }
+}
+    
+//        Yii::import("ext.EAjaxUpload.qqFileUploader");
+//        $folder = "topics/tmp/";
+//
+//
+//        $allowedExtensions = array("jpg", "jpeg"); //array("jpg","jpeg","gif","exe","mov" and etc...
+//        $sizeLimit = 10 * 1024 * 1024; // maximum file size in bytes
+//        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+//        $result = $uploader->handleUpload($folder);
+//
+//        //echo $result['code'];
+//
+//        $end = ".jpg";
+//        $crop = "_crop";
+//        $url = $result['filename']; // путь с расширением
+//        $url = substr($url, 0, strlen($url) - 4);
+//
+//        $result['code'] = PostController::photosetItemRet($url . $crop . $end);
+//        $return = json_encode($result);
+//
+//        Yii::app()->ih
+//                ->load($url . $end)
+//                ->thumb(1200, 1200, true)
+//                ->save();
+//
+//        $size = getimagesize($url . $end);
+//
+//        Yii::app()->ih
+//                ->load($url . $end)
+//                ->adaptiveThumb(100, 100)
+//                ->save($url . $crop . $end);
+//
+//
+//
+//        echo $return; // it's array
     }
 
     public function actionArchive($id) {

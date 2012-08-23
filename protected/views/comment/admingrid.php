@@ -40,6 +40,9 @@
                                 'label'=>'spam',
                                 'url' =>  'Yii::app()->createUrl("comment/itisspam",
                                     array ("id"=>$data->id));',
+                                'click' => 'js:function() 
+                                    {item_click( $(this).attr("href") ); 
+                                        return false;}',
                                 'icon'=>"ban-circle",
                                 ),
                              'view' => array (
@@ -52,12 +55,18 @@
                                 'label'=>'Nospam',
                                 'url' =>  'Yii::app()->createUrl("comment/itIsNoSpam",
                                     array ("id"=>$data->id));',
+                                'click' => 'js:function() 
+                                    {item_click( $(this).attr("href") ); 
+                                        return false;}',
                                 'icon'=>"ok-circle",
                                 ),
                             'del' => array (
                                 'label'=>'delete',
                                 'url' =>  'Yii::app()->createUrl("comment/toarchive",
                                     array ("id"=>$data->id));',
+                                'click' => 'js:function() 
+                                    {item_click( $(this).attr("href") ); 
+                                        return false;}',
                                 'icon'=>"trash",
                                 ),
                             ),
@@ -66,4 +75,20 @@
 	),
 )); ?>
 
+<script type="text/javascript">
+function item_click(url) {
+        
+        var id = parseInt(url.substring(url.indexOf('id=') + 3), 10);
 
+        $.fn.yiiGridView.update('comment-grid', {
+                type :'POST',
+                url  : url,
+                data : id,
+                success:function(data) {
+                        $.fn.yiiGridView.update('comment-grid');
+                        //alert(data);
+                }
+        });
+}
+
+</script>

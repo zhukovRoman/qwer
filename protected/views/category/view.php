@@ -4,7 +4,7 @@
     <?php 
         foreach ($category->getSubCats($category) as $cat)
         {
-            echo CHtml::link($model->subCat->name, 
+            echo CHtml::link($cat->name, 
                         Yii::app()->createUrl('category/subcatview',
                                     array ("id"=>$cat->id)));
         }
