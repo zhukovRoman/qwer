@@ -15,7 +15,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 ));*/ ?>
 
 <?php $this->widget('bootstrap.widgets.BootMenu', array(
-    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
+    'type'=>'pills',  // '', 'tabs', 'pills' (or 'list')
     'stacked'=>false, // whether this is a stacked menu
     'items'=>array(
         array('label'=>'Профиль', 'url'=>array('/site/login'), 'active'=>true),
@@ -33,17 +33,18 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 		<?php if (!file_exists($path)) $src = Account::ACCOUNT_DIR . Account::DEFAULT_DIR . Account::AVATAR_NAME; else $src = $path ?>
 		<img class="img-polaroid" src='<?php echo $src?>' style='width: 200px;' alt='Avatar'>
 	<p>
-		<?php $this->widget('bootstrap.widgets.BootMenu', array(
-		    'type'=>'list',
-		    'items'=>array(
-		    	array('label'=>'Редактировать профиль', 'icon'=>'pencil', 'url'=>array('update', 'id'=>$model->id)),
-		    	array('label'=>'Изменить фотографию', 'icon' => 'camera','url'=>'#', 'items'=>array(
-			        array('label'=>'Обновить фотографию', 'icon'=>'arrow-up', 'url'=>'#AvatarLoad', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',)),
-			        array('label'=>'Удалить фотографию', 'icon'=>'remove', 'url'=>'#AvatarDelete', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path))),
-			        array('label'=>'Изменить миниатюру', 'icon'=>'move', 'url'=>'#UserPic', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path)),),
-		    	)),
-		    )
-		)); ?>
+		<?php if (Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			$this->widget('bootstrap.widgets.BootMenu', array(
+			    'type'=>'list',
+			    'items'=>array(
+			    	array('label'=>'Редактировать профиль', 'icon'=>'pencil', 'url'=>array('update', 'id'=>$model->id)),
+			    	array('label'=>'Изменить фотографию', 'icon' => 'camera','url'=>'#', 'items'=>array(
+				        array('label'=>'Обновить фотографию', 'icon'=>'arrow-up', 'url'=>'#AvatarLoad', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',)),
+				        array('label'=>'Удалить фотографию', 'icon'=>'remove', 'url'=>'#AvatarDelete', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path))),
+				        array('label'=>'Изменить миниатюру', 'icon'=>'move', 'url'=>'#UserPic', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path)),),
+			    	)),
+			    )
+			)); ?>
 </div>
 
 
@@ -72,16 +73,15 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 			'value'=> Yii::app()->dateFormatter->format('d MMMM yyyy', strtotime($model->birth_date)),
 		));
 			
-	if (!empty($model->city_id))    array_push($personal, 'city_id');
-	if (isset($model->sex))        array_push($personal, //'sex'); 
+	if (!empty($model->city_id)) array_push($personal, 'city_id');
+	if (isset($model->sex)) array_push($personal, //'sex'); 
+		array(
+				'label'=>$model->getAttributeLabel('sex'),
+				'type'=>'raw',
+				'value'=>$model->sex == 1 ? 'Мужской' : 'Женский',
+		));
 	
-	array(
-			'label'=>$model->getAttributeLabel('sex'),
-			'type'=>'raw',
-			'value'=>$model->sex == 1 ? 'Мужской' : 'Женский',
-	));
-	
-	if (!empty($model->about))      array_push($personal, 'about');
+	if (!empty($model->about)) array_push($personal, 'about');
 	
 	// 3. Контактная информация
 	function setValue($model, $service)
@@ -125,22 +125,31 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 		if (!empty($url))
 		{
 			$link = CHtml::link(substr($url, strrpos($url, '/')+1), $url);
-			$icon = CHtml::link('<i class="icon-refresh"></i>', // Формировать!!!!!!!!
-								Yii::app()->createUrl('account/linking/', array('id'=>$model->id, 'service' => $service)), 
-								array('class' => 'update', 'rel'=> 'tooltip', 'data-original-title' => 'Изменить аккаунт')); // Формировать!!!!!!!! 
+			$properties['value'] =  $link;
 			
-			$icon .= CHtml::link('<i class="icon-remove"></i>', // Формировать!!!!!!!!
-								 Yii::app()->createUrl('account/unlinking/', array('id'=>$model->id, 'service' => $service)),
-								 array('class' => 'delete', 'rel'=> 'tooltip', 'data-original-title' => 'Удалить аккаунт'));
-			
-			$properties['value'] =  $link . '<div style="float:right;">'.$icon.'</div>';
+			if (Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model))) 
+			{
+				$icon = CHtml::link('<i class="icon-refresh"></i>', // Формировать!!!!!!!!
+									Yii::app()->createUrl('account/linking/', array('id'=>$model->id, 'service' => $service)), 
+									array('class' => 'update', 'rel'=> 'tooltip', 'data-original-title' => 'Изменить аккаунт')); // Формировать!!!!!!!! 
+				
+				$icon .= CHtml::link('<i class="icon-remove"></i>', // Формировать!!!!!!!!
+									 Yii::app()->createUrl('account/unlinking/', array('id'=>$model->id, 'service' => $service)),
+									 array('class' => 'delete', 'rel'=> 'tooltip', 'data-original-title' => 'Удалить аккаунт'));
+				
+				$properties['value'] =  $link . '<div style="float:right;">'.$icon.'</div>';
+			}
 		}
 		else
 		{
-			$link = CHtml::link('<i class="icon-magnet"></i> Привязать аккаунт',
-								Yii::app()->createUrl('account/linking/', array('id'=>$model->id, 'service' => $service)));
+			if (Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			{
+				$link = CHtml::link('<i class="icon-magnet"></i> Привязать аккаунт',
+									Yii::app()->createUrl('account/linking/', array('id'=>$model->id, 'service' => $service)));
 			
-			$properties['value'] =  $link;
+				$properties['value'] =  $link;
+			}
+			else $properties['value'] =  '<span class="null">Не задан</span>';
 		}
 			
 		return  $properties;
@@ -246,8 +255,12 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 		<?php
 		if (empty($personal)) 
 		{
-			$linkPersonal = Yii::app()->createUrl('account/update', array('id'=>$model->id));
-			echo '<p align="center"><a href="'.$linkPersonal.'">Заполнить информацию о себе</a></p>';
+			if (Yii::app()->user->checkAccess('updateOwnAccount', array ('Account' => $model)))
+			{
+				$linkPersonal = Yii::app()->createUrl('account/update', array('id'=>$model->id));
+				echo '<p align="center"><a href="'.$linkPersonal.'">Заполнить информацию о себе</a></p>';
+			}
+			else echo '<p align="center"><span class="null">Пользователь не заполнил информацию о себе</span></p>';
 		}
 		else 
 		{
@@ -263,8 +276,12 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 		<?php 
 		if (empty($contacts)) 
 		{
-			$linkPersonal = Yii::app()->createUrl('account/update', array('id'=>$model->id));
-			echo '<p align="center"><a href="'.$linkPersonal.'">Заполнить контактную информацию</a></p>';
+			if (Yii::app()->user->checkAccess('updateOwnAccount', array ('Account' => $model)))
+			{
+				$linkPersonal = Yii::app()->createUrl('account/update', array('id'=>$model->id));
+				echo '<p align="center"><a href="'.$linkPersonal.'">Заполнить контактную информацию</a></p>';
+			}
+			else echo '<p align="center"><span class="null">Пользователь не заполнил информацию о себе</span></p>';
 		}
 		else 
 		{

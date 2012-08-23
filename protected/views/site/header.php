@@ -37,7 +37,7 @@
 	}
 	else
 	{
-		array_push($bar, array('label'=>'Войти', // 'url'=>array('/site/login/'),));//
+		array_push($bar, array('label'=>'Войти', // 'url'=>array('/site/login/'),));//modal_login
 							   'url'=>'#modal_login', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary')));
 		array_push($bar, '---');
 		array_push($bar, array('label'=>'Регистрация', 'url'=>array('/account/signup/'), 'visible'=>Yii::app()->user->isGuest));
@@ -112,7 +112,7 @@
 
 	
 <!-- files with modalwindow, ajax calls etc for easier reading -->
-	<?php echo $this->renderPartial('//site/modal_login'); ?> 
+	<?php echo $this->renderPartial('//site/modal_login'); ?>
 	<?php //echo $this->renderPartial('//site/modal_create');?>
 
 <!-- ********************************************************  -->

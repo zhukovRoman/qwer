@@ -42,7 +42,7 @@ return array(
 		
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool	
-/*&		'rights'=>array(
+/*		'rights'=>array(
 				'debug'=>true,
 				//'install'=>true,
 				'enableBizRuleData'=>true,
@@ -176,6 +176,8 @@ return array(
 		),
 			
 		'user'=>array(
+			'class' => 'WebUser',
+				
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 			
@@ -185,11 +187,18 @@ return array(
 			'loginUrl'=>array('site/login'),
 		),
 			
-//		'authManager'=>array( 
-//			'class'=>'RDbAuthManager', // Provides support authorization item sorting.
-//			'defaultRoles' => array('Guest') // дефолтная роль
-//		),
+/*		'authManager'=>array( 
+			'class'=>'RDbAuthManager', // Provides support authorization item sorting.
+			'defaultRoles' => array('Guest') // дефолтная роль
+		),
+*/
 			
+		'authManager' => array(
+		// Будем использовать свой менеджер авторизации
+				'class' => 'PhpAuthManager',
+				// Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
+				'defaultRoles' => array('guest'),
+		),
 			
 		'ih'=>array(
 			'class'=>'CImageHandler',
