@@ -46,7 +46,7 @@
 
 <?php $this->widget('bootstrap.widgets.BootNavbar', array(
     'fixed'=>false,
-    'brand'=>'<img src="http://fresh-i.ru/templates/skin/simple/images/logo.png">',
+    'brand'=>'<img src="css/img/logo.png">',
     'brandUrl'=>Yii::app()->homeUrl,
     'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(

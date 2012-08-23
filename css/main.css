@@ -13,6 +13,9 @@
   width: 200px;
   position: relative;
 }
+#dateselect > select{
+  width: initial;
+}
 html, body {
   /*background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
   background: #eee;
@@ -86,6 +89,14 @@ body {
 }
 .black-a:hover {
   color: #0b8e36;
+  text-decoration: none;
+}
+.green-a {
+  color: #0b8e36;
+  text-decoration: none;
+}
+.green-a:hover {
+  color: #236b20;
   text-decoration: none;
 }
 .photo-border {
@@ -183,14 +194,15 @@ body {
 
 /*Экстеншены*/
 /*навбар, переопределение бутстрапа c магией*/
-.dropdown:hover .dropdown-menu{
-  display: block;   
+.dropdown:hover .dropdown-menu {
+  display: block;
+  top: 20px;
+}
+ul.pull-right li.dropdown:hover .dropdown-menu{   
   top: 53px; 
-  left: 14px;
 }
 ul.nav-head li.dropdown:hover ul.dropdown-menu{  
   top: 32px; 
-  left: 0;
 }
 a.menu:after, .dropdown-toggle:after {
   content: none;
@@ -373,7 +385,7 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
   text-align: left;
   height:26px;
 }
-.main-carousel .item > img {
+.main-carousel .carousel-inner .item > a > img {
   margin-top: -1px;
   height: 292px;
   width: 455px;
