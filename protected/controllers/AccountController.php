@@ -643,7 +643,7 @@ class AccountController extends Controller
 					$model->fb_id = null;
 					break;
 					/* ----------------------------------------------- */
-				case Account::SCENARIO_TWITTER:
+				case Account::SCENARIO_TWITTER:	
 					$model->tw_url = null;
 					$model->tw_id = null;
 					break;
@@ -653,19 +653,27 @@ class AccountController extends Controller
 					$model->ok_id = null;
 					break;
 			}
-			// Проверка данных
-			if($model->validate())
+			
+			// Определяем возможность удаления аккаунта 
+			//	* У пользователя нет стандартного аккаунта и все аккаунты стали пусты
+			if ((empty($model->mail) || empty($model->password)) && (($model->vk_id || $model->fb_id || $model->tw_id) == null)) 
+				Yii::app()->user->setFlash('error', 'Ошибка! Вы не можете удалить данный аккаунт.');
+			else 
 			{
-				// Сохранить полученные данные
-				// false нужен для того, чтобы не производить повторную проверку
-				$model->save(false);
-
-				// Направляем в профиль
-				$this->redirect(array('view','id'=>$model->id));
+				// Проверка данных
+				if($model->validate())
+				{
+					// Сохранить полученные данные
+					// false нужен для того, чтобы не производить повторную проверку
+					$model->save(false);
+	
+					// Направляем в профиль
+					$this->redirect(array('view','id'=>$model->id));
+				}
 			}
 		}
 
-		$this->render('update', array('model'=>$model));
+		$this->redirect(array('view','id'=>$model->id));//$this->render('view', array('model'=>$model));
 	}
 	
 	/**
