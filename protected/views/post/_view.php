@@ -1,7 +1,7 @@
 <li class="main-view content-border">
 	<div class="main-view-top">
 		<?php echo CHtml::link(CHtml::encode($data->title), 
-			array('/post/view', 'id'=>$data->id), array('class'=>'black-a'));?>
+			array('/post/view', 'id'=>$data->id), array('class'=>'black-a ellipsis'));?>
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).

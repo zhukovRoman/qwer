@@ -30,7 +30,7 @@ jQuery(function($){
     });
 
     //Aттач формы
-    $('.button-replay').click(function() {
+    $(document).on('click', '.button-replay', function() {
         var id = this.id.slice(13);
         $('.def-pos-form').hide();
         $('#comment-form').appendTo($('#reply-'+id));
