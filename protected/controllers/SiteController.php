@@ -142,10 +142,10 @@ class SiteController extends Controller
 					if (empty($account))
 					{	
 						// Выводим модальное окно с вопросом о существовании аккаунта
-						//$authIdentity->redirect(Yii::app()->createUrl('site/newaccount', array('service' => $service)));
+						$authIdentity->redirect(Yii::app()->createUrl('site/newaccount', array('service' => $service)));
 
-						$this->render('new_account', array('service' => $service));
-						return;
+						//$this->render('new_account', array('service' => $service));
+						//return;
 						//$this->render('new_account');
 						//return;
 					}

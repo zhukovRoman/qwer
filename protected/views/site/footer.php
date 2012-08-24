@@ -3,7 +3,7 @@ All Rights Reserved.<br/>
 
 <?php  
 
-echo Yii::app()->user->role;
+/*echo Yii::app()->user->role;
 
 if(Yii::app()->user->checkAccess('administrator'))
 {
@@ -11,6 +11,6 @@ if(Yii::app()->user->checkAccess('administrator'))
 	echo "hello, I'm administrator";
 	//echo $params["Account"]->id;
 	
-}
+}*/
 
 ?>

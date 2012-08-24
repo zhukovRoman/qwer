@@ -156,7 +156,12 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	}
 	
 	$contacts = array();
-	if (!empty($model->phone))  array_push($contacts, 'phone');
+	
+	// Почту могут видеть только администраторы
+	if (Yii::app()->user->checkAccess('administrator'))
+		if (!empty($model->mail)) array_push($contacts, 'mail');
+	
+	if (!empty($model->phone)) array_push($contacts, 'phone');
 	array_push($contacts, setValue($model, Account::SCENARIO_VKONTAKTE));
 	array_push($contacts, setValue($model, Account::SCENARIO_FACEBOOK));
 	array_push($contacts, setValue($model, Account::SCENARIO_TWITTER));

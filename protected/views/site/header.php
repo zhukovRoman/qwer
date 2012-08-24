@@ -7,9 +7,9 @@
 	array_push($bar,'---');
 	if (!Yii::app()->user->isGuest) 
 	{
-		array_push($bar,array('label'=>'Rights', 'url'=>array( '/rights' ),
+		//array_push($bar,array('label'=>'Rights', 'url'=>array( '/rights' ),
 				//'visible'=>Yii::app()->user->checkAccess(Rights::module()->superuserName ) 
-		));
+		//));
 		
 		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
 							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));
