@@ -364,7 +364,6 @@ class SiteController extends Controller
         ->load($url.$end)
         ->thumb(500, 330 ,true)
         ->save(false,false,99);
-        //echo "dsfa"; die();
         $size = getimagesize ($url.$end);
 
         Yii::app()->ih
