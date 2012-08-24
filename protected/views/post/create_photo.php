@@ -1,21 +1,37 @@
-    <div style="display:block;">
+    <div style="display:none;">
         <?php echo $form->textAreaRow($model, 'code', array(' class'=>'span5', 'rows'=>10)); ?>
     </div>
-   <div class="control-group ">
+   <div class="control-group">
          <label class="control-label required" >
              Фото: <span class="required">*</span>
          </label>
          <div class="controls">
             <div id="widget_photoset" >
-                
-                <!-- загрузчик -->
-            
-            <div id="img-container">    
+            <?php  
+                $this->widget('ext.EAjaxUpload.EAjaxUpload',
+                    array(
+                    'id'=>'uploadphotoset',
+                    'config'=>array(
+                        'multiple'=>true,
+                        'action'=>Yii::app()->createUrl('post/photoItemUpload'),
+                        'allowedExtensions'=>array("jpg", "jpeg"),//array("jpg","jpeg","gif","exe","mov" and etc...
+                        'sizeLimit'=>10*1024*1024,// maximum file size in bytes
+                        'minSizeLimit'=>5*1024,// minimum file size in bytes
+                        'onComplete'=>"js:function(id, fileName, responseJSON)
+                            { 
+                               photoset_upload_compleate(responseJSON.code);
+                            }",
+                        'messages'=>array(
+                                            'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
+                                            'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",
+                                            'minSizeError'=>"{file} is too small, minimum file size is {minSizeLimit}.",
+                                            'emptyError'=>"{file} is empty, please select files again without it.",
+                                            'onLeave'=>"The files are being uploaded, if you leave now the upload will be cancelled."
+                                            ),
+                        'showMessage'=>"js:function(message){ alert(message); }"
+                        )
+                    )); ?> 
             </div>
-            <div class="form-photo">
-                    <input type="file" name="my-pic" id="file-field" />
-            </div>
-            </div> 
              <div id="all_photos">
                 <?php  
                    
@@ -35,7 +51,6 @@
              </div>
          </div>
     </div>
-    <a id="upload-all" class="btn">Завершить выбор фото</a>
     <hr>
     
     <?php echo $form->textAreaRow($model, 'text', array(' class'=>'span8', 'rows'=>10, 'id'=>"redactor")); ?>

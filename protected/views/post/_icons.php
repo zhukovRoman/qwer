@@ -28,7 +28,7 @@ if (Yii::app()->user->getId()) {
             } else { 
     //  если статья не в избранном
 
-                echo CHtml::ajaxLink('<i class="icon-heart black-a" 
+                echo CHtml::ajaxLink('<i class="icon-heart green-a" 
                                     rel="tooltip" 
                                     title="добавить в избранное">'.$model->favourite_count.'</i>', 
                     Yii::app()->createUrl('post/favorite'), array(

@@ -12,7 +12,8 @@
 <?php $this->renderPartial('raiting',array(
   'model'=>$model,
 )); ?>    
-Блок поделиться? лайки <br>
-
-
+<?php $this->renderPartial('_soc',array(
+  'model'=>$model,
+)); ?>  
+<br>
 </div>
