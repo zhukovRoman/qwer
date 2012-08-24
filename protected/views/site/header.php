@@ -11,10 +11,11 @@
 				//'visible'=>Yii::app()->user->checkAccess(Rights::module()->superuserName ) 
 		//));
 		
-		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
-							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));
+/*		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
+							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));*/
 				
-		array_push($bar, array('label'=> Yii::app()->user->name,//Account::model()->findByPk(Yii::app()->user->getId())->login, 
+		array_push($bar, array('label'=> "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
+                 'url'=> array('/account/view', 'id' => Yii::app()->user->getId()),//Account::model()->findByPk(Yii::app()->user->getId())->login, 
 							   'items'=>array(
 										array('label'=> Account::model()->findByPk(Yii::app()->user->getId())->login),
 										'---',

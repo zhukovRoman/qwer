@@ -35,7 +35,7 @@
         <div class="arrow-up black-a"><i class=" icon-arrow-up"></i></div>
     </div>
     <div class="footer">
-        <div class="span5 offset5">
+        <div class="offset2 span10">
           <?php include "protected/views/site/footer.php";?>
         </div>
     </div>

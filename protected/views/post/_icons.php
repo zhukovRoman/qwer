@@ -1,13 +1,11 @@
 <i class="icon-user" rel="tooltip" title="автор"></i>
-<b><?php echo CHtml::link($model->author->login, 
+<b title="Автор"><?php echo CHtml::link($model->author->login, 
     Yii::app()->createUrl('account/view',
     array ("id"=>$model->author->id))); ?>
 </b>
 &nbsp;
-<i class="icon-time" rel="tooltip" title="дата публикации"></i>
-<?php echo date ("d/m/Y", strtotime($model->time_add));?>
+<i class="icon-time" rel="tooltip" title="дата публикации"><?php echo date ("d/m/Y", strtotime($model->time_add));?></i>
 &nbsp;
-<i class="icon-star" rel="tooltip" title="рейтинг"><?php echo $model->getraiting();?> </i>
 <i class="icon-comment" rel="tooltip" title="число комментариев"><?php echo  $model->comment_count;?> </i>
 <i class="icon-eye-open" rel="tooltip" title="число просмотров"><?php echo  $model->view_count;?> </i>
 <?php 
@@ -44,3 +42,4 @@ if (Yii::app()->user->getId()) {
                                     title="Чтобы добавить в избранное, авторизуйтесь"></i>';
     ?>
 
+<i class="icon-star" rel="tooltip" title="рейтинг"><?php echo $model->getraiting();?> </i>

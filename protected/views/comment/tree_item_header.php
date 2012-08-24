@@ -1,5 +1,5 @@
 
-<div class="bg-gray content-border">
+<div class="bg-grey content-border">
     <img src="<?php echo "uploads/" . $model->author->id . "/25x25.jpg" ?>" 
          class="userpic-comment" width="25" height="25">
          <?php echo Chtml::link($model->author->login, array('/account/view', 'id' => $model->author->id));

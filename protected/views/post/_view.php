@@ -5,8 +5,12 @@
 		<?php 
 			echo CHtml::link(
 					CHtml::image($data->preview_url).
-						"<div><span>".CHtml::encode(mb_substr($data->subtitle, 0, 150, 'utf-8')).'...'.
-									"</span></div>", 
+						"<div>
+						<span>"
+						.CHtml::encode(mb_substr($data->subtitle, 0, 80, 'utf-8')).
+						'...<hr>'
+						.CHtml::encode($data->category->name).
+						"</span></div>", 
 						array('/post/view', 'id'=>$data->id)); 
 		?>
 	</div>
