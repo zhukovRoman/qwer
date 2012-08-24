@@ -1,11 +1,4 @@
 /* общие */
-.ads {
-  width: 190px;
-  margin-top: 2px;
-  float: right;
-  margin-left: -10px;
-  font-size: 11px;
-}
 .fix-tabs {
   height: 400px;
 }
@@ -17,7 +10,7 @@
   width: initial;
 }
 html, body {
-  /*background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
+/*  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
   background: #eee;
 }
 a.promo-link {
@@ -169,8 +162,15 @@ body {
 .article-title h1 {
   padding: 8px;
 }
+.article-title .description {
+  display: none;
+  padding: 20px;
+}
 .article-title h3 span {
   font-weight: normal;
+}
+.article-title .subcat {
+  float: left;
 }
 .article-content {
   margin-top: 20px;
@@ -387,7 +387,7 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 }
 .main-carousel .carousel-inner .item > a > img {
   margin-top: -1px;
-  height: 292px;
+  height: 293px;
   width: 455px;
 }
 
