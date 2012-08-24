@@ -42,15 +42,16 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 	 * This method is required by {@link IUserIdentity}.
 	 * @return boolean whether authentication succeeds.
 	 */
-	public function authenticate() {		
+	public function authenticate() 
+	{		
 		if ($this->service->isAuthenticated) 
 		{
 			$this->id = $this->service->id;
 			$this->name = $this->service->getAttribute('name');
-			
-			$this->setState('id', $this->id);
-			$this->setState('name', $this->name);
-			$this->setState('service', $this->service->serviceName);
+		
+		//	$this->setState('id', $this->id);
+		//	$this->setState('name', $this->name);
+		//	$this->setState('service', $this->service->serviceName);
 			
 			$this->errorCode = self::ERROR_NONE;		
 		}

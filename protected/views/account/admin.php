@@ -13,10 +13,10 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
+/*$this->menu=array(
 	array('label'=>'List Account','url'=>array('index')),
 	array('label'=>'Create Account','url'=>array('create')),
-);
+);*/
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -53,11 +53,47 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'type'=>'striped bordered condensed',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-	'columns'=>array(
-		'id',
-		'login',
+	'columns'=>array(		
+		
+		// 1. Идентификатор пользователя
+		array(
+                'name' => "id",
+                'value' => '$data->id',
+                //'filter' => CHtml::listData(Category::model()->findAll('parent_id=0'), 'id', 'name'),
+                'sortable' => true,
+                'htmlOptions'=>array('width'=>'40px'),
+        ),	
+		
+		// 2. Ссылка на профиль
+		array(
+				'class'=> 'CLinkColumn',
+				'header'=> 'Пользователь',
+                'labelExpression'=>'$data->login',
+                'urlExpression'=>'Yii::app()->createUrl("/account/view", array("id"=>$data["id"]))',
+				//'sortable' => true,     
+		),
+
+		// 3. Статус //'status_id',
+		array(
+				'name' => "status_id",
+				'value' => '$data->status->name',
+				'filter' => CHtml::listData(UserStatus::model()->findAll(), 'id', 'name'),
+				'sortable' => true,
+			),
+			
+			
+		// 4. Рейтинг // 
+		'rating',
+
+		// 5. Баланс // 
+		'balance',
+
+		// 6. IP-адрес 
+		'user_ip',
+			
+		//	'login',
 		//'password',
-		'mail',
+		//'mail',
 		//'avatar_url',
 		//'first_name',
 		//'last_name',
@@ -68,12 +104,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		//'birth_date',
 		//'phone',
 		//'about',
-		'status_id',
-		'rating',
-		'balance',
+		
+		
+		
 		//'register_date',
 		//'last_login',
-		'user_ip',
+		
 		//'activate_key',
 		//'newpass_key',
 		//'referral',

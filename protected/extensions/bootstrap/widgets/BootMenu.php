@@ -153,7 +153,7 @@ class BootMenu extends BootBaseMenu
 			else
 				$item['linkOptions']['class'] = 'dropdown-toggle';
 
-			$item['linkOptions']['data-toggle'] = 'dropdown';
+	/*		$item['linkOptions']['data-toggle'] = 'dropdown';*/
 			$item['label'] .= ' <span class="caret"></span>';
 		}
 

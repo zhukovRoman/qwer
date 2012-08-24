@@ -7,9 +7,9 @@
 	array_push($bar,'---');
 	if (!Yii::app()->user->isGuest) 
 	{
-		array_push($bar,array('label'=>'Rights', 'url'=>array( '/rights' ),
+		//array_push($bar,array('label'=>'Rights', 'url'=>array( '/rights' ),
 				//'visible'=>Yii::app()->user->checkAccess(Rights::module()->superuserName ) 
-		));
+		//));
 		
 		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
 							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));
@@ -37,7 +37,7 @@
 	}
 	else
 	{
-		array_push($bar, array('label'=>'Войти', // 'url'=>array('/site/login/'),));//
+		array_push($bar, array('label'=>'Войти', // 'url'=>array('/site/login/'),));//modal_login
 							   'url'=>'#modal_login', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary')));
 		array_push($bar, '---');
 		array_push($bar, array('label'=>'Регистрация', 'url'=>array('/account/signup/'), 'visible'=>Yii::app()->user->isGuest));
@@ -46,7 +46,7 @@
 
 <?php $this->widget('bootstrap.widgets.BootNavbar', array(
     'fixed'=>false,
-    'brand'=>'<img src="http://fresh-i.ru/templates/skin/simple/images/logo.png">',
+    'brand'=>'<img src="css/img/logo.png">',
     'brandUrl'=>Yii::app()->homeUrl,
     'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(
@@ -91,7 +91,7 @@
 
 	
 <!-- files with modalwindow, ajax calls etc for easier reading -->
-	<?php echo $this->renderPartial('//site/modal_login'); ?> 
+	<?php echo $this->renderPartial('//site/modal_login'); ?>
 	<?php //echo $this->renderPartial('//site/modal_create');?>
 
 <!-- ********************************************************  -->

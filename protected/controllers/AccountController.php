@@ -11,7 +11,7 @@ class AccountController extends Controller
 	/**
 	 * @return array action filters
 	 */
-	public function filters()
+/*	public function filters()
 	{
 		return array(
 			'accessControl',//'rights',// // perform access control for CRUD operations
@@ -23,12 +23,34 @@ class AccountController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
+/*	public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','signup','activation','selectlogin','update','passrecovery','selectpass', 
-									'update', 'avatarload', 'avatardelete', 'userpic','admin', 'linking', 'unlinking'),
+				'actions'=>array(
+						'index',			// 1. Просмотр всех пользователей
+						
+						'view',				// 2. Просмотр профиля пользователя
+						'update',			// 3. Обновление информации о пользователи
+						'create',			// 4. Создание пользователя
+						
+						'signup',			// 5. Регистрация
+						'activation',		// 6. Активация аккаунта
+						'selectlogin',		// 7. Выбор логина
+						
+						'passrecovery',		// 8. Восстановление пароля
+						'selectpass',		// 9. Выбор пароля	
+						 			
+						'avatarload',		// 10. Загрузка аватара 
+						'avatardelete', 	// 11. Удаление аватара
+						'userpic',			// 12. Редактирование миниатюры
+
+						'linking', 			// 13. Привязка аккаунта соц.сети
+						'unlinking',		// 14. Отвязка аккаунта соц.сети
+						
+						'admin', 			// 15. Администрирование пользователя
+						'delete'			// 16. Удаление пользователя 
+				),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -67,6 +89,9 @@ class AccountController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		if (!Yii::app()->user->checkAccess('createAccount'))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		if(isset($_POST['Account']))
 		{
 			$model->attributes=$_POST['Account'];
@@ -90,7 +115,11 @@ class AccountController extends Controller
 		//$model->scenario = '';//Account::SCENARIO_UPDATE; 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		
+		if (!Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+			
+		
 		if(isset($_POST['Account']))
 		{
 			$model->attributes=$_POST['Account'];
@@ -128,6 +157,9 @@ class AccountController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+		if (!Yii::app()->user->checkAccess('deleteAccount'))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
@@ -146,6 +178,9 @@ class AccountController extends Controller
 	 */
 	public function actionIndex()
 	{
+		if (!Yii::app()->user->checkAccess('indexAccount'))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		$dataProvider=new CActiveDataProvider('Account');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
@@ -156,9 +191,13 @@ class AccountController extends Controller
 	 * Manages all models.
 	 */
 	public function actionAdmin()
-	{
+	{	
+		if (!Yii::app()->user->checkAccess('adminAccount'))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+				
 		$model=new Account('search');
 		$model->unsetAttributes();  // clear any default values
+		
 		if(isset($_GET['Account']))
 			$model->attributes=$_GET['Account'];
 
@@ -173,6 +212,9 @@ class AccountController extends Controller
 		// Создать модель и указать ей, что используется сценарий регистрации
 		$model = new Account(Account::SCENARIO_SIGNUP);
 	
+		//if (!Yii::app()->user->isGuest)
+		//	throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		// В случае запроса аякс-валидации
 		if(isset($_POST['ajax']) && $_POST['ajax']==='account-form')
 		{
@@ -234,7 +276,7 @@ class AccountController extends Controller
 					
 					if ($account->loginByActivationCode())	// Если пользователь аутентифицирован
 					{
-						$model->status_id = $userId;		// Изменяем статус пользователя
+						//$model->status_id = $userId;		// Изменяем статус пользователя
 						$model->activate_key = 'activated'; // Убираем ключ из базы
 						$model->last_login = date('Y-m-d H:i:s');
 						$model->save();						// Сохраняем изменения
@@ -267,6 +309,9 @@ class AccountController extends Controller
 		$model = Account::model()->findByPk($id);
 		$model->scenario = Account::SCENARIO_SELECTLOGIN;
 		
+		if (!Yii::app()->user->checkAccess('selectOwnLogin', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		// В случае запроса аякс-валидации
 		if(isset($_POST['ajax']) && $_POST['ajax']==='selectlogin-form')
 		{
@@ -279,6 +324,8 @@ class AccountController extends Controller
 		{
 			// Безопасное присваивание значений атрибутам
 			$model->attributes = $_POST['Account'];
+			// Изменяем статус пользователя
+			$model->status_id = UserStatus::model()->findByAttributes(array ('name' => Account::ROLE_USER))->id;		
 			
 			// Проверка данных
 			if($model->validate())
@@ -394,6 +441,9 @@ class AccountController extends Controller
 		//echo $model->avatar_url;	
 		//die();
 		
+		if (!Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		if(isset($_POST['params']))
 		{
 			if ($_POST['params'] == 'submit')
@@ -423,6 +473,9 @@ class AccountController extends Controller
 	public function actionUserpic($id)
 	{
 		$model = $this->loadModel($id);
+		
+		if (!Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
 		
 		if(isset($_POST['params']))
 		{
@@ -464,6 +517,9 @@ class AccountController extends Controller
 		$model = $this->loadModel($id);
 		$model->scenario = Account::SCENARIO_LINKING;
 		
+		if (!Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		if (file_exists(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME))
 			unlink(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME);
 		if (file_exists(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME))
@@ -475,6 +531,9 @@ class AccountController extends Controller
 	{
 		$model = $this->loadModel($id); // !!! СЦЕНАРИЙ !!!  и валидация для него! (Уникальность)
 		$model->scenario = Account::SCENARIO_LINKING;
+		
+		if (!Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
 		
 		if (isset($service))
 		{
@@ -566,6 +625,9 @@ class AccountController extends Controller
 		$model = $this->loadModel($id); // !!! СЦЕНАРИЙ !!!  и валидация для него! (Уникальность)
 		//$model->scenario = Account::SCENARIO_LINKING;
 	
+		if (!Yii::app()->user->checkAccess('updateOwnAccount', array('Account' => $model)))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+		
 		if (isset($service))
 		{
 			switch($service)
@@ -581,7 +643,7 @@ class AccountController extends Controller
 					$model->fb_id = null;
 					break;
 					/* ----------------------------------------------- */
-				case Account::SCENARIO_TWITTER:
+				case Account::SCENARIO_TWITTER:	
 					$model->tw_url = null;
 					$model->tw_id = null;
 					break;
@@ -591,19 +653,27 @@ class AccountController extends Controller
 					$model->ok_id = null;
 					break;
 			}
-			// Проверка данных
-			if($model->validate())
+			
+			// Определяем возможность удаления аккаунта 
+			//	* У пользователя нет стандартного аккаунта и все аккаунты стали пусты
+			if ((empty($model->mail) || empty($model->password)) && (($model->vk_id || $model->fb_id || $model->tw_id) == null)) 
+				Yii::app()->user->setFlash('error', 'Ошибка! Вы не можете удалить данный аккаунт.');
+			else 
 			{
-				// Сохранить полученные данные
-				// false нужен для того, чтобы не производить повторную проверку
-				$model->save(false);
-
-				// Направляем в профиль
-				$this->redirect(array('view','id'=>$model->id));
+				// Проверка данных
+				if($model->validate())
+				{
+					// Сохранить полученные данные
+					// false нужен для того, чтобы не производить повторную проверку
+					$model->save(false);
+	
+					// Направляем в профиль
+					$this->redirect(array('view','id'=>$model->id));
+				}
 			}
 		}
 
-		$this->render('update', array('model'=>$model));
+		$this->redirect(array('view','id'=>$model->id));//$this->render('view', array('model'=>$model));
 	}
 	
 	/**

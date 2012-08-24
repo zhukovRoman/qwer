@@ -81,6 +81,9 @@ class SiteController extends Controller
 	 */
 	public function actionLogin($linkService = null)
 	{	
+		// Если пользователь уже залогинин - выкидываем его
+		if (!Yii::app()->user->isGuest) $this->redirect(Yii::app()->createUrl('account/view', array('id' => Yii::app()->user->getId()))); //(Yii::app()->baseUrl);
+		
 		// 1. В случае входа для привязки аккаунта, выводим сообщение
 		$linking = Yii::app()->request->getQuery('linkService');	
 		if (isset($linking)) Yii::app()->user->setFlash('warning', 'Уважаемый пользователь! Для того, чтобы привязать аккаунт к уже существующему, войдите в него');
@@ -141,16 +144,19 @@ class SiteController extends Controller
 						// Выводим модальное окно с вопросом о существовании аккаунта
 						$authIdentity->redirect(Yii::app()->createUrl('site/newaccount', array('service' => $service)));
 
+						//$this->render('new_account', array('service' => $service));
+						//return;
 						//$this->render('new_account');
 						//return;
 					}
 					// Логинимся
+					Yii::app()->user->setId($account->id);
 					Yii::app()->user->login($identity);
 					Yii::app()->user->setId($account->id);
 					Yii::app()->user->setState('name', $account->login);
 					
 					// специальное перенаправления для корректного закрытия всплывающего окна	
-					if (!empty($linkService))
+					if (isset($linking))
 					{
 						//echo $linkService; die();
 						$authIdentity->redirect(Yii::app()->createUrl('account/linking', array('id' => $account->id, 'service' => $linkService)));
@@ -164,9 +170,8 @@ class SiteController extends Controller
 				}
 			}
 			// авторизация не удалась, перенаправляем на страницу входа
-			if (!empty($linkService)) 
-					$this->redirect(array('site/login', 'linkService' => $linkService));
-					else $this->redirect(array('site/login'));
+			if (isset($linking)) $this->redirect(array('site/login', 'linkService' => $linkService)); 
+			$this->redirect(array('site/login'));
 		}
 
 		
@@ -180,16 +185,14 @@ class SiteController extends Controller
 			{
 				//echo $linkService; die();
 				
-				if (!empty($linkService))
-					$this->redirect(Yii::app()->createUrl('account/linking', array('id' => Yii::app()->user->getId(), 'service' => $linkService)));
+				if (isset($linking)) $this->redirect(Yii::app()->createUrl('account/linking', array('id' => Yii::app()->user->getId(), 'service' => $linkService)));
 				$this->redirect(Yii::app()->user->returnUrl);	
 			}
 			else
 			{
 				//Yii::app()->user->setFlash('login', 'Login error');
-				if (!empty($linkService)) 
-					$this->redirect(array('site/login', 'linkService' => $linkService));
-					else $this->redirect(array('site/login'));
+				if (isset($linking)) $this->redirect(array('site/login', 'linkService' => $linkService));
+				$this->redirect(array('site/login'));
 			}
 		}
 		// display the login form
@@ -225,7 +228,7 @@ class SiteController extends Controller
 		$account = new Account($service);
 		$account->mail = '';
 		$account->password = '';
-		$account->status_id = 3;
+		$account->status_id = 4;
 		$account->register_date = date('Y-m-d H:i:s');
 		$account->last_login = date('Y-m-d H:i:s');
 		
