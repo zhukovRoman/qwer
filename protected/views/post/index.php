@@ -19,6 +19,6 @@ $this->menu=array(
 <?php echo $this->renderPartial('_carousel', array('dataProvider'=>$dataProvider));?>
   <div class="clearfix"></div>
   <hr>
-  <div class="row" style="padding-left: 3px">
+  <div class="row">
     <?php echo $this->renderPartial('_tabs', array('dataProvider'=>$dataProvider));?>
   </div>  

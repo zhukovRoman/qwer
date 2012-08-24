@@ -7,8 +7,6 @@ Yii::app()->getClientScript()->registerCssFile('js/redactor/redactor/css/redacto
 Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
 Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CClientScript::POS_HEAD);
 Yii::app()->getClientScript()->registerCssFile('css/fileuploader/uploader.css');
-Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.damnUploader.js", CClientScript::POS_HEAD);
-Yii::app()->clientScript->registerScriptFile("js/uploadphoto.js", CClientScript::POS_HEAD);
 ?>
 
 <?php

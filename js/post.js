@@ -26,7 +26,7 @@ function postfavsuccess(data){
         if (resp.direction=='in'){    
             _this = $('.icon-heart');
             _this.addClass('gray-a');
-            _this.removeClass('black-a');
+            _this.removeClass('green-a');
             var i = _this.html();
             i++;
             _this.html(i);
@@ -34,7 +34,7 @@ function postfavsuccess(data){
             notify(resp.description, 'success');
         } else {
             _this.removeClass('gray-a');
-            _this.addClass('black-a');
+            _this.addClass('green-a');
             var i = _this.html();
             i--;
             _this.html(i);
