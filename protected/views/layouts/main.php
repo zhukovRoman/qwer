@@ -8,6 +8,7 @@
 <head>
   <meta charset="utf-8">
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+  <link href="css/favicon.ico" rel="shortcut icon">
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap-yii.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/fontawesome/font-awesome.css" />
@@ -34,10 +35,10 @@
         </div>
         <div class="arrow-up black-a"><i class=" icon-arrow-up"></i></div>
     </div>
-    <div class="footer content-border">
-        <div class="offset2 span10">
-          <?php include "protected/views/site/footer.php";?>
-        </div>
+    <div class="footer">
+      <div class="offset2 span10">
+        <?php include "protected/views/site/footer.php";?>
+      </div>
     </div>
   </div>  
 <!-- <a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a> -->
@@ -54,7 +55,7 @@
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
-<!-- <script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script> -->
+<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>
 </body>
 </html>
 
