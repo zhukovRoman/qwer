@@ -109,6 +109,22 @@ body {
 .bg-grey {
   background: #eee;
 }
+.bg-black {
+  background-image: linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -o-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -moz-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -webkit-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -ms-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.39, rgb(31,30,31)),
+    color-stop(0.62, rgb(23,23,23)),
+    color-stop(0.2, rgb(33,33,33))
+  );
+}
 .color-grey {
   color: #999;
 }
@@ -215,7 +231,6 @@ a.menu:after, .dropdown-toggle:after {
   height: 50px;
 }
 .nav-head{
-  background: #333;
   padding: 3px 5px;
   margin: 0;
 }
@@ -253,7 +268,6 @@ a.menu:after, .dropdown-toggle:after {
 .navbar-search {
   right: 6px;
   padding:10px 8px 0 10px;
-  background: #333;
   top: 49px;
   float: right;
   margin-top: -10px;

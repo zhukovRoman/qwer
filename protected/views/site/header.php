@@ -79,12 +79,12 @@
         ),
     ),
 )); ?>
-<form class="navbar-search pull-right span2" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
+<form class="navbar-search pull-right span2 bg-black" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
 <!-- 	<div id="mainmenu">	 -->
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
 	    'stacked'=>false, // whether this is a stacked menu
-		'htmlOptions'=>array('class'=>'nav-head span12'),
+		'htmlOptions'=>array('class'=>'nav-head span12 bg-black'),
 	    'items'=>  Category::getCategories(),
 	)); ?>
 <div style="clear:both"></div>
