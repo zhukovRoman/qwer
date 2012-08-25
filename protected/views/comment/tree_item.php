@@ -43,6 +43,8 @@
                 'size' => 'mini',
                 'label' => 'Спам',
                 'htmlOptions' => array(
+                    'id' => 'spam-btn',
+                    'class'=>'spam-btn',
                     'ajax' => array(
                         'type' => 'POST',
                         'data' => "js:'id-comment='+$model->id",
@@ -61,6 +63,8 @@
                 'size' => 'mini',
                 'label' => 'Удалить',
                 'htmlOptions' => array(
+                    'id' => 'delete-btn',
+                    'class'=>'delete-btn',
                     'ajax' => array(
                         'type' => 'POST',
                         'data' => "js:'id-comment='+$model->id",

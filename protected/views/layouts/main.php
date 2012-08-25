@@ -18,10 +18,10 @@
   <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/vendor/jquery-ui.min.js"></script>
 </head>
 <body>
-<div class="wrap">
+<div>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <?php include "protected/views/layouts/_modal.php";?>
-  <div id="pos" class="container content-border">
+  <div class="container content-border wrap">
     <div class="header">
       <?php include "protected/views/site/header.php";?>
     </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="arrow-up black-a"><i class=" icon-arrow-up"></i></div>
     </div>
-    <div class="footer">
+    <div class="footer content-border">
         <div class="offset2 span10">
           <?php include "protected/views/site/footer.php";?>
         </div>
@@ -54,7 +54,7 @@
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
-<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>
+<!-- <script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script> -->
 </body>
 </html>
 

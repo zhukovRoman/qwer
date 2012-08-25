@@ -2,10 +2,10 @@
 .fix-tabs {
   height: 400px;
 }
-.left-column {
+/*.left-column {
   width: 200px;
   position: relative;
-}
+}*/
 #dateselect > select{
   width: initial;
 }
@@ -13,7 +13,7 @@ html, body {
 /*  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
   background: #eee;
 }
-a.promo-link {
+/*a.promo-link {
   display: block;
   position: fixed;
   top: 0;
@@ -22,7 +22,7 @@ a.promo-link {
   text-decoration: none;
   width: 100%;
   height: 100%;
-}
+}*/
 #content {
   margin: -3px;
 }
@@ -47,11 +47,9 @@ body {
   height: 200px;
   padding: 20px;
 }
-.wrap {
+
+.wrap{
   margin: 0 auto;
-  min-width: 960px;
-}
-#pos{
   position: relative; 
   /* z-index: 1;*/
   /*margin-top: 210px;*/
@@ -95,13 +93,15 @@ body {
 .photo-border {
   border-radius: 4px;
   margin: 3px;
-  /*float: left; */
   border: solid 7px #333;
 }
 .content-border {
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
- /* padding: 5px;*/
+  -webkit-box-shadow: 4px;
+  -moz-box-shadow: 4px;
+  box-shadow:0 0 10px 1px rgba(0,0,0,.05);
+  -webkit-box-shadow:0 0 10px 1px rgba(0,0,0,.05);
+  -moz-box-shadow:0 0 10px 1px rgba(0,0,0,.05);
 }
 .help-inline {
   color: red;
@@ -131,8 +131,7 @@ body {
   margin-top: 10px;
 }
 .comment-body {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 10px 10px 10px;
 }
 #comment-form {
   margin-top: 10px;
@@ -409,7 +408,7 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 }
 
 /*загрузчик фоток*/
-#upload-all {
+/*#upload-all {
   display: none;
 }
 .progress {
@@ -420,4 +419,4 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
   background-image: url('img/pbar_bgr.png');
   background-repeat: no-repeat;
   background-position: -150px center;
-}
+}*/

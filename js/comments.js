@@ -55,6 +55,29 @@ jQuery(function($){
         }
     });
 
+    //Индикация кнопок Удалить и Спам
+
+    $(document).on('click', '#delete-btn', function() {
+        $(this).closest('.comment-body').animate({height:"hide"}, 250);
+        notify('Удалено', 'error');
+    });
+
+    $(document).on('click', '#spam-btn', function() {
+        $(this).closest('.comment-body').animate({height:"hide"}, 250);
+        notify('Отправлено с спам', 'warning');
+    });
+
+    $('.delete-btn').click(function() {
+        $(this).closest('.comment-body').animate({height:"hide"}, 250);
+        notify('Удалено', 'error');
+    });
+
+    $('.spam-btn').click(function() {
+        $(this).closest('.comment-body').animate({height:"hide"}, 250);
+        notify('Отправлено с спам', 'warning');
+    });
+
+
 });
  
 function getcomment(data){
@@ -108,3 +131,6 @@ function flashvotesucces (text, id)
         $('#vote-success-'+id).hide(); // call the reset function
     }, 5000);
 };
+function show_preview (data) {
+  
+}
