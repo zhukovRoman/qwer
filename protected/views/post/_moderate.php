@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="span3">
+    <div class="span1 offset1">
         <?php echo ($model->status_id==1)? "на модерации!" : ""; ?>
         <?php echo ($model->status_id==10)? "Архив!" : ""; ?>
         <?php echo ($model->status_id==3)? "Черновик!" : ""; ?>
     </div>
-    <div class="span6" style="float:right">
+    <div class="span7" style="float:right">
         <?php 
         $this->widget('bootstrap.widgets.BootButton', array(
             'label'=>'Редактировать',
