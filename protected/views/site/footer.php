@@ -1,5 +1,34 @@
-Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-All Rights Reserved.<br/>
+<div class="span3">
+  <h4>бабушка</h4>
+  <ul class="items">
+    <li>sdafsa</li>
+    <li>fasdfasd</li>
+    <li>asdfasd</li>
+    <li>asdfasd</li>
+    <li>asfsd</li>
+  </ul>
+</div>
+<div class="span3">
+  <h4>бабушка</h4>
+  <ul class="items">
+    <li>sdafsa</li>
+    <li>fasdfasd</li>
+    <li>asdfasd</li>
+    <li>asdfasd</li>
+    <li>asfsd</li>
+  </ul>
+</div>
+<div class="span3">
+  <h4>бабушка</h4>
+  <ul class="items">
+    <li>sdafsa</li>
+    <li>fasdfasd</li>
+    <li>asdfasd</li>
+    <li>asdfasd</li>
+    <li>asfsd</li>
+  </ul>
+</div>
+
 
 <?php  
 

@@ -1,11 +1,25 @@
 /* общие */
+i{
+  font-style: normal;
+}
+.brand {
+  background: url("img/logo.png");
+  width: 104px;
+  height: 26px;
+}
+.brand:hover {
+  background: url("img/logo_old.png");
+}
 .fix-tabs {
   height: 400px;
 }
-.left-column {
+.showtree {
+  cursor: pointer;
+}
+/*.left-column {
   width: 200px;
   position: relative;
-}
+}*/
 #dateselect > select{
   width: initial;
 }
@@ -13,7 +27,7 @@ html, body {
 /*  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
   background: #eee;
 }
-a.promo-link {
+/*a.promo-link {
   display: block;
   position: fixed;
   top: 0;
@@ -22,7 +36,7 @@ a.promo-link {
   text-decoration: none;
   width: 100%;
   height: 100%;
-}
+}*/
 #content {
   margin: -3px;
 }
@@ -30,7 +44,7 @@ body {
   min-height: 100%;
   height: auto !important;
   position: relative;
-  padding-top: 45px; 
+  padding-top: 15px; 
 }
 .main {
   min-width: 960px;
@@ -44,14 +58,15 @@ body {
   color: white;
   position: relative;
   background: #333;
-  height: 50px;
+  height: 200px;
   padding: 20px;
+  margin: 0 -20px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
-.wrap {
+
+.wrap{
   margin: 0 auto;
-  min-width: 960px;
-}
-#pos{
   position: relative; 
   /* z-index: 1;*/
   /*margin-top: 210px;*/
@@ -85,29 +100,52 @@ body {
   text-decoration: none;
 }
 .green-a {
-  color: #0b8e36;
+  color: #399C72;
   text-decoration: none;
 }
 .green-a:hover {
-  color: #236b20;
+  color: #0b8e36;
   text-decoration: none;
 }
 .photo-border {
   border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
   margin: 3px;
-  /*float: left; */
   border: solid 7px #333;
 }
 .content-border {
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
- /* padding: 5px;*/
+  -webkit-box-shadow: 4px;
+  -moz-box-shadow: 4px;
+  -o-box-shadow: 4px;
+  box-shadow:0 0 10px 1px rgba(0,0,0,.05);
+  -webkit-box-shadow:0 0 10px 1px rgba(0,0,0,.05);
+  -moz-box-shadow:0 0 10px 1px rgba(0,0,0,.05);
+  -o-box-shadow:0 0 10px 1px rgba(0,0,0,.05);
 }
 .help-inline {
   color: red;
 }
 .bg-grey {
   background: #eee;
+}
+.bg-black {
+  background-image: linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -o-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -moz-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -webkit-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+  background-image: -ms-linear-gradient(bottom, rgb(31,30,31) 39%, rgb(23,23,23) 62%, rgb(33,33,33) 20%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.39, rgb(31,30,31)),
+    color-stop(0.62, rgb(23,23,23)),
+    color-stop(0.2, rgb(33,33,33))
+  );
 }
 .color-grey {
   color: #999;
@@ -131,8 +169,7 @@ body {
   margin-top: 10px;
 }
 .comment-body {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 10px 10px 10px;
 }
 #comment-form {
   margin-top: 10px;
@@ -191,7 +228,6 @@ body {
   padding:15px 0 5px;
 }
 
-
 /*Экстеншены*/
 /*навбар, переопределение бутстрапа c магией*/
 .dropdown:hover .dropdown-menu {
@@ -212,26 +248,37 @@ a.menu:after, .dropdown-toggle:after {
   margin: 0 50px;
 }
 .userpic {
-  position: absolute;
   margin-top: -20px;
   width: 50px;
   height: 50px;
-  left: 20px;
-}
-.nav-head{
-  background: #333;
-  padding: 3px 5px;
-  margin: 0;
 }
 .nav-head >li >a {
   color: white;
 }
-.nav-pills {
-  margin-left: -20px;
-  padding: 9px 20px;
+.nav-head {
+  position: relative;
+  margin-left: -30px;
+  padding: 9px 26px;
+}
+.nav-head:before, h1:after{
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-color: transparent;
+  bottom: -10px;
+}
+.nav-head:before {
+  border-width: 0 10px 10px 0;
+  border-right-color: #222;
+  left: -0.1em;
+}
+.nav-head:after {
+  border-width: 0 0 100px 100px;
+  border-left-color: red;
+  right: 0;
 }
 .navbar {
-  margin: 10px 0 0 0;
+  margin: 10px 0 -23px 0;
 }
 .navbar .pull-right{
  /* background: white;*/
@@ -241,12 +288,10 @@ a.menu:after, .dropdown-toggle:after {
   font-size: 22px;
 }
 .navbar .nav > li > a {
-  margin-top: 25px;
-  color: #333;
+  margin-top: 20px;
+  /*color: #333;*/
 }
-.navbar .nav > li > a:hover {
-  color: #0b8e36;
-}
+
 .nav-head.nav > li > a:hover {
   color: #333;
 }
@@ -257,10 +302,10 @@ a.menu:after, .dropdown-toggle:after {
 .navbar-search {
   right: 6px;
   padding:10px 8px 0 10px;
-  background: #333;
   top: 49px;
   float: right;
   margin-top: -10px;
+  z-index: 1;
 }
 
 /*главаная*/
@@ -310,6 +355,8 @@ ul.items li.main-view .main-view-top a div span {
   font-weight: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+  position: absolute;
+  bottom: 0;
 }
 
 .main-view-bottom {
@@ -410,7 +457,7 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
 }
 
 /*загрузчик фоток*/
-#upload-all {
+/*#upload-all {
   display: none;
 }
 .progress {
@@ -421,4 +468,4 @@ ul.items li.main-view .main-view-top a .da-slideLeft {
   background-image: url('img/pbar_bgr.png');
   background-repeat: no-repeat;
   background-position: -150px center;
-}
+}*/

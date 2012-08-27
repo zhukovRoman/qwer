@@ -11,10 +11,11 @@
 				//'visible'=>Yii::app()->user->checkAccess(Rights::module()->superuserName ) 
 		//));
 		
-		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
-							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));
+/*		array_push($bar, array('label' => "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
+							   'url'=> array('/account/view', 'id' => Yii::app()->user->getId())));*/
 				
-		array_push($bar, array('label'=> Yii::app()->user->name,//Account::model()->findByPk(Yii::app()->user->getId())->login, 
+		array_push($bar, array('label'=> "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
+                 'url'=> array('/account/view', 'id' => Yii::app()->user->getId()),//Account::model()->findByPk(Yii::app()->user->getId())->login, 
 							   'items'=>array(
 										array('label'=> Account::model()->findByPk(Yii::app()->user->getId())->login),
 										'---',
@@ -46,7 +47,7 @@
 
 <?php $this->widget('bootstrap.widgets.BootNavbar', array(
     'fixed'=>false,
-    'brand'=>'<img src="css/img/logo.png">',
+    'brand'=>' ',
     'brandUrl'=>Yii::app()->homeUrl,
     'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(
@@ -78,12 +79,12 @@
         ),
     ),
 )); ?>
-<form class="navbar-search pull-right span2" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
+<form class="navbar-search pull-right span2 bg-black" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
 <!-- 	<div id="mainmenu">	 -->
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
 	    'stacked'=>false, // whether this is a stacked menu
-		'htmlOptions'=>array('class'=>'nav-head span12'),
+		'htmlOptions'=>array('class'=>'nav-head span12 bg-black'),
 	    'items'=>  Category::getCategories(),
 	)); ?>
 <div style="clear:both"></div>

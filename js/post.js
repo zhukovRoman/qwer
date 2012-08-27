@@ -9,7 +9,8 @@ function postvotesuccess(data)
     else 
     {
         notify(resp.description, 'success');
-        $('#post-rating').html(resp.code);
+        $('.icon-star').html(resp.code);
+        $('.post-rating').hide();
     }
 }
 

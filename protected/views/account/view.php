@@ -38,8 +38,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 			    'type'=>'list',
 			    'items'=>array(
 			    	array('label'=>'Редактировать профиль', 'icon'=>'pencil', 'url'=>array('update', 'id'=>$model->id)),
-			    	array('label'=>'Изменить фотографию', 'icon' => 'camera','url'=>'#', 'items'=>array(
-				        array('label'=>'Обновить фотографию', 'icon'=>'arrow-up', 'url'=>'#AvatarLoad', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',)),
+			    	array('label'=>'Изменить фотографию', 'icon' => 'camera','url'=>'#AvatarLoad', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary'), 'items'=>array(
 				        array('label'=>'Удалить фотографию', 'icon'=>'remove', 'url'=>'#AvatarDelete', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path))),
 				        array('label'=>'Изменить миниатюру', 'icon'=>'move', 'url'=>'#UserPic', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary',), 'visible' => (file_exists($path)),),
 			    	)),

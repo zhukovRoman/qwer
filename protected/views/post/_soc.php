@@ -1,9 +1,16 @@
 <!-- AddThis Button BEGIN -->
-<div class="addthis_toolbox addthis_default_style ">
-<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-<a class="addthis_button_tweet"></a>
-<a class="addthis_button_pinterest_pinit"></a>
-<a class="addthis_counter addthis_pill_style"></a>
+<div class="clearfix"></div>
+<div class="icons">
+  <p>Поделиться:</p>
+  <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+    <a class="addthis_button_vk"></a>
+    <a class="addthis_button_facebook"></a>
+    <a class="addthis_button_twitter"></a>
+    <a class="addthis_button_mymailru"></a>
+    <a class="addthis_button_odnoklassniki_ru"></a>
+    <a class="addthis_counter addthis_pill_style"></a>
+
+  </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-5037903823b3362a"></script>
+  <!-- AddThis Button END -->
 </div>
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-5037903823b3362a"></script>
-<!-- AddThis Button END -->
