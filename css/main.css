@@ -25,7 +25,8 @@ i{
 }
 html, body {
 /*  background: #ee7f85 url('panas_pink.jpg') no-repeat 50% 0;*/
-  background: #eee;
+background: #DFE0E2 url('img/background.jpg');
+  /*background: #eee;*/
 }
 /*a.promo-link {
   display: block;
@@ -114,6 +115,10 @@ body {
   -o-border-radius: 4px;
   margin: 3px;
   border: solid 7px #333;
+}
+.green-border {
+  margin:  10px 0;
+  border: solid 9px #399C72;
 }
 .content-border {
   border-radius: 4px;

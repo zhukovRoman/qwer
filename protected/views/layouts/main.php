@@ -4,11 +4,14 @@
 <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <title><?php echo CHtml::encode($this->pageTitle); ?></title>
   <link href="css/favicon.ico" rel="shortcut icon">
+  <link rel="apple-touch-icon" href="css/favicon.png">
+  <meta charset="utf-8">
+  <meta name="Keywords" content="fresh-i, freshi, mkrv, дануче, поэты "/> 
+  <meta name="description" content="Fresh-i — новости моды, музыки, кино, дизайна. Афиша мероприятий. Фотографии. Луки.">
+  <meta name="viewport" content="width=1024">
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap-yii.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/fontawesome/font-awesome.css" />
@@ -17,6 +20,7 @@
   <![endif]--> 
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
   <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/vendor/jquery-ui.min.js"></script>
+  <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
 <div>
