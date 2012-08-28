@@ -1,8 +1,8 @@
 <div class="span9 content-border">
   <h1>Прямой эфир</h1>
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#discussed" data-toggle="tab">Лучшие высказывания</a></li>
-    <li><a href="#best" data-toggle="tab">Обсуждаемое</a></li>
+    <li class="active"><a href="#discussed" data-toggle="tab">Комментируемые посты</a></li>
+    <li><a href="#best" data-toggle="tab">Лучшие комменты</a></li>
 <!--     <li><a href="#afisha" data-toggle="tab">Афиша</a></li>
     <li><a href="#babushka" data-toggle="tab">Бабушка Пушкина</a></li>
     <li><a href="#life" data-toggle="tab">Start-Up Life</a></li> -->
