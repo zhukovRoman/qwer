@@ -82,7 +82,9 @@ class SiteController extends Controller
 	public function actionLogin($linkService = null)
 	{	
 		// Если пользователь уже залогинин - выкидываем его
-		if (!Yii::app()->user->isGuest) $this->redirect(Yii::app()->createUrl('account/view', array('id' => Yii::app()->user->getId()))); //(Yii::app()->baseUrl);
+		if (!Yii::app()->user->isGuest) 
+                    $this->redirect(Yii::app()->createUrl('account/view',
+                            array('id' => Yii::app()->user->getId()))); //(Yii::app()->baseUrl);
 		
 		// 1. В случае входа для привязки аккаунта, выводим сообщение
 		$linking = Yii::app()->request->getQuery('linkService');	

@@ -6,7 +6,7 @@ class AccountController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	//public $layout='//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -84,14 +84,14 @@ class AccountController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Account;
+		
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if (!Yii::app()->user->checkAccess('createAccount'))
 			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
-		
+		$model=new Account;
 		if(isset($_POST['Account']))
 		{
 			$model->attributes=$_POST['Account'];
@@ -124,7 +124,9 @@ class AccountController extends Controller
 		{
 			$model->attributes=$_POST['Account'];
 			ActiveDateSelect::sanitize($model, 'birth_date');
-		
+                        $purifier = new CHtmlPurifier();
+                        
+                        $model->about = $purifier->purify($_POST['Account']['about']);;
 
 			//$model->first_name=$_POST['Account']['first_name'];
 			
@@ -780,4 +782,50 @@ class AccountController extends Controller
 		// Отправляем письмо 
 		mail($to, $subject, $message, $headers);
 	}
+        
+        public function actionfav($id)
+        {
+            $model = $this->loadModel($id);
+            $criteria = new CDbCriteria(array(
+                'with' => array('favourites'),
+                'condition'=>"status_id=5 AND favourites.user_id=$id",
+                'order' => 'time_add',
+            ));    
+
+            $dataProvider = new CActiveDataProvider('account', array(
+                        'pagination' => array(
+                            'pageSize' => 11,
+                        ),
+                        'criteria' => $criteria ));
+            $this->render('/account/posts', array(
+                    'dataProvider' => $dataProvider,
+                    'model'=>$model,
+            ));
+        }
+        
+        public function actionCreated($id)
+        {
+            $model = $this->loadModel($id);
+            if ($id == Yii::app()->user->getId()){
+                    $criteria = new CDbCriteria(array(
+                    'condition'=>"author_id = $id",
+                    'order' => 'time_add',
+                ));    
+            } else {
+                $criteria = new CDbCriteria(array(
+                    'condition'=>"status_id=5 AND author_id = $id",
+                    'order' => 'time_add',
+                ));    
+            }
+
+            $dataProvider = new CActiveDataProvider('Post', array(
+                        'pagination' => array(
+                            'pageSize' => 6,
+                        ),
+                        'criteria' => $criteria ));
+            $this->render('/account/posts', array(
+                    'dataProvider' => $dataProvider,
+                    'model'=>$model,
+            ));
+        }
 }

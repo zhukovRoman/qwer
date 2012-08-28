@@ -16,7 +16,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	'enableAjaxValidation'=>true,
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
-			'validateOnSubmit'=>true,
+			'validateOnSubmit'=>false,
 			'validateOnChange'=>true,
 	),
 )); ?>
@@ -224,7 +224,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 </fieldset> 
 
 	<div class="form-actions">
-	    <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType'=>'submit', 'type'=>'primary', 'icon'=>'ok white', 'label'=>'Сохранить')); ?>
+	    <?php $this->widget('bootstrap.widgets.BootButton', array('buttonType'=>'submit', 'type'=>'primary', 'icon'=>'ok white', 'label'=>'Сохранить', 'htmlOptions'=>array('id' =>'update-btn'))); ?>
 	    <?php $this->widget('bootstrap.widgets.BootButton', array('icon'=>'remove', 'label'=>'Вернуться в профиль', 'url'=>array('view','id'=>$model->id),)); ?>
 	</div>
 	 
@@ -233,7 +233,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 <!-- --------------------------------------------------------------------- -->
 <!-- --------------------------------AvatarLoad--------------------------- -->
 <!-- --------------------------------------------------------------------- -->
-
+<?php if (false) {  // я убрал модалки отсюда.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?> 
 <?php $this->beginWidget('bootstrap.widgets.BootModal', array('id'=>'AvatarLoad')); ?>
  
 <div class="modal-header">
@@ -434,3 +434,4 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 </div>
  
 <?php $this->endWidget(); ?>
+<?php } ?>

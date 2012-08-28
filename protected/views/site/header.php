@@ -20,9 +20,13 @@
 										array('label'=> Account::model()->findByPk(Yii::app()->user->getId())->login),
 										'---',
 										array('label'=>'Профиль', 'url'=> array('/account/view', 'id' => Yii::app()->user->getId())),
-										array('label'=>'Созданное', 'url'=>'#'),
-										array('label'=>'Избранное', 'url'=>'#'),
-										array('label'=>'Подписки', 'url'=>'#'),
+										array('label'=>'Созданное', 'url'=>Yii::app()->
+                                                                                                                    createUrl('/account/created',
+                                                                                                                    array ('id'=>Yii::app()->user->getId()))),
+										array('label'=>'Избранное', 'url'=>Yii::app()->
+                                                                                                                    createUrl('/account/fav',
+                                                                                                                    array ('id'=>Yii::app()->user->getId()))),
+										//array('label'=>'Подписки', 'url'=>'#'),
 										'---',
 										array('label'=>'Выйти', 'url'=>array('/site/logout')))));
 		array_push($bar, '---');

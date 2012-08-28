@@ -8,6 +8,7 @@
 <head>
   <meta charset="utf-8">
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+  
   <link href="css/favicon.ico" rel="shortcut icon">
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap-yii.css" />
@@ -55,7 +56,7 @@
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
-<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>
+<!--<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>-->
 </body>
 </html>
 

@@ -43,7 +43,7 @@ class Post extends CActiveRecord {
 
     public $old_tags;
     const APPROVE_STATUS = 5;
-    const DAYS_FOR_BEST = 5;
+    const DAYS_FOR_BEST = 12;
     const COUNT_OF_DISSCUS = 5;
     const DAYS_FOR_DISCUSS = 2;
     /**
@@ -436,14 +436,18 @@ class Post extends CActiveRecord {
     public static function getBest ()
     {
         $f = Post::DAYS_FOR_BEST;
+       
         $criteria = new CDbCriteria;
         $criteria->addCondition ("status_id=:status");
         $criteria->addCondition ("time_moder > now() - interval '$f day'");
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
                                  );  
         $criteria->limit=7;
-        $criteria->order='all_vote_count DESC';
-        return Post::model()->findAll ($criteria);
+        
+        $arr = Post::model()->findAll ($criteria);
+        uasort($arr, "Post::sortByRating");
+        return $arr;
+        
     }
     
     public static function getDiscussed()
@@ -452,10 +456,9 @@ class Post extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->addCondition ("status_id=:status");
         $criteria->addCondition ("time_moder > now() - interval '$f day'");
-        $criteria->limit = Post::COUNT_OF_DISSCUS;
+        $criteria->limit = 2;
         $criteria->order = 'comment_count DESC';
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
-                                   // ':time'=> 2222 
                                  );        
         return Post::model()->findAll ($criteria);
     }
@@ -638,4 +641,13 @@ class Post extends CActiveRecord {
             return ($c == null) ? false : $c;
            
         }
+        
+    public static function sortByRating ($p1, $p2)
+            {
+                $r1 = $p1->getraiting();
+                $r2 = $p2->getraiting();
+                if($r1>$r2) return -1;
+                elseif($r1<$r2) return 1;
+                else return 0;
+            }
 }

@@ -4,7 +4,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'type'=>'horizontal',
 )); ?>
 
-<fieldset class="span9"> 
+<fieldset class="span8"> 
 	<legend><?php echo $model->login; ?></legend>
 
 <?php /* $this->widget('bootstrap.widgets.BootMenu', array(
@@ -14,14 +14,21 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     ),
 ));*/ ?>
 
+
 <?php $this->widget('bootstrap.widgets.BootMenu', array(
     'type'=>'pills',  // '', 'tabs', 'pills' (or 'list')
     'stacked'=>false, // whether this is a stacked menu
     'items'=>array(
-        array('label'=>'Профиль', 'url'=>array('/site/login'), 'active'=>true),
-        array('label'=>'Созданное', 'url'=>'#'),
-        array('label'=>'Избранное', 'url'=>'#'),
-    	array('label'=>'Подписки', 'url'=>'#'),
+       array('label'=>'Профиль', 'url'=>Yii::app()->
+                                            createUrl('/account/view',
+                                                                    array ('id'=>$model->id))),
+        array('label'=>'Созданное', 'url'=>Yii::app()->
+                                            createUrl('/account/created',
+                                                                    array ('id'=>$model->id))),
+        array('label'=>'Избранное','url'=>Yii::app()->
+                                            createUrl('/account/fav',
+                                                                    array ('id'=>$model->id))),
+    	
     ),
 )); ?>
 
@@ -47,7 +54,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 </div>
 
 
-<div class="span4">
+<div class="span5">
 
 <?php $this->widget('bootstrap.widgets.BootAlert'); ?>
 
@@ -329,52 +336,6 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
         array('name'=>'language', 'label'=>'Language'),
     ),
 ));
-*/
-?>
-
-<?php 
-	/*
-	$this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(//$model->safeAttributeNames  
-		
-		//'id',
-		//'login',
-		//'password',
-		//'mail',
-		'avatar_url',
-		'first_name',
-		'last_name',
-		'sex',
-		'country_id',
-		'region_id',
-		'city_id',
-		'birth_date',
-		'phone',
-		'about',
-		'status_id',
-		'rating',
-		'balance',
-		//'register_date',
-		//'last_login',
-		//'user_ip',
-		//'activate_key',
-		//'newpass_key',
-		//'referral',
-		//'badge',
-		'vk_url',
-		'tw_url',
-		//'post_count',
-		//'comment_count',
-		//'friend_count',
-		//'subscribe_count',
-		//'all_vote_count',
-		//'positive_vote_count',
-		//'new_msg_count',
-		//'new_friend_count',
-		
-	),
-)); 
 */
 ?>
 
