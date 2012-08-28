@@ -5,7 +5,9 @@
 <!-- /.crumbs -->
 <br>
 <!-- .moderate -->
-<?php $this->renderPartial('_moderate',array(
+<?php if (Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model))
+        || Yii::app()->user->checkAccess('moderatePost'))
+$this->renderPartial('_moderate',array(
   'model'=>$model,
 )); ?>
 <!-- /.moderate -->

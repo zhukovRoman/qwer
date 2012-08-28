@@ -1,10 +1,11 @@
-<?php if (!Yii::app()->user->isGuest) { ?>
 <legend>
     <?php
     echo ($model->comment_count != 0) ? "Комментарии ($model->comment_count) :" : "Вы можете стать первым!"
     ?>
 
 </legend>
+<?php if (Yii::app()->user->checkAccess('addComment')) { ?>
+
     <div class="btn comment-btn">Написать комментарий</div>
     <div class="def-pos-form">
     <?php

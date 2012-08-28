@@ -1,6 +1,6 @@
 <?php return array(
 /***************************************************************************/
-/*                      	 1. Описание операций                          */
+/*                      	 1. Описание операций                      */
 /***************************************************************************/
 		
 		// 1.1. Просмотр профиля пользователя
@@ -66,6 +66,49 @@
 				'bizRule' => null,
 				'data' => null
 		),
+                // 2 ПОСТЫ
+                //2.1 создание нового материла
+                'createNewPost' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'создание нового материла',
+                            'bizRule' => null,
+                            'data' => null
+		),
+    
+                //2.2 модерация материалов
+                'moderatePost' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'модерация материалов',
+                            'bizRule' => null,
+                            'data' => null
+		),
+                'PostActions' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'добавление в избранное и рейтинг',
+                            'bizRule' => null,
+                            'data' => null
+		),
+    
+                //3. комментарии
+                // 3.1 добавление комментария
+                'addComment' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'добавление комментария',
+                            'bizRule' => null,
+                            'data' => null
+		),
+                'commentVote' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'голосование за комментарии и спам.',
+                            'bizRule' => null,
+                            'data' => null
+		),
+                'commentModeration' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'Модерация комментов',
+                            'bizRule' => null,
+                            'data' => null
+		),
 /***************************************************************************/
 /*                      	   2. Описание задач                           */
 /***************************************************************************/
@@ -90,6 +133,17 @@
 				'bizRule' => 'return Yii::app()->user->id==$params["Account"]->id;',
 				'data' => null
 		),
+    
+                'manageOwnPost' => array(
+                                    'type' => CAuthItem::TYPE_TASK,
+                                    'description' => 'управление своими постами',
+                                    'children' => null,
+                                    'bizRule' => 'return Yii::app()->user->id==$params["Post"]->author_id;',
+                                    'data' => null
+                            ),
+                
+    
+    
 /***************************************************************************/
 /*                      	   3. Описание ролей                           */
 /***************************************************************************/		
@@ -105,7 +159,6 @@
 				'description' => 'Not Activated',
 				'children' => array(
 						'guest', // унаследуемся от гостя
-		
 						//'viewAccount',
 						//'updateOwnAccount',
 						'selectOwnLogin',
@@ -119,9 +172,14 @@
 				'description' => 'User',
 				'children' => array(
 						'guest', // унаследуемся от гостя
-						
 						'viewAccount',
 						'updateOwnAccount',
+                                                'createNewPost',
+                                                'manageOwnPost',
+                                                'PostActions',
+                                                'addComment',
+                                                'commentVote',
+                                                
 				),
 				'bizRule' => null,
 				'data' => null
@@ -132,8 +190,9 @@
 				'description' => 'Moderator',
 				'children' => array(
 						'user',          // позволим модератору всё, что позволено пользователю
-						
+						'moderatePost',
 						'indexAccount',
+                                                'commentModeration',
 					//	'createAccount',
 				),
 				'bizRule' => null,

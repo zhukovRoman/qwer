@@ -12,11 +12,11 @@ class qqUploadedFileXhr {
         $temp = tmpfile();
         $realSize = stream_copy_to_stream($input, $temp);
         fclose($input);
-
+        
         if ($realSize != $this->getSize()){
             return false;
         }
-
+       
         $target = fopen($path, "w");
         fseek($temp, 0, SEEK_SET);
         stream_copy_to_stream($temp, $target);
@@ -45,6 +45,7 @@ class qqUploadedFileForm {
      * @return boolean TRUE on success
      */
     function save($path) {
+      
         if(!move_uploaded_file($_FILES['qqfile']['tmp_name'], $path)){
             return false;
         }
@@ -128,7 +129,7 @@ class qqFileUploader {
         if (!is_writable($uploadDirectory)){
             return array('error' => "Server error. Upload directory isn't writable.");
         }
-
+        
         if (!$this->file){
             return array('error' => 'No files were uploaded.');
         }
@@ -154,6 +155,8 @@ class qqFileUploader {
             $these = implode(', ', $this->allowedExtensions);
             return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');
         }
+        
+       
 
         if(!$replaceOldFile){
             /// don't overwrite previous files that were uploaded
@@ -166,6 +169,9 @@ class qqFileUploader {
         {
             $filename = substr(md5($filename. rand(12, 323). time()),0);
             $filename = $filename."_".rand(0,100);
+            
+            //$size = getimagesize ($_FILES['qqfile']['tmp_name']);
+        //echo $size[0];
         }
         
         if ($this->file->save($uploadDirectory . $filename . '.' .strtolower($ext))){

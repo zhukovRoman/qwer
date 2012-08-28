@@ -6,6 +6,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
 <head>
+  <meta charset="utf-8">
   <link href="css/favicon.ico" rel="shortcut icon">
   <link rel="apple-touch-icon" href="css/favicon.png">
   <meta charset="utf-8">
@@ -19,7 +20,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/fontawesome/font-awesome-ie7.css" /> 
   <![endif]--> 
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-  <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/vendor/jquery-ui.min.js"></script>
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
@@ -47,6 +47,7 @@
   </div>  
 <!-- <a class="promo-link" href="http://ads.adfox.ru/6902/goLink?p1=birgs&amp;p2=v&amp;p5=bkeah&amp;pr=[RANDOM]" target="_blank"></a> -->
 </div>
+ <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/vendor/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/vendor/jquery.scrollto.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/noty/jquery.noty.js"></script>
@@ -59,7 +60,7 @@
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
-<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>
+<!--<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>-->
 </body>
 </html>
 

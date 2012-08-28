@@ -14,9 +14,9 @@ return array(
 					 'bootstrap'
 			),
 		
-		'sourceLanguage'=>'en_US',
-		'language'=>'ru',
-		'charset'=>'utf-8',
+            'sourceLanguage'=>'en_US',
+            'language'=>'ru',
+            'charset'=>'utf-8',
 
 	// autoloading model and component classes
 	'import'=>array(

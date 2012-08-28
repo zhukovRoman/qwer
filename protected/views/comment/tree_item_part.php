@@ -16,69 +16,18 @@
                 echo CHtml::encode('Здесь был спам!');
             }
             if ($model->status_id == 1 || $model->status_id == 4) {
-                     echo CHtml::encode($model->text);
-                 }
+                echo CHtml::encode($model->text);
+            }
             ?>
         </div>
-    <?php if (!(Yii::app()->user->isGuest || $model->status_id == 2)) { ?>
-        <div class="comment-resp">
-            <?php
-            $this->widget('bootstrap.widgets.BootButton', array(
-                'buttonType' => 'button',
-                'type' => 'primary',
-                'size' => 'mini',
-                'label' => 'Oтветить',
-                'htmlOptions' => array(
-                    'id' => 'replay-button' . $model->id,
-                    'class' => 'button-replay',
-                )
-                    )
-            );
-            ?> 
-      <!--       <span id="spam-link-<?php echo $model->id; ?> ">
-                <?php
-                $this->widget('bootstrap.widgets.BootButton', array(
-                'buttonType' => 'button',
-                'type' => 'warning',
-                'size' => 'mini',
-                'label' => 'Спам',
-                'htmlOptions' => array(
-                    'id' => 'spam-btn',
-                    'class'=>'spam-btn',
-                    'ajax' => array(
-                        'type' => 'POST',
-                        'data' => "js:'id-comment='+$model->id",
-                        'url' => Yii::app()->createUrl('comment/spam'),
-                        'update' => '#commentbody-' . $model->id,
-                    ),
-                )
-            ));
-            ?>
-            </span>
-
-            <?php
-            $this->widget('bootstrap.widgets.BootButton', array(
-                'buttonType' => 'button',
-                'type' => 'danger',
-                'size' => 'mini',
-                'label' => 'Удалить',
-                'htmlOptions' => array(
-                    'id' => 'delete-btn',
-                    'class'=>'delete-btn',
-                    'ajax' => array(
-                        'type' => 'POST',
-                        'data' => "js:'id-comment='+$model->id",
-                        'url' => Yii::app()->createUrl('comment/delete'),
-                        'success' => "js:function(data) {show_preview(data);}",
-                    ),
-                )
-            ));
-            ?>  -->
-        </div>
-    <?php }; ?>
+        <?php  $this->renderPartial('/comment/commentButton', 
+                array('model' => $model)); ?>
     </div>
     <div id="reply-<?php echo $model->id; ?>"></div>
-    <?php
+    <?php $this->renderPartial('/comment/tree', array(
+        'comments' => $model->comments,
+        'parent_id' => $model->id));
+    // не выводить у удаленных
     $this->renderPartial('/comment/tree', array(
         'comments' => $model->comments,
         'parent_id' => $model->id));
