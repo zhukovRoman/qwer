@@ -57,12 +57,12 @@ jQuery(function($){
 
     //Индикация кнопок Удалить и Спам
 
-    $(document).on('click', '#delete-btn', function() {
+    $(document).on('click', '.delete-btn', function() {
         $(this).closest('.comment-body').animate({height:"hide"}, 250);
         notify('Удалено', 'error');
     });
 
-    $(document).on('click', '#spam-btn', function() {
+    $(document).on('click', '.spam-btn', function() {
         $(this).closest('.comment-body').animate({height:"hide"}, 250);
         notify('Отправлено с спам', 'warning');
     });

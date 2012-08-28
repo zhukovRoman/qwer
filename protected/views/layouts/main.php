@@ -6,6 +6,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
 <head>
+  <meta charset="utf-8">
   <link href="css/favicon.ico" rel="shortcut icon">
   <link rel="apple-touch-icon" href="css/favicon.png">
   <meta charset="utf-8">
@@ -59,7 +60,7 @@
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
-<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>
+<!--<script src="http://cssrefresh.frebsite.nl/js/cssrefresh.js"></script>-->
 </body>
 </html>
 

@@ -82,7 +82,9 @@ class SiteController extends Controller
 	public function actionLogin($linkService = null)
 	{	
 		// Если пользователь уже залогинин - выкидываем его
-		if (!Yii::app()->user->isGuest) $this->redirect(Yii::app()->createUrl('account/view', array('id' => Yii::app()->user->getId()))); //(Yii::app()->baseUrl);
+		if (!Yii::app()->user->isGuest) 
+                    $this->redirect(Yii::app()->createUrl('account/view',
+                            array('id' => Yii::app()->user->getId()))); //(Yii::app()->baseUrl);
 		
 		// 1. В случае входа для привязки аккаунта, выводим сообщение
 		$linking = Yii::app()->request->getQuery('linkService');	
@@ -367,7 +369,6 @@ class SiteController extends Controller
         ->load($url.$end)
         ->thumb(500, 330 ,true)
         ->save(false,false,99);
-        //echo "dsfa"; die();
         $size = getimagesize ($url.$end);
 
         Yii::app()->ih

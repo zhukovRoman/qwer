@@ -22,9 +22,17 @@
             'size'=>'mini',
             'icon' => 'remove',// '', 'large', 'small' or 'mini'
             'url'=>array('archive','id'=>$model->id),
-        )): ""; ?>
+        )): $this->widget('bootstrap.widgets.BootButton', array(
+                'label'=>'Восстановить',
+                'type'=>'success', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                'size'=>'mini',
+                'icon' => 'repeat',// '', 'large', 'small' or 'mini'
+                'url'=>array('restore','id'=>$model->id),
+            )); ?>
 
         <?php
+        if ( Yii::app()->user->checkAccess('moderatePost'))
+        {
             if ($model->status_id==1){
                 $this->widget('bootstrap.widgets.BootButton', array(
                 'label'=>'Одобрить, но не обновлять',
@@ -40,14 +48,8 @@
                 'icon' => 'time',// '', 'large', 'small' or 'mini'
                 'url'=>array('approvetime','id'=>$model->id),
             )) ;  }
-            ($model->status_id==10)?
-                $this->widget('bootstrap.widgets.BootButton', array(
-                'label'=>'Восстановить',
-                'type'=>'success', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                'size'=>'mini',
-                'icon' => 'repeat',// '', 'large', 'small' or 'mini'
-                'url'=>array('restore','id'=>$model->id),
-            )):"";
+        }
+            
                 ?>
         
     </div>
