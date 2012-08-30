@@ -28,7 +28,7 @@ class Comment extends CActiveRecord {
     const APPROVE_STATUS = 4;
     const START_STATUS = 1;
     const BEST_TIME = 5; // сколько дней для лучшего.
-    const COUNT_OF_LAST = 10;
+    const COUNT_OF_LAST = 5;
     
     static public function createNewComment($text, $parent, $post) {
         $comment = new Comment();
@@ -160,6 +160,20 @@ class Comment extends CActiveRecord {
             'positive_vote_count' => 'Positive Vote Count',
             'status_id' => 'Status',
         );
+    }
+    
+    public function recurseCalc($isRestore=false)
+    {
+        
+        $count = 1;
+        if ($this->status_id==2 && $isRestore=false) return 0;
+        foreach ($this->comments as $comm)
+        {
+            $count =  $count+$comm->recurseCalc();
+            
+        }
+        return $count;
+        
     }
 
     /**

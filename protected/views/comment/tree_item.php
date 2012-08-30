@@ -1,3 +1,3 @@
-<?php if ($model->status_id != 2){
+<?php 
    $this->renderPartial("/comment/tree_item_part", array('model' => $model,));
-}; ?>
+ ?>
