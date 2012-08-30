@@ -25,10 +25,6 @@
  */
 class Comment extends CActiveRecord {
 
-<<<<<<< HEAD
-        
-=======
->>>>>>> dev
     const APPROVE_STATUS = 4;
     const START_STATUS = 1;
     const BEST_TIME = 5; // сколько дней для лучшего.
