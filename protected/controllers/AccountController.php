@@ -786,17 +786,20 @@ class AccountController extends Controller
         public function actionfav($id)
         {
             $model = $this->loadModel($id);
-            $criteria = new CDbCriteria(array(
-                'with' => array('favourites'),
-                'condition'=>"status_id=5 AND favourites.user_id=$id",
-                'order' => 'time_add',
-            ));    
-
-            $dataProvider = new CActiveDataProvider('account', array(
-                        'pagination' => array(
-                            'pageSize' => 11,
+            
+            $criteria=new CDbCriteria;
+	    $criteria->condition = 'user_id=:user AND t.status_id=5';
+	    $criteria->params = array(':user'=>$id);
+	    $criteria->with = array('favourites'=>array('together'=>true));
+	    $criteria -> order = 'favourites.time_add DESC';
+	 
+            $dataProvider = new CActiveDataProvider('Post', array (
+                                'pagination' => array(
+                            'pageSize' => 12,
                         ),
-                        'criteria' => $criteria ));
+                'criteria'=>$criteria ));
+
+          
             $this->render('/account/posts', array(
                     'dataProvider' => $dataProvider,
                     'model'=>$model,
@@ -820,7 +823,7 @@ class AccountController extends Controller
 
             $dataProvider = new CActiveDataProvider('Post', array(
                         'pagination' => array(
-                            'pageSize' => 6,
+                            'pageSize' => 12,
                         ),
                         'criteria' => $criteria ));
             $this->render('/account/posts', array(

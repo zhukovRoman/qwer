@@ -12,13 +12,12 @@ class PostController extends Controller {
 
    public function actionIndex() {
         $dataProvider = new CActiveDataProvider('Post', array(
-                    'pagination' => array(
-                        'pageSize' => 11,
-                    ),
+                    
                     'criteria' => array(
                         #'select'=>''
                         'condition' => 'status_id = 5',
                         'order' => 'time_moder DESC',
+                        'limit' => 8,
                     )
                 ));
         $this->pageTitle="Fresh-i - Главная";
