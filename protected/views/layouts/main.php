@@ -13,6 +13,7 @@
   <meta name="Keywords" content="fresh-i, freshi, mkrv, дануче, поэты "/> 
   <meta name="description" content="Fresh-i — новости моды, музыки, кино, дизайна. Афиша мероприятий. Фотографии. Луки.">
   <meta name="viewport" content="width=1024">
+  <link href='http://fonts.googleapis.com/css?family=Comfortaa:700&subset=cyrillic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap/bootstrap-yii.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/fontawesome/font-awesome.css" />

@@ -43,10 +43,10 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     <?php echo $form->checkBoxRow($model, 'rememberMe'); ?>
     
         <?php $this->widget('bootstrap.widgets.BootButton', array(
-    		'buttonType'=>'submit', 
-    		'type'=>'primary', 
+    		'buttonType'=>'submit',  
     		'icon'=>'ok white', 
     		'label'=>'Войти',
+        'size' => 'large'
         		
         	//'url' => array('site/login'),
     	)
@@ -57,10 +57,9 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 </div> 
 
 <div class="modal-footer">
-    <h4>Войти, как пользователь:</h4>
-    <br>
+    <h4 style="float:left">Войти, как пользователь:</h4>
+    <hr>
 	<?php $this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login', 'popup' => true )); ?>
-	
 </div>
 <?php $this->endWidget(); ?>
 <?php $this->endWidget(); ?>
