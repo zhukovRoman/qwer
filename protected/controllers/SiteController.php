@@ -444,7 +444,10 @@ class SiteController extends Controller
         {
            
             $purifier = new CHtmlPurifier();
-            $purifier->options = array('HTML.SafeIframe'=>true, 'URI.SafeIframeRegexp'=>'%^http://(www.youtube.com/embed/|player.vimeo.com/video/)%');
+            $purifier->options = array('HTML.SafeIframe'=>true, 
+                'URI.SafeIframeRegexp'=>'%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player/)%');
+                //'URI.SafeIframeRegexp'=>'%^http://(www.youtube.com/embed/|player.vimeo.com/video/)%');
+            
             // $purifier->options = array();
             echo $purifier->purify($_POST['text']);
             

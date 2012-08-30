@@ -2,7 +2,7 @@
   'model'=>$model,
 )); ?>
 <div class="article-video">
-  <?php echo ($model->code); ?>
+  <?php echo $model->decodeVideLink (); ?>
 </div>
 <br>
 <div class="article-content content-border span8">
