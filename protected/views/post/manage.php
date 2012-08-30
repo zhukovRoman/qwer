@@ -1,3 +1,4 @@
+<?php $this->renderPartial ('/admin/header'); ?>
 <div class="span9">
     <?php
     //Yii::app()->clientScript->registerScript('search', "

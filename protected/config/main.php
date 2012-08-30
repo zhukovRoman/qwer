@@ -58,7 +58,7 @@ return array(
 				),
 			'password'=>'123',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('192.168.10.201','::1'),
+			'ipFilters'=>array('192.168.10.31','::1'),
 				
 			'generatorPaths'=>array(
 					'bootstrap.gii', // since 0.9.1

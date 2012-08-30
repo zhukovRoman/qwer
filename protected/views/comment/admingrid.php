@@ -1,6 +1,7 @@
 <?php $this->widget('bootstrap.widgets.BootGridView',array(
 	'id'=>'comment-grid',
 	'dataProvider'=>$model->searchModer($status),
+    'type'=>'striped bordered condensed',
 	'filter'=>$model,
 	'columns'=>array(
              array(

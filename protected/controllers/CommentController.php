@@ -53,7 +53,7 @@ class CommentController extends Controller {
 
     public function actionManage ($status=0) {
         
-        if (!Yii::app()->user->checkAccess('commentModeration', array('Account' => $model)))
+        if (!Yii::app()->user->checkAccess('commentModeration'))
 			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
         $model = new Comment('search');
         $model->unsetAttributes();  // clear any default values

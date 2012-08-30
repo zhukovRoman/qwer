@@ -1,3 +1,4 @@
+<?php $this->renderPartial ('/admin/header'); ?>
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id'=>'horizontalForm',
@@ -31,8 +32,6 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
-<h1>Manage Accounts</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -127,6 +126,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		
 		array(
 			'class'=>'bootstrap.widgets.BootButtonColumn',
+                        'template' => '{view}',
 			'htmlOptions'=>array('style'=>'width: 50px'),
 		),
 	),

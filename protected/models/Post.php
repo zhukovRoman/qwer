@@ -487,6 +487,18 @@ class Post extends CActiveRecord {
         }
     }
 
+    public static function getSpecProj()
+    {
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ("status_id=:status");
+        $criteria->addCondition("important_flag=true");
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,
+                                 );  
+        
+        
+        return  Post::model()->find($criteria);
+        
+    }
     /**
      * @return array relational rules.
      */

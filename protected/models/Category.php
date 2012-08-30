@@ -38,12 +38,12 @@ class Category extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('parent_id, order', 'required'),
+            array('parent_id, description,name', 'required'),
             array('parent_id, order', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 50),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, parent_id, name, order', 'safe', 'on' => 'search'),
+            
         );
     }
 
@@ -65,9 +65,9 @@ class Category extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'parent_id' => 'Parent',
-            'name' => 'Name',
-            'order' => 'Order',
+            'parent_id' => 'Вложена',
+            'name' => 'Название',
+            'order' => 'Порядок',
         );
     }
 
@@ -128,6 +128,12 @@ class Category extends CActiveRecord {
             );
         }
         return $res;
+    }
+    
+    public function getNameParent($id)
+    {
+        $par = $this->getParent($this);
+        return ($par==null) ? "Без категории":$par->name;
     }
 
 }

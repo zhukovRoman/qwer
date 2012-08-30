@@ -1,36 +1,30 @@
-<div class="form">
+<?php
+/** @var BootActiveForm $form */
+$form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
+    'id' => 'horizontalForm',
+    'type' => 'horizontal',
+        ));
+?>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'category-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<fieldset>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+    <legend><?php echo ($model->isNewrecord)? "Создать категорию" : "редактировать категорию"; ?> </legend>
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php echo $form->textFieldRow($model, 'name'); ?>
+    <?php
+    $data = Post::getCategories();
+    $data[0] = 'Без родителя';
+    echo $form->dropDownListRow($model, 'parent_id', $data);
+    ?>
+<?php echo $form->textAreaRow($model, 'description', array('class' => 'span6', 'rows' => 5)); ?>
+<?php echo $form->textFieldRow($model, 'order'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'parent_id'); ?>
-		<?php echo $form->textField($model,'parent_id'); ?>
-		<?php echo $form->error($model,'parent_id'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'name'); ?>
-	</div>
+</fieldset>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'order'); ?>
-		<?php echo $form->textField($model,'order'); ?>
-		<?php echo $form->error($model,'order'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+<div class="form-actions">
+<?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'submit', 'type' => 'primary', 'icon' => 'ok white', 'label' => 'Сохранить')); ?>
+<?php $this->widget('bootstrap.widgets.BootButton', array('buttonType' => 'reset', 'icon' => 'remove', 'label' => 'Reset')); ?>
+</div>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->

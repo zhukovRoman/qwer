@@ -2,6 +2,7 @@
   $this->widget('bootstrap.widgets.BootGridView',array(
 	'id'=>'post-grid',
         'dataProvider' => $model->searchModer($status),
+        'type'=>'striped bordered condensed',
         'filter' => $model,
         'columns' => array(
             
@@ -48,7 +49,7 @@
             
             array(
                 'class'=>'bootstrap.widgets.BootButtonColumn',
-                'template' => '{update}{view}{approve}',
+                'template' => '{update}{view}{approve}{important}',
                 'buttons' => array(
                     'approve' => array (
                         'label'=>'approve',
@@ -58,10 +59,14 @@
                     'time'=> array(
                         'label'=>'app and time',
                         'ajax' => true,
-                        'click' =>  'function(){alert (123);}',
+                        'click' =>'function(){alert (123);}',
                         'icon'=>"time",
-                    )
                     ),
+                    'important'=> array(
+                        'label'=>'it is important',
+                        'icon'=>"thumbs-up",
+                        'url' =>  'Yii::app()->createUrl("post/important", array ("id"=>$data->id));',
+                    ),),
                 'htmlOptions'=>array('width'=>'70px'),
             ),
             
