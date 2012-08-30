@@ -75,29 +75,18 @@ class Comment extends CActiveRecord {
 
     public static function getBest ()
     {
-<<<<<<< HEAD
     $d = Comment::BEST_TIME;
-=======
-        $d = Comment::BEST_TIME;
->>>>>>> dev
         $criteria = new CDbCriteria;
         $criteria->addCondition ( "status_id=:status");
         $criteria->addCondition('status_id=:status1', 'OR');
         $criteria->addCondition ("time_add < now() - interval '$d day'");
         $criteria->params = array(':status' => Comment::APPROVE_STATUS,
-<<<<<<< HEAD
-        ':status1' => Comment::START_STATUS,
-
-    ); 
-    return Comment::model()->findAll ($criteria);
-=======
                                     ':status1' => Comment::START_STATUS,
                                    
                                  );
         $criteria->order="all_vote_count-positive_vote_count";
         $criteria->limit=5;
         return Comment::model()->findAll ($criteria);
->>>>>>> dev
     }
     
     /**
