@@ -126,8 +126,16 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		
 		array(
 			'class'=>'bootstrap.widgets.BootButtonColumn',
-                        'template' => '{view}',
+                        'template' => '{view}{chng_role}',
 			'htmlOptions'=>array('style'=>'width: 50px'),
+                        'buttons' => array(
+                            'chng_role' => array (
+                                'label'=>'chng_role',
+                                'url' =>  'Yii::app()->createUrl("account/chrole",
+                                    array ("id"=>$data->id));',
+                                'icon'=>"ban-circle",
+                                ),
+                            )
 		),
 	),
 )); ?>

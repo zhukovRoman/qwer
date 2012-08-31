@@ -80,15 +80,15 @@ return array(
 			)
 		),
 		'search' => array(
-            'class' => 'application.components.DGSphinxSearch',
-            'server' => '127.0.0.1',
-            'port' => 3312,
-            'maxQueryTime' => 3000,
-            'enableProfiling'=>0,
-            'enableResultTrace'=>0,
-            'fieldWeights' => array(
-                'name' => 10000,
-                'keywords' => 100,
+                'class' => 'application.components.DGSphinxSearch.DGSphinxSearch',
+                'server' => 'localhost',
+                'port' => 3312,
+                'maxQueryTime' => 3000,
+                'enableProfiling'=>0,
+                'enableResultTrace'=>0,
+                'fieldWeights' => array(
+                    'tag' => 10000,
+                    'text' => 100,
             ),
      ),
 		'loid' => array(

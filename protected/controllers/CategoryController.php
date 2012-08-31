@@ -38,10 +38,12 @@ class CategoryController extends Controller
                 )
                     
                     );
-
+        $model = $this->loadModel($id);
+        $tmp = $model->getNameParent($model->id)."->".$model->name;
+        $this->pageTitle="Fresh-i - $tmp";  
         $this->render('view', array(
             'dataProvider' => $dataProvider,
-            'category' =>Category::model()->findByPk($id)
+            'category' =>$model
         ));
 	
 	}
@@ -62,7 +64,8 @@ class CategoryController extends Controller
                 )
                     
                     );
-
+        $model = $this->loadModel($id);   
+        $this->pageTitle="Fresh-i - $model->name";  
         $this->render('view', array(
             'dataProvider' => $dataProvider,
             'category' =>Category::model()->findByPk($id)

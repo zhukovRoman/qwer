@@ -3,8 +3,10 @@
 		<?php echo CHtml::link(CHtml::encode($data->title), 
 			array('/post/view', 'id'=>$data->id), array('class'=>'black-a ellipsis'));?>
 		<?php 
+                     $url = $data->preview_url;
+                     if ($url=="" || !file_exists($url)) $url=Post::DEF_URL;
 			echo CHtml::link(
-					CHtml::image($data->preview_url).
+					CHtml::image($url).
 						"<div>
 						<span>"
 						.CHtml::encode(mb_substr($data->subtitle, 0, 80, 'utf-8')).

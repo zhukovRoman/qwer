@@ -1,4 +1,7 @@
-<h1><img src="<?php echo "images/category/$category->name.jpg";?>"><?php echo $category->name;?></h1>
+<h1>
+<!--    <img src="<?php echo "images/category/$category->name.jpg";?>">-->
+    <?php echo $category->name;?>
+</h1>
       <div class="article-title">
         <a class="subcat" href="#">Подробнее</a>
         <hr>

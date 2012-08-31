@@ -42,6 +42,20 @@ class SiteController extends Controller
 		$this->render('index');
 	}
 
+        public function actionSearch ($q)
+        {
+            $text = $q;
+            $searchCriteria = new stdClass();
+            $searchCriteria->select = 'id';
+            $searchCriteria->filters = array('id' => 114);
+           // $searchCriteria->query = '@name '.$query.'*';
+            $searchCriteria->from = 'post';
+            $resIterator = Yii::App()->search->search($searchCriteria); // interator result
+            /* OR */
+            $resArray = Yii::App()->search->searchRaw($searchCriteria); // array result
+            
+            echo count($resArray); die();
+        }
 	/**
 	 * This is the action to handle external exceptions.
 	 */

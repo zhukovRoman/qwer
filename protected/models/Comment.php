@@ -164,15 +164,28 @@ class Comment extends CActiveRecord {
     
     public function recurseCalc($isRestore=false)
     {
-        
-        $count = 1;
-        if ($this->status_id==2 && $isRestore=false) return 0;
-        foreach ($this->comments as $comm)
+        if (!$isRestore)
         {
-            $count =  $count+$comm->recurseCalc();
-            
+            $count = 1;
+            if ($this->status_id==2) return 0;
+            foreach ($this->comments as $comm)
+            {
+                $count =  $count+$comm->recurseCalc();
+
+            }
+            return $count;
         }
-        return $count;
+        //подсчет при восстановлении коммента
+        else {
+          $count = 1;
+          if ($this->status_id==2) return 0;
+          foreach ($this->comments as $comm)
+            {
+                $count =  $count+$comm->recurseCalc();
+
+            }
+            return $count;
+        }
         
     }
 
@@ -202,7 +215,7 @@ class Comment extends CActiveRecord {
                 ));
     }
     
-     public function searchModer($status) {
+    public function searchModer($status) {
         
         $criteria = new CDbCriteria;
         if($status!=0)
