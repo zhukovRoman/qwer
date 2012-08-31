@@ -2,6 +2,26 @@
 	if (!Yii::app()->user->isGuest) $src = $path; else $src='';
 	if (!file_exists($path)) $src = Account::ACCOUNT_DIR . Account::DEFAULT_DIR . Account::AVATAR_NAME; 
 	
+      $menu = array(
+                array('label'=> Account::model()->findByPk(Yii::app()->user->getId())->login),
+                '---',
+                array('label'=>'Профиль', 'url'=> array('/account/view', 'id' => Yii::app()->user->getId())),
+                array('label'=>'Созданное', 'url'=>Yii::app()->
+                                                    createUrl('/account/created',
+                                                    array ('id'=>Yii::app()->user->getId()))),
+                array('label'=>'Избранное', 'url'=>Yii::app()->
+                                                    createUrl('/account/fav',
+                                                    array ('id'=>Yii::app()->user->getId()))),
+                //array('label'=>'Подписки', 'url'=>'#'),
+
+
+                '---',
+                array('label'=>'Выйти', 'url'=>array('/site/logout')));  
+      if (Yii::app()->user->checkAccess('moderatePost'))
+      { 
+        $menu[] = '---';
+        $menu[] = array('label'=>'Админка', 'url'=>Yii::app()->  createUrl('/moderator/')); 
+      }
 	// Формируем бар меню в зависимости от того, кем является посетитель (гость/авторизованный) 
 	$bar = array();
 	array_push($bar,'---');
@@ -16,19 +36,7 @@
 				
 		array_push($bar, array('label'=> "<img src='$src' class='userpic content-border' alt='Личный кабинет' title='Личный кабинет' width='25' height='25'>", 
                  'url'=> array('/account/view', 'id' => Yii::app()->user->getId()),//Account::model()->findByPk(Yii::app()->user->getId())->login, 
-							   'items'=>array(
-										array('label'=> Account::model()->findByPk(Yii::app()->user->getId())->login),
-										'---',
-										array('label'=>'Профиль', 'url'=> array('/account/view', 'id' => Yii::app()->user->getId())),
-										array('label'=>'Созданное', 'url'=>Yii::app()->
-                                                                                                                    createUrl('/account/created',
-                                                                                                                    array ('id'=>Yii::app()->user->getId()))),
-										array('label'=>'Избранное', 'url'=>Yii::app()->
-                                                                                                                    createUrl('/account/fav',
-                                                                                                                    array ('id'=>Yii::app()->user->getId()))),
-										//array('label'=>'Подписки', 'url'=>'#'),
-										'---',
-										array('label'=>'Выйти', 'url'=>array('/site/logout')))));
+							   'items'=>$menu));
 		array_push($bar, '---');
 		
 		array_push($bar, array('label'=>'Создать', 'icon'=>'pencil white', 
@@ -83,7 +91,15 @@
         ),
     ),
 )); ?>
-<form class="navbar-search pull-right span2 bg-black" action=""><input type="text" class="span2" placeholder="Поиск..."></form>
+<!--<form class="navbar-search pull-right span2 bg-black" action="<?php echo Yii::app()->urlManager->createUrl('site/search'); ?>" method="get">
+    <input type="text" class="span2" placeholder="Поиск..." name="find">
+    <input type="submit" value="Отправить">
+</form>-->
+<?php 
+echo CHtml::beginForm(array('site/search'), 'get', array('class'=> 'navbar-search pull-right span2 bg-black')) .
+      CHtml::textField('q', '', array('placeholder'=> 'Поиск...','class'=>'span2')) .
+      CHtml::endForm('');
+    ?>
 <!-- 	<div id="mainmenu">	 -->
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')

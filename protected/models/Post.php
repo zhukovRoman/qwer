@@ -45,8 +45,9 @@ class Post extends CActiveRecord {
     const APPROVE_STATUS = 5;
     const DAYS_FOR_BEST = 12;
     const COUNT_OF_DISSCUS = 5;
-    const DAYS_FOR_DISCUSS = 2;
-    /**
+    const DAYS_FOR_DISCUSS = 12;
+    const DEF_URL = "images/def_prev.jpg";
+    /**<img src="topics/2012_08_23/5ddb91f24bb76bfab77ca8fa98a4921f_92_crop.jpg" alt="">
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Post the static model class

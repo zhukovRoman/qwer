@@ -73,6 +73,7 @@ class AccountController extends Controller
 	 */
 	public function actionView($id)
 	{
+                $this->pageTitle="Fresh-i - Личный кабинет";
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -828,6 +829,29 @@ class AccountController extends Controller
                         'criteria' => $criteria ));
             $this->render('/account/posts', array(
                     'dataProvider' => $dataProvider,
+                    'model'=>$model,
+            ));
+        }
+        
+        public function actionChRole($id)
+        {
+             if (!Yii::app()->user->checkAccess('adminAccount'))
+            throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
+                            Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
+            
+            $model = $this->loadModel($id);
+            
+            if (isset($_POST['Account'])) {
+                
+                $model->status_id=$_POST['Account']['status_id'];
+                if ($model->save(false))
+                   $this->redirect (Yii::app()->createUrl('account/view', array ('id'=>$id))) ;
+                    
+            }
+            
+            
+            
+            $this->render('/account/_change_role_form', array(
                     'model'=>$model,
             ));
         }

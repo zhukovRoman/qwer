@@ -405,11 +405,15 @@ class PostController extends Controller {
     }
 
     public function actionRestore($id) {
-        if (!Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model)) && (!Yii::app()->user->checkAccess('moderatePost')))
+        $model = $this->loadModel($id);
+        
+        if ($model!=null && 
+                !Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model))
+                && (!Yii::app()->user->checkAccess('moderatePost')))
         throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
        
-        $model = $this->loadModel($id);
+        
         $model->status_id = 1;
         $model->save(false);
 

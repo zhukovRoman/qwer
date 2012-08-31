@@ -1,6 +1,9 @@
-<div class="<?php echo ($i==0)? "active" : "" ?> item">
+<div class="<?php 
+                $url = $item->preview_url;
+                if ($url=="" || !file_exists($url)) $url=Post::DEF_URL;
+                   echo ($i==0)? "active" : "" ?> item">
                    <?php echo CHtml::link(
-					CHtml::image($item->preview_url),
+					CHtml::image($url),
 						array('/post/view', 'id'=>$item->id)); 
                     ?>
                     <div class="carousel-caption">
