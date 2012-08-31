@@ -242,9 +242,37 @@ class CommentController extends Controller {
         if (isset($_POST['id-comment'])) {
             $comment_id = intval($_POST['id-comment']);
             $comment = Comment::model()->findByPk($comment_id);
+
+            $allInTree = $comment->recurseCalc ();
+            if ($allInTree > 0)
+            {
+                $post = $comment->post;
+                $post->comment_count = $post->comment_count - $allInTree;
+                $post->save(false);
+            }
             $comment->status_id = 2;
             $comment->save(false); 
             echo $comment_id;
+        }
+    }
+    
+    public function actionRestore() {
+         if (!Yii::app()->user->checkAccess('commentModeration'))
+			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+        if (isset($_POST['id-comment'])) {
+            $comment_id = intval($_POST['id-comment']);
+            $comment = Comment::model()->findByPk($comment_id);
+
+            $allInTree = $comment->recurseCalc (true);
+            if ($allInTree > 0)
+            {
+                $post = $comment->post;
+                $post->comment_count = $post->comment_count + $allInTree;
+                $post->save(false);
+            }
+            $comment->status_id = 1;
+            $comment->save(false); 
+           
         }
     }
 

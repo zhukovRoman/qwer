@@ -1,6 +1,6 @@
 <?php
 
-if (!Yii::app()->user->getId()) {
+if (Yii::app()->user->checkAccess('commentModeration')) {
 // //админский вид
     foreach ($comments as $comm) {
         if ($comm->parent_id == $parent_id ) {

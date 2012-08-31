@@ -28,8 +28,8 @@
         'comments' => $model->comments,
         'parent_id' => $model->id));
     // не выводить у удаленных
-    $this->renderPartial('/comment/tree', array(
-        'comments' => $model->comments,
-        'parent_id' => $model->id));
+//    $this->renderPartial('/comment/tree', array(
+//        'comments' => $model->comments,
+//        'parent_id' => $model->id));
     ?>
 </div>

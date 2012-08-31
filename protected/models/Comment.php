@@ -28,6 +28,7 @@ class Comment extends CActiveRecord {
     const APPROVE_STATUS = 4;
     const START_STATUS = 1;
     const BEST_TIME = 5; // сколько дней для лучшего.
+    const COUNT_OF_LAST = 5;
     
     static public function createNewComment($text, $parent, $post) {
         $comment = new Comment();
@@ -75,17 +76,31 @@ class Comment extends CActiveRecord {
 
     public static function getBest ()
     {
-    $d = Comment::BEST_TIME;
+        $d = Comment::BEST_TIME;
         $criteria = new CDbCriteria;
         $criteria->addCondition ( "status_id=:status");
         $criteria->addCondition('status_id=:status1', 'OR');
-        $criteria->addCondition ("time_add < now() - interval '$d day'");
+        $criteria->addCondition ("time_add > now() - interval '$d day'");
         $criteria->params = array(':status' => Comment::APPROVE_STATUS,
                                     ':status1' => Comment::START_STATUS,
                                    
                                  );
         $criteria->order="all_vote_count-positive_vote_count";
         $criteria->limit=5;
+        return Comment::model()->findAll ($criteria);
+    }
+    
+    public static function getLast ()
+    {
+    $d = Comment::BEST_TIME;
+        $criteria = new CDbCriteria;
+        $criteria->addCondition ( "status_id=:status");
+        $criteria->addCondition('status_id=:status1', 'OR');
+        $criteria->params = array(':status' => Comment::APPROVE_STATUS,
+                                    ':status1' => Comment::START_STATUS,
+                                   
+                                 );
+        $criteria->limit=Comment::COUNT_OF_LAST;
         return Comment::model()->findAll ($criteria);
     }
     
@@ -145,6 +160,20 @@ class Comment extends CActiveRecord {
             'positive_vote_count' => 'Positive Vote Count',
             'status_id' => 'Status',
         );
+    }
+    
+    public function recurseCalc($isRestore=false)
+    {
+        
+        $count = 1;
+        if ($this->status_id==2 && $isRestore=false) return 0;
+        foreach ($this->comments as $comm)
+        {
+            $count =  $count+$comm->recurseCalc();
+            
+        }
+        return $count;
+        
     }
 
     /**

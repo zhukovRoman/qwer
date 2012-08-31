@@ -7,7 +7,7 @@
 <i class="icon-time" rel="tooltip" title="Дата публикации"><?php echo date ("d/m/Y", strtotime($model->time_add));?></i>
 &nbsp;
 <i class="icon-comment" rel="tooltip" title="Число комментариев"><?php echo  $model->comment_count;?> </i>
-<i class="icon-eye-open" rel="tooltip" title="Число просмотров"><?php echo  $model->view_count;?> </i>
+<!--<i class="icon-eye-open" rel="tooltip" title="Число просмотров"><?php echo  $model->view_count;?> </i>-->
 <?php 
 if (Yii::app()->user->getId()) {
     if (Post::inFavorite($model->id))

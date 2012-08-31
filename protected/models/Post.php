@@ -190,27 +190,40 @@ class Post extends CActiveRecord {
     //  /(?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/))?([\w\-]{6,12})(?:\&.+)?/i
     //  /(?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10})/i
     //  
-
-    public static function parseVideoLink($link) {
+    public function decodeVideLink ()
+    {
         $start_frame_vimeo = '<iframe class="photo-border" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen src="http://player.vimeo.com/video/';
         $start_frame_youtube = '<iframe class="photo-border" width="560" height="315" frameborder="0" allowfullscreen src="http://www.youtube.com/embed/';
         $end_frame = '" ></iframe>';
-
-
+        
+        $code = json_decode($this->code);
+       
+        if ($code->service=='vimeo')
+                return $start_frame_vimeo . $code->url .$end_frame;
+        if ($code->service=='youtube')
+                return $start_frame_youtube . $code->url .$end_frame;
+        
+    }
+    public static function parseVideoLink($link) {
+        
         $youtube_patern = "/(?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/))?([\w\-]{6,12})(?:\&.+)?/i";
         $vimeo_patern = "/(?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10})/i";
 
-
         $urls = array();
-
+        
+        if (preg_match($youtube_patern, $link, $urls)) {      
+            return  json_encode(array(
+                                'service'=>"youtube",
+                                'url' => $urls[1],
+                    ));
+            
+        }
         if (preg_match($vimeo_patern, $link, $urls)) {
-            return array($start_frame_vimeo . $urls[1] . $end_frame, "vimeo");
+                    return json_encode(array(
+                                            'service'=>"vimeo",
+                                            'url' => $urls[1],                            
+                    )); 
         }
-        if (preg_match($youtube_patern, $link, $urls)) {
-            return array($start_frame_youtube . $urls[1] . $end_frame, "youtube");
-        }
-
-        return "";
     }
 
     public function getraiting() {
@@ -226,7 +239,8 @@ class Post extends CActiveRecord {
      * @return array validation rules for model attributes.
      */
     public function convertCode() {
-        $items = explode("|", $this->code);
+        //$items = explode("|", $this->code);
+        $items = json_decode($this->code);
         $this->code = "";
         foreach ($items as $i) {
             if ($i != "") {
@@ -240,8 +254,9 @@ class Post extends CActiveRecord {
     }
 
     public function getGalleryPhoto() {
-        $items = explode("|", $this->code);
-        $this->code = "";
+        //$items = explode("|", $this->code);
+        $items = json_decode($this->code);
+        //$this->code = "";
         foreach ($items as $i) {
             if ($i != "") {
                 echo '<a href="' . $i . '">
@@ -275,8 +290,7 @@ class Post extends CActiveRecord {
 
         $purifier = new CHtmlPurifier();
         $purifier->options = array('HTML.SafeIframe' => true,
-            'URI.SafeIframeRegexp' =>
-            '%^http://(www.youtube.com/embed/|player.vimeo.com/video/)%');
+            'URI.SafeIframeRegexp'=>'%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player/)%');
         // $purifier->options = array();
         $this->text = $purifier->purify($this->text);
 
@@ -304,8 +318,8 @@ class Post extends CActiveRecord {
             $this->landscape = true;
 
         if ($this->is_video) {
-            $tmp = Post::parseVideoLink($this->code);
-            $this->code = $tmp[0];
+            $this->code = Post::parseVideoLink($this->code);
+            
         }
 
         if ($this->is_photoset) {
@@ -352,12 +366,14 @@ class Post extends CActiveRecord {
         $matches = array();
         preg_match_all('/<img[^>]+src=([\'"])?((?(1).+?|[^\s>]+))(?(1)\1)/', $this->code, $matches);
         $paths = array();
+        
         foreach ($matches[2] as $url) {
             $res = Post::moveCropPicture($url, false);
             $paths[] = $res[0];
         }
-
-        return implode("|", $paths);
+        return json_encode($paths);
+       
+        //implode("|", $paths);
     }
 
     public static function renamePicture($old_ulr, $new_url) {
