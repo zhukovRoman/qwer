@@ -22,7 +22,7 @@
 
 <?php 
   Yii::app()->clientScript->registerScriptFile("js/prettyphoto/jquery.prettyPhoto.js", CClientScript::POS_END);
-  Yii::app()->getClientScript()->registerCssFile('css/prettyphoto/prettyPhoto.css');
+ /* Yii::app()->getClientScript()->registerCssFile('css/prettyphoto/prettyPhoto.css');*/
 ?>
 
 <div class="article-content content-border span8">

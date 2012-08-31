@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<project name="Build Project" default="build-lib" basedir=".">
+
+
+  <property name="js_src.dir" value="./js"/>
+  <property name="js.dir" value="./js/min"/>
+  <property name="css_src.dir" value="./css"/>
+  <property name="css.dir" value="./css/min"/>
+
+
+  <taskdef name="yuicompress" classname="com.yahoo.platform.yui.compressor.YUICompressTask">
+    <classpath>
+      <fileset dir="C:\yuicompressor\build">
+        <include name="*.jar"/>
+      </fileset>
+    </classpath>
+  </taskdef>
+
+
+  <target name="build-lib" depends="concat-files-css, minify-css, concat-files-js, minify-js">
+    <echo>Done.</echo>
+  </target>
+
+
+  <target name="concat-files-js">
+    <echo>Concatenating JS files</echo>
+    <concat destfile="${js.dir}/primary.js">
+      <filelist dir="${js_src.dir}">
+        <file name="vendor/jquery-ui.min.js"/>
+        <file name="vendor/jquery.scrollto.min.js"/>
+        <file name="bootstrap/bootstrap.min.js"/>
+        <file name="noty/jquery.noty.js"/>
+        <file name="noty/layouts/top.js"/>
+        <file name="noty/themes/default.js"/>
+        <file name="main.js"/>
+      </filelist>
+    </concat>
+  </target>
+
+  <target name="concat-files-css">
+    <echo>Concatenating CSS files</echo>
+    <concat destfile="${css.dir}/all.css">
+      <filelist dir="${css_src.dir}">
+        <file name="bootstrap/bootstrap.min.css"/>
+        <file name="bootstrap/bootstrap-yii.css"/>
+        <file name="fontawesome/font-awesome.css"/>
+        <file name="prettyphoto/prettyPhoto.css"/>
+        <file name="fileuploader/uploader.css"/>
+        <file name="fileuploader/xuploads.css"/>
+        <file name="fileuploader/jquery.fileupload-ui.css"/>
+        <file name="main.css"/>
+      </filelist>
+    </concat>
+   </target>
+
+
+  <target name="minify-js">
+    <echo>Minifying files</echo>
+    <yuicompress munge="yes" linebreak="5000" preserveallsemicolons="yes" outputfolder="${js.dir}">
+      <fileset dir="${js.dir}">
+        <include name="*.js"/>
+       </fileset>
+    </yuicompress>
+  </target>
+
+  <target name="minify-css">
+    <echo>Minifying files</echo>
+    <yuicompress munge="yes" linebreak="5000" preserveallsemicolons="yes" outputfolder="${css.dir}">
+      <fileset dir="${css.dir}">
+        <include name="*.css"/>
+       </fileset>
+    </yuicompress>
+  </target>
+
+</project>

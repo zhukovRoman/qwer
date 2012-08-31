@@ -21,11 +21,11 @@ function posterror (){
 
 function postfavsuccess(data){
     var resp = $.parseJSON(data);
+     _this = $('.icon-heart');
     if (resp.status=='error'){
         notify(resp.description, 'error');
     } else {
         if (resp.direction=='in'){    
-            _this = $('.icon-heart');
             _this.addClass('gray-a');
             _this.removeClass('green-a');
             var i = _this.html();

@@ -350,7 +350,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 	Yii::app()->clientScript->registerScriptFile("js/crop.js");
 	Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload.js");
 	Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload-ui.js");
-	Yii::app()->getClientScript()->registerCssFile('css/fileuploader/jquery.fileupload-ui.css');
+	/*Yii::app()->getClientScript()->registerCssFile('css/fileuploader/jquery.fileupload-ui.css');*/
 ?>	
 
 <!-- --------------------------------------------------------------------- -->
