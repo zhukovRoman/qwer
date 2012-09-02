@@ -99,7 +99,7 @@ class AccountController extends Controller
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
-
+                $this->pageTitle="Fresh-i - Регистрация";
 		$this->render('create',array(
 			'model'=>$model,
 		));
@@ -179,16 +179,17 @@ class AccountController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
-		if (!Yii::app()->user->checkAccess('indexAccount'))
-			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
-		
-		$dataProvider=new CActiveDataProvider('Account');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+//	public function actionIndex()
+//	{
+//            
+//		if (!Yii::app()->user->checkAccess('indexAccount'))
+//			throw new CHttpException(403, 'Недостаточно прав для указанного действия');
+//		
+//		$dataProvider=new CActiveDataProvider('Account');
+//		$this->render('index',array(
+//			'dataProvider'=>$dataProvider,
+//		));
+//	}
 
 	/**
 	 * Manages all models.
@@ -246,6 +247,7 @@ class AccountController extends Controller
 				return;
 			}
 		}
+                $this->pageTitle="Fresh-i - Вход";
 		// Вывести форму
 		$this->render('signup', array('model'=>$model));
 	}
@@ -342,7 +344,7 @@ class AccountController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}
-		
+		$this->pageTitle="Fresh-i - Выбор логина";
 		// Вывести форму
 		$this->render('signup3', array('model'=>$model));
 	}
@@ -385,7 +387,7 @@ class AccountController extends Controller
 				}
 			}
 		}
-		
+		$this->pageTitle="Fresh-i - Восстановление пароля";
 		$this->render('passrecovery', array('model'=>$model));
 	}
 	
@@ -427,7 +429,7 @@ class AccountController extends Controller
 			// Если не передан ключ активации, редиректим обратно
 			$this->redirect(Yii::app()->user->returnUrl);
 		}
-		
+		$this->pageTitle="Fresh-i - смена пароля";
 		$this->render('input_newpass', array('model' => $model));
 	}
 	
@@ -800,7 +802,7 @@ class AccountController extends Controller
                         ),
                 'criteria'=>$criteria ));
 
-          
+            $this->pageTitle="Fresh-i - Избранное";
             $this->render('/account/posts', array(
                     'dataProvider' => $dataProvider,
                     'model'=>$model,
@@ -827,6 +829,7 @@ class AccountController extends Controller
                             'pageSize' => 12,
                         ),
                         'criteria' => $criteria ));
+            $this->pageTitle="Fresh-i - Созданное";
             $this->render('/account/posts', array(
                     'dataProvider' => $dataProvider,
                     'model'=>$model,

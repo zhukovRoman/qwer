@@ -13,10 +13,10 @@ Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CCli
 /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     'id' => 'createpost-form',
-    'type' => 'horizontal span7',
+    'type' => 'horizontal span8',
     'enableAjaxValidation' => false,
     'enableClientValidation' => true,
-    'htmlOptions' => array('enctype' => 'multipart/form-data'),
+    'htmlOptions' => array('enctype' => 'multipart/form-data',),
     'clientOptions' => array(
         'validateOnChange' => true,
     #'validateOnSubmit'=>false,

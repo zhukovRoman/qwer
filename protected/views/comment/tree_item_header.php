@@ -19,7 +19,7 @@
 
     <?php
     echo ($model->parent_id != Null) ?
-            Chtml::link('<b title="Показать родителя комментария" style="color:#333">^</b>', Yii::app()->request->url . "#" . $model->parent_id) :
+            Chtml::link('<b title="Показать родителя комментария" style="color:#333">^</b>', Yii::app()->createUrl('post/view', array ("id"=>$model->post->id)) . "#" . $model->parent_id) :
             "";
     ?>
 

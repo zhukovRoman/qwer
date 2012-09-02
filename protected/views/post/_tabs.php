@@ -14,7 +14,7 @@
         $this->renderPartial ('/comment/list', array ('items'=> Comment::getLast())); 
       ?>
     </div>
-    <div class="tab-pane active" id="discussed">
+    <div class="tab-pane" id="discussed">
       <?php 
         $this->renderPartial ('/post/discussed', array ('items'=> Post::getDiscussed())); 
       ?>

@@ -68,10 +68,10 @@
 			'htmlOptions'=>array('class'=>'l-nav'),
             'items'=>array(
             	'---',
-                array('label'=>'Лекторий', 'url'=>array ('/category/index/')), //'active'=>true),
-                array('label'=>'Правила', 'url'=>'#'),
-            	array('label'=>'Блоги', 'url'=>'#'),
-            	array('label'=>'Идеи', 'url'=>'#'),
+                array('label'=>'О нас', 'url'=>array('/site/page', 'view'=>'about')), //'active'=>true),
+//                array('label'=>'Правила', 'url'=>'#'),
+//            	array('label'=>'Блоги', 'url'=>'#'),
+//            	array('label'=>'Идеи', 'url'=>'#'),
                /* array('label'=>'Еще', 'url'=>'#', 'items'=>array(
                     array('label'=>'Action', 'url'=>'#'),
                     array('label'=>'Another action', 'url'=>'#'),

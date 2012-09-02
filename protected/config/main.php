@@ -82,7 +82,7 @@ return array(
 		'search' => array(
                 'class' => 'application.components.DGSphinxSearch.DGSphinxSearch',
                 'server' => 'localhost',
-                'port' => 3312,
+                'port' => 9312,
                 'maxQueryTime' => 3000,
                 'enableProfiling'=>0,
                 'enableResultTrace'=>0,

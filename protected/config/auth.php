@@ -109,6 +109,13 @@
                             'bizRule' => null,
                             'data' => null
 		),
+    
+                'categoryManage' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'Модерация комментов',
+                            'bizRule' => null,
+                            'data' => null
+		),
 /***************************************************************************/
 /*                      	   2. Описание задач                           */
 /***************************************************************************/
@@ -193,6 +200,7 @@
 						'moderatePost',
 						'indexAccount',
                                                 'commentModeration',
+                                                'categoryManage'
 					//	'createAccount',
 				),
 				'bizRule' => null,
@@ -204,7 +212,6 @@
 				'description' => 'Administrator',
 				'children' => array(
 						'moderator',         // позволим админу всё, что позволено модератору
-						
 						'adminAccount',
 					//	'delete',
 				),

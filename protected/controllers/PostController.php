@@ -10,7 +10,7 @@ class PostController extends Controller {
         return $model;
     }
 
-   public function actionIndex() {
+    public function actionIndex() {
         $dataProvider = new CActiveDataProvider('Post', array(
                     
                     'criteria' => array(

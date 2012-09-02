@@ -44,16 +44,27 @@ class SiteController extends Controller
 
         public function actionSearch ($q)
         {
-            $text = $q;
-            $searchCriteria = new stdClass();
-            $searchCriteria->select = 'id';
-            $searchCriteria->filters = array('id' => 114);
-           // $searchCriteria->query = '@name '.$query.'*';
-            $searchCriteria->from = 'post';
-            $resIterator = Yii::App()->search->search($searchCriteria); // interator result
-            /* OR */
-            $resArray = Yii::App()->search->searchRaw($searchCriteria); // array result
-            
+//            $text = $q;
+//            $pages = new CPagination();
+//            $pages->pageSize = 20;
+//            $searchCriteria = new stdClass();
+//            $searchCriteria->select = 'id';
+//            $searchCriteria->filters = array('id' => 114);
+//           // $searchCriteria->query = '@name '.$query.'*';
+//            $searchCriteria->paginator = $pages;
+//            $searchCriteria->from = 'post';
+//            $resIterator = Yii::App()->search->search($searchCriteria); // interator result
+//            /* OR */
+//            $resArray = Yii::App()->search->searchRaw($searchCriteria); // array result
+            $search = Yii::App()->search;
+            $search->select('*')->
+            from('post')->
+            //where($expression)->
+            //filters(array('project_id' => $this->_city->id))->
+            //groupby($groupby)->
+            //orderby(array('f_name' => 'ASC'))->
+            limit(0, 30);
+            $resArray = $search->searchRaw(); // array result
             echo count($resArray); die();
         }
 	/**
