@@ -80,16 +80,17 @@ return array(
 			)
 		),
 		'search' => array(
-                'class' => 'application.components.DGSphinxSearch.DGSphinxSearch',
-                'server' => 'localhost',
-                'port' => 9312,
-                'maxQueryTime' => 3000,
-                'enableProfiling'=>0,
-                'enableResultTrace'=>0,
-                'fieldWeights' => array(
-                    'tag' => 10000,
-                    'text' => 100,
-            ),
+                    'class' => 'application.components.DGSphinxSearch.DGSphinxSearch',
+                    'server' => 'localhost',
+                    'port' => 9312,
+                    'maxQueryTime' => 3000,
+                    'enableProfiling'=>0,
+                    'enableResultTrace'=>0,
+                    'fieldWeights' => array(
+//                        'tag' => 1000,
+//                        'text' => 100,
+//                        'title' => 1000,
+                ),
      ),
 		'loid' => array(
 			//alias to dir, where you unpacked extension

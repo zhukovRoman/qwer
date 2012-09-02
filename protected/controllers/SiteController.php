@@ -48,24 +48,39 @@ class SiteController extends Controller
 //            $pages = new CPagination();
 //            $pages->pageSize = 20;
 //            $searchCriteria = new stdClass();
-//            $searchCriteria->select = 'id';
-//            $searchCriteria->filters = array('id' => 114);
-//           // $searchCriteria->query = '@name '.$query.'*';
+//            $searchCriteria->select = '*';
+//            $searchCriteria->filters = array('status_id' => 5);
+//            //$searchCriteria->query = '@title like';
 //            $searchCriteria->paginator = $pages;
-//            $searchCriteria->from = 'post';
+//            $searchCriteria->from = 'posts_index';
 //            $resIterator = Yii::App()->search->search($searchCriteria); // interator result
 //            /* OR */
 //            $resArray = Yii::App()->search->searchRaw($searchCriteria); // array result
             $search = Yii::App()->search;
             $search->select('*')->
-            from('post')->
-            //where($expression)->
-            //filters(array('project_id' => $this->_city->id))->
-            //groupby($groupby)->
-            //orderby(array('f_name' => 'ASC'))->
-            limit(0, 30);
+            from('posts_index')->
+            where("@tag  $q | @title $q | @subtitle $q | @text $q" )->
+            //filters(array('status_id' => 5))->
+            limit(0, 90);
             $resArray = $search->searchRaw(); // array result
-            echo count($resArray); die();
+             print_r($resArray['matches']); die();
+            
+            
+            $dataProvider = new CActiveDataProvider('Post', array(
+                    
+                    'criteria' => array(
+                        #'select'=>''
+                        'condition' => 'status_id = 5 AND id in (138,137)',
+                        'order' => 'time_moder DESC',
+                        'limit' => 8,
+                    )
+                ));
+            $this->pageTitle="Fresh-i - Поиск";
+            $this->render('/post/list', array(
+                'dataProvider' => $dataProvider,
+            ));
+            
+           
         }
 	/**
 	 * This is the action to handle external exceptions.

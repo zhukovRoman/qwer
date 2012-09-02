@@ -2,6 +2,7 @@
 	if (!Yii::app()->user->isGuest) $src = $path; else $src='';
 	if (!file_exists($path)) $src = Account::ACCOUNT_DIR . Account::DEFAULT_DIR . Account::AVATAR_NAME; 
 	
+        if (!Yii::app()->user->isGuest)
       $menu = array(
                 array('label'=> Account::model()->findByPk(Yii::app()->user->getId())->login),
                 '---',
@@ -91,15 +92,17 @@
         ),
     ),
 )); ?>
-<!--<form class="navbar-search pull-right span2 bg-black" action="<?php echo Yii::app()->urlManager->createUrl('site/search'); ?>" method="get">
+<!--<form class="navbar-search pull-right span2 bg-black" action="<?php // echo Yii::app()->urlManager->createUrl('site/search'); ?>" method="get">
     <input type="text" class="span2" placeholder="Поиск..." name="find">
     <input type="submit" value="Отправить">
 </form>-->
-<?php 
-echo CHtml::beginForm(array('site/search'), 'get', array('class'=> 'navbar-search pull-right span2 bg-black')) .
-      CHtml::textField('q', '', array('placeholder'=> 'Поиск...','class'=>'span2')) .
-      CHtml::endForm('');
+
+    <?php 
+ //echo CHtml::beginForm(array('site/search'), 'get', array('class'=> 'navbar-search pull-right span2 bg-black')) .
+  //    CHtml::textField('q', '', array('placeholder'=> 'Поиск...','class'=>'span2')) .
+  //    CHtml::endForm('');
     ?>
+
 <!-- 	<div id="mainmenu">	 -->
 	<?php $this->widget('bootstrap.widgets.BootMenu', array(
 	    'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
