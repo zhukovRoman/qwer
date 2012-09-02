@@ -29,9 +29,6 @@
         <file name="vendor/jquery-ui.min.js"/>
         <file name="vendor/jquery.scrollto.min.js"/>
         <file name="bootstrap/bootstrap.min.js"/>
-        <file name="noty/jquery.noty.js"/>
-        <file name="noty/layouts/top.js"/>
-        <file name="noty/themes/default.js"/>
         <file name="main.js"/>
       </filelist>
     </concat>

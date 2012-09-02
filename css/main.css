@@ -1,4 +1,12 @@
 /* общие */
+* {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  /*margin-bottom: 15px;  */
+  /*line-height: 1.5em;   */
+}
 i{
   font-style: normal;
 }
