@@ -171,101 +171,17 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "protected/views/layouts/main.php",
-			"settings":
-			{
-				"buffer_size": 3838,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "protected/views/post/form.php",
-			"settings":
-			{
-				"buffer_size": 4068,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "protected/views/post/photoset_view.php",
-			"settings":
-			{
-				"buffer_size": 999,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "protected/views/account/view.php",
-			"settings":
-			{
-				"buffer_size": 20507,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "protected/views/layouts/_modal.php",
-			"settings":
-			{
-				"buffer_size": 2700,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "build.xml",
-			"settings":
-			{
-				"buffer_size": 2316,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "js/post.js",
-			"settings":
-			{
-				"buffer_size": 1054,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/RailsInstaller/Git/etc/inputrc",
-			"settings":
-			{
-				"buffer_size": 1957,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/RailsInstaller/Git/etc/profile",
-			"settings":
-			{
-				"buffer_size": 4528,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/unclepotap/Desktop/index.html",
-			"settings":
-			{
-				"buffer_size": 171,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/unclepotap/Desktop/script.js",
-			"settings":
-			{
-				"buffer_size": 2686,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "Packages/Java/Ant.sublime-build",
 	"command_palette":
 	{
-		"height": 311.0,
+		"height": 81.0,
 		"selected_items":
 		[
+			[
+				"git cha",
+				"Git: Change Branch"
+			],
 			[
 				"Package Control: ",
 				"Package Control: Install Package"
@@ -273,10 +189,6 @@
 			[
 				"insta",
 				"Package Control: Install Package"
-			],
-			[
-				"git cha",
-				"Git: Change Branch"
 			],
 			[
 				"git re",
@@ -299,7 +211,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 468.0
+		"width": 528.0
 	},
 	"console":
 	{
@@ -316,23 +228,35 @@
 	},
 	"file_history":
 	[
+		"/Z/qwer/protected/views/layouts/main.php",
+		"/Z/qwer/js/redactor/redactor/redactor.js",
+		"/Z/qwer/js/redactor/redactor/css/redactor.css",
+		"/Z/qwer/js/min/primary.js",
+		"/Z/qwer/css/main.css",
+		"/Z/qwer/build.xml",
+		"/Z/qwer/css/min/all.css",
+		"/C/Users/unclepotap/Desktop/script.js",
+		"/Z/qwer/js/redactor/redactor/css/docstyle.css",
+		"/Z/qwer/protected/views/post/photoset_view.php",
+		"/Z/qwer/protected/views/post/form.php",
+		"/Z/qwer/protected/views/account/view.php",
+		"/Z/qwer/protected/views/layouts/_modal.php",
+		"/Z/qwer/js/post.js",
+		"/C/RailsInstaller/Git/etc/inputrc",
+		"/C/RailsInstaller/Git/etc/profile",
+		"/C/Users/unclepotap/Desktop/index.html",
 		"/C/Users/unclepotap/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/unclepotap/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Z/qwer/js/noty/min.js",
-		"/Z/qwer/js/min/primary.js",
 		"/Z/qwer/js/fileuploader/jquery.damnUploader.js",
 		"/Z/qwer/css/min/lib.css",
-		"/Z/qwer/js/post.js",
-		"/Z/qwer/build.xml",
 		"/Z/qwer/js/uploadphoto.js",
 		"/Z/qwer/protected/extensions/DGSphinxSearch/DGSphinxSearch.php",
 		"/Z/qwer/js/modernizr.js",
-		"/Z/qwer/css/main.css",
 		"/C/Sites/sites/app/views/music/index.js.erb",
 		"/C/Sites/sites/app/views/albums/_album.html.haml",
 		"/C/Sites/sites/app/admin/looks.rb",
 		"/C/Users/unclepotap/Desktop/cube/Guardfile",
-		"/Z/qwer/protected/views/layouts/main.php",
 		"/C/Sites/sites/app/views/photos/_photo.html.haml",
 		"/C/Sites/sites/app/views/music/index.html.haml",
 		"/C/Sites/sites/app/views/pict/index.js.erb",
@@ -406,7 +330,6 @@
 		"/C/Sites/sites/app/assets/stylesheets/indices.css.scss",
 		"/C/Users/unclepotap/Desktop/index6.html",
 		"/C/Users/unclepotap/Desktop/Canvas Art gallery.htm",
-		"/C/Users/unclepotap/Desktop/index.html",
 		"/C/Sites/sites/app/assets/stylesheets/looks.css.scss",
 		"/C/Sites/sites/app/controllers/looks_controller.rb",
 		"/C/Users/unclepotap/Desktop/canvas.html",
@@ -432,18 +355,7 @@
 		"/C/Sites/sites/lib/pagination_list_link_renderer.rb",
 		"/C/Sites/sites/config/locales/ru.yml",
 		"/C/Sites/sites/app/helpers/link_renderer.rb",
-		"/C/Users/unclepotap/YandexDisk/dnch/app/views/music/index.html.haml",
-		"/C/Sites/sites/config/compass.rb",
-		"/C/Users/unclepotap/YandexDisk/dnch/Gemfile",
-		"/C/Sites/dnch/config/application.rb",
-		"/C/Sites/dnch/Gemfile",
-		"/C/Sites/dnch/app/assets/stylesheets/vid.css.scss",
-		"/C/Sites/dnch/app/views/vid/index.html.haml",
-		"/C/Sites/dnch/app/assets/stylesheets/application.css.scss",
-		"/C/Users/unclepotap/AppData/Local/Temp/fz3temp-2/topic_topic.tpl",
-		"/C/Users/unclepotap/AppData/Local/Temp/fz3temp-2/block.addthis.tpl",
-		"/C/Users/unclepotap/AppData/Local/Temp/fz3temp-2/style.css",
-		"/C/Users/unclepotap/AppData/Local/Temp/fz3temp-2/topic.css"
+		"/C/Users/unclepotap/YandexDisk/dnch/app/views/music/index.html.haml"
 	],
 	"find":
 	{
@@ -462,6 +374,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"margin: 0 0",
+			"margin: 0 0 9px",
+			"margin: 0 0 9px;",
+			".nav-head",
+			"nav-head",
+			"margin:0 0",
+			"center",
+			"opts",
+			"execCom",
+			"properties",
+			"text-align",
+			"JustifyRight",
+			"show",
+			"header4",
+			"font",
+			"formatting",
 			"prettyphoto",
 			"prettyPhoto",
 			"prettyphoto",
@@ -538,312 +466,8 @@
 	"groups":
 	[
 		{
-			"selected": 10,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "protected/views/layouts/main.php",
-					"settings":
-					{
-						"buffer_size": 3838,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								81,
-								81
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "protected/views/post/form.php",
-					"settings":
-					{
-						"buffer_size": 4068,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								771,
-								691
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 156.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "protected/views/post/photoset_view.php",
-					"settings":
-					{
-						"buffer_size": 999,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								812,
-								729
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "protected/views/account/view.php",
-					"settings":
-					{
-						"buffer_size": 20507,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13413,
-								13505
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4290.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "protected/views/layouts/_modal.php",
-					"settings":
-					{
-						"buffer_size": 2700,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								488,
-								488
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "build.xml",
-					"settings":
-					{
-						"buffer_size": 2316,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								602,
-								602
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ant/Ant.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 70.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "js/post.js",
-					"settings":
-					{
-						"buffer_size": 1054,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								823,
-								823
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 234.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/C/RailsInstaller/Git/etc/inputrc",
-					"settings":
-					{
-						"buffer_size": 1957,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								467,
-								467
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "/C/RailsInstaller/Git/etc/profile",
-					"settings":
-					{
-						"buffer_size": 4528,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1880,
-								1880
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 605.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/C/Users/unclepotap/Desktop/index.html",
-					"settings":
-					{
-						"buffer_size": 171,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								171,
-								171
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/C/Users/unclepotap/Desktop/script.js",
-					"settings":
-					{
-						"buffer_size": 2686,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2686,
-								2686
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -896,6 +520,14 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"layma",
+				"protected/views/layouts/main.php"
+			],
+			[
+				"build",
+				"build.xml"
+			],
 			[
 				"_moda",
 				"protected/views/layouts/_modal.php"
