@@ -488,7 +488,7 @@ class AccountController extends Controller
 			$model->avatar_url = $_POST['params'];
 			$model->save(false);
 			// Парсим из 'params' координаты
-			$mass = split(";", $_POST['params']); 
+			$mass = explode(";", $_POST['params']); 
 			//print_r($mass);die();
 			
 			// 2 варианта 

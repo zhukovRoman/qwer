@@ -441,7 +441,7 @@ class Account extends CActiveRecord
 						$this->mail = strtolower($this->mail);
 						
 						// Логин
-						$mass = split("@", $this->mail);
+						$mass = explode("@", $this->mail);
 						//$this->login = 
 						$this->setLogin($mass[0]);
 						

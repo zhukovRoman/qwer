@@ -31,7 +31,7 @@ class Favourites extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'public.favourites';
+		return 'favourites';
 	}
 
 	/**
