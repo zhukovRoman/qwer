@@ -235,10 +235,10 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'pgsql:host=localhost;port=5432;dbname=klimgo_dev',
+			'connectionString' => 'mysql:host=localhost;dbname=freshi_dev',
 			'emulatePrepare' => true,
-			'username' => 'klimgo_dev_database',
-			'password' => '45^RdA$%Ws',
+			'username' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		

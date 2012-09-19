@@ -456,7 +456,7 @@ class Post extends CActiveRecord {
        
         $criteria = new CDbCriteria;
         $criteria->addCondition ("status_id=:status");
-        $criteria->addCondition ("time_moder > now() - interval '$f day'");
+        $criteria->addCondition ("time_moder > now() - interval $f day");
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
                                  );  
         $criteria->limit=7;
@@ -472,7 +472,7 @@ class Post extends CActiveRecord {
         $f = Post::DAYS_FOR_DISCUSS;
         $criteria = new CDbCriteria;
         $criteria->addCondition ("status_id=:status");
-        $criteria->addCondition ("time_moder > now() - interval '$f day'");
+        $criteria->addCondition ("time_moder > now() - interval $f day");
         $criteria->limit = 2;
         $criteria->order = 'comment_count DESC';
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
@@ -494,8 +494,8 @@ class Post extends CActiveRecord {
             $old_tags = $tmp[1];
             $tmp = Post::stripTags($this->tag);
             $new_tags = $tmp[1];
-            print_r($new_tags);
-            print_r($old_tags);
+            //print_r($new_tags);
+            //print_r($old_tags);
             //die();
             $mass = Post::compareTags($old_tags, $new_tags);
 

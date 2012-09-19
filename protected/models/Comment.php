@@ -80,7 +80,7 @@ class Comment extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->addCondition ( "status_id=:status");
         $criteria->addCondition('status_id=:status1', 'OR');
-        $criteria->addCondition ("time_add > now() - interval '$d day'");
+        $criteria->addCondition ("time_add > now() - interval $d day");
         $criteria->params = array(':status' => Comment::APPROVE_STATUS,
                                     ':status1' => Comment::START_STATUS,
                                    
