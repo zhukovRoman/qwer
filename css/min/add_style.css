@@ -1,0 +1,32 @@
+.brand:hover
+{
+background-image: url(img/logo_old.png);
+}
+
+.bg-black {
+background-image: url(img/p.png);
+}
+
+.navbar .nav > li > a
+{
+color: black;
+}
+
+.l-nav .dropdown .dropdown-menu
+{
+margin:35px 0 0 65px;
+}
+#content {padding-right: 10px;}
+
+@font-face {
+	font-family: 'Pushkin';
+	src: url('grand-font.eot');
+	src: local('O'), url('grand-font.woff') format('woff'), url('grand-font.ttf') format('truetype'), url('grand-font.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.l-nav > li > a {font-family:Pushkin !important;font-size:130%;}
+.ttt {
+margin-left:200px !important;
+font-family:Pushkin !important;
+}
