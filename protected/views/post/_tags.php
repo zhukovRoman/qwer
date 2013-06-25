@@ -6,9 +6,10 @@
             $c=count($tags_array);
           for ($i=0; $i<$c; $i++)
           {
-              if ($i!=0) echo ",";
-              echo CHtml::link($tags_array[$i], Yii::app()->createUrl('tag/view',
-                                    array ("tag"=>$tags_array[$i])));
+              if ($i!=0) echo ", ";
+              //echo CHtml::link($tags_array[$i], Yii::app()->createUrl('tag/view',
+              //                      array ("tag"=>$tags_array[$i])));
+              echo CHtml::encode($tags_array[$i]);
           }
       ?>
 </div>

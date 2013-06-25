@@ -1,0 +1,53 @@
+.poll-result{
+margin-bottom: 10px;
+margin-left: 0;
+list-style-type: none;
+font-family: Verdana, sans-serif;
+margin-top: 10px;
+}
+.poll-result li {
+margin-bottom: 10px;
+font-size: 12px;
+}
+.poll-result li dl {
+overflow: hidden;
+zoom: 1;
+}
+.poll-result li.even dl dt {
+color: #227A51;
+}
+.poll-result li dl dt {
+float: left;
+width: 100px;
+text-align: right;
+padding-right: 15px;
+}
+.poll-result li dl dd {
+float: left;
+width: 400px;
+}
+.poll-result li.even dl dd span {
+color: white;
+background: #9EA91C;
+box-shadow: 1px 1px 1px 1px #9EA91C inset;
+border-radius: 3px;
+display: block;
+border-color: #9EA91C;
+}
+.poll-result li dl dd span.counter {
+float: left;
+background: white;
+color: black;
+box-shadow: none;
+border-color: white;
+margin-left: 5px;
+}
+.poll-result li dl dd span {
+height: 20px;
+margin-top: 0px;
+background: white;
+border: 1px solid black;
+overflow: hidden;
+border-radius: 3px;
+box-shadow: 0 1px 0 #939393;
+float: left;}

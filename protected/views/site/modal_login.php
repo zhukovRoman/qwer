@@ -1,3 +1,4 @@
+<!-- fasdfsd -->
 <?php /** @var BootActiveForm $form */
 	$this->beginWidget('bootstrap.widgets.BootModal', array(
 		'id' => 'modal_login',

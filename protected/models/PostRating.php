@@ -117,13 +117,20 @@ class PostRating extends CActiveRecord
         
         public static function addNewItem ($d, $post)
         {
+            
             $model = new PostRating();
             $model->user_id = Yii::app()->user->getId();
             $model->author_id = $post->author_id;
             $model->post_id = $post->id;
             $model->time_add = date('Y-m-d H:i:s');
             $model->delta = $d;
-            return ($model->save(false)) ? $model : false;
+            if ($model->save(false))
+            {
+                $post->saveCounters(array('all_vote_count'=>1));
+                if ($d>0) $post->saveCounters(array('positive_vote_count'=>1));
+                return $model;
+            }
+            return false;
             
             
         }

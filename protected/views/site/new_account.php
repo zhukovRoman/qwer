@@ -7,8 +7,6 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm'); ?>
 	<p><span class="label label-success">Спасибо!</span>
 	Уважаемый пользователь! Имеете ли Вы уже на нашем сайте аккаунт? 
 	
-	<?php echo $service; ?>
-	
 	<div class="form-actions">
 	    <?php $this->widget('bootstrap.widgets.BootButton', array('type'=>'primary', 'icon'=>'magnet white', 
 	    														  'label'=>'Да, привязать к моему аккаунту',

@@ -11,11 +11,13 @@
 )); ?>
 </div>
 <div class="clearfix"></div>
-<div class="span9">
+<div class="span8">
   <?php $this->renderPartial('_tags',array(
     'model'=>$model,
   )); ?>    
-  <?php $this->renderPartial('_soc',array(
+  <?php
+  if ($model->status_id == 5)
+  $this->renderPartial('_soc',array(
     'model'=>$model,
   )); ?>  
 </div>

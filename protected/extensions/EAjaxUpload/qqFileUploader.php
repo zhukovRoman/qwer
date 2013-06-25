@@ -125,7 +125,7 @@ class qqFileUploader {
     /**
      * Returns array('success'=>true) or array('error'=>'error message')
      */
-    function handleUpload($uploadDirectory, $replaceOldFile = FALSE, $generateName = TRUE){
+    function handleUpload($uploadDirectory, $replaceOldFile = FALSE, $generateName = TRUE, $itIsAvatar=false){
         if (!is_writable($uploadDirectory)){
             return array('error' => "Server error. Upload directory isn't writable.");
         }
@@ -167,8 +167,18 @@ class qqFileUploader {
         
         if ($generateName)
         {
+            
             $filename = substr(md5($filename. rand(12, 323). time()),0);
             $filename = $filename."_".rand(0,100);
+            
+            if($itIsAvatar)
+            {
+                $filename = 'new_avatar';
+                if (strtolower($ext)=="jpeg")
+                {
+                    $ext='jpg';
+                }
+            }
             
             //$size = getimagesize ($_FILES['qqfile']['tmp_name']);
         //echo $size[0];

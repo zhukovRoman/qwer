@@ -1,19 +1,23 @@
 <li class="main-view content-border">
 	<div class="main-view-top">
 		<?php echo CHtml::link(CHtml::encode($data->title), 
-			array('/post/view', 'id'=>$data->id), array('class'=>'black-a ellipsis'));?>
+			array('/post/view', 'id'=>$data->id), array('class'=>'black-a ellipsis',
+                            'title'=>$data->title));?>
 		<?php 
                      $url = $data->preview_url;
                      if ($url=="" || !file_exists($url)) $url=Post::DEF_URL;
-			echo CHtml::link(
-					CHtml::image($url).
-						"<div>
-						<span>"
-						.CHtml::encode(mb_substr($data->subtitle, 0, 80, 'utf-8')).
-						'...<hr>'
+					 
+					 $link = CHtml::image($url, $data->title,array('class'=>'content-border'))."<div style='border-radius:4px;'><span>";
+					 if (mb_strlen($data->subtitle,'utf-8') > 80) {
+						$link.=CHtml::encode(mb_substr($data->subtitle, 0, 80, 'utf-8')).'...' ;
+					 }
+					 else $link.=CHtml::encode ($data->subtitle)." ";
+					 
+					 $link .= '<hr>'
 						.CHtml::encode($data->category->name).
-						"</span></div>", 
-						array('/post/view', 'id'=>$data->id)); 
+						"</span></div>";
+						
+			echo CHtml::link($link, array('/post/view', 'id'=>$data->id)); 
 		?>
 	</div>
 	<div class="main-view-bottom color-black">

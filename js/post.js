@@ -14,6 +14,26 @@ function postvotesuccess(data)
     }
 }
 
+function poll_success(data)
+{
+    var resp = $.parseJSON(data);
+  
+    if (resp.status=='error')
+    {
+        notify(resp.description, 'error');
+    }
+    else 
+    {
+        window.location.reload(); 
+    }
+}
+
+poll_error()
+{
+    notify('Ошибка! Попробуйте позже.', 'error');
+}
+
+
 function posterror (){
     notify('Ошибка! Попробуйте позже.', 'error');
 }

@@ -59,9 +59,9 @@
     $(document).ready(
         function()
         {
-            var buttons = ['html', '|', 'formatting', '|', 'bold', 'italic', '|',
+           var buttons = ['html', '|', 'formatting', '|', 'bold', 'italic', '|',
                                             'unorderedlist', 'orderedlist', '|',
-                                            , 'link', '|', 
+                                            'image', 'link', 'video','|', 
                                             'alignleft', 'aligncenter', 'alignright', 'justify', '|',
                                             'horizontalrule'];
                         $('#redactor').redactor({ 

@@ -1,4 +1,9 @@
 <div class="span2">
+	<h4>Партнеры</h4>
+	<img width="50px" src="/adv/az.png" alt="азкон" style="vertical-align: top;">
+	<img width="50px" src="/adv/leco.png" alt="LeCoMedia">
+</div>
+<div class="span2">
   <h4>Пользователь</h4>
   <ul class="items">
   <?php    
@@ -17,9 +22,10 @@
 <div class="span2">
   <h4>О сайте</h4>
   <ul class="items">
-    <li>  <?php echo CHtml::link(CHtml::encode('О нас'), array('/site/page', 'view'=>'about'));?></li>
-    <li> <?php echo CHtml::link(CHtml::encode('Контакты'), array('/site/page', 'view'=>'contacts'));?></li>
-    <li> <?php echo CHtml::link(CHtml::encode('Cоглашение'), array('/site/page', 'view'=>'license'));?></li>
+    <li>  <?php echo CHtml::link(CHtml::encode('О нас'), array('/pages/view', 'id'=>2));?></li>
+    <li> <?php echo CHtml::link(CHtml::encode('Контакты'), array('/pages/view', 'id'=>1));?></li>
+    <li> <?php echo CHtml::link(CHtml::encode('Cоглашение'), array('/pages/view', 'id'=>3));?></li>
+	<li> <a href="http://old.fresh-i.ru">Старая версия</a></li>
   </ul>
 </div>
 <div class="span4">
@@ -31,9 +37,9 @@
   </ul>
 </div>
 <div class="span1">
-  <br>
   <h6>&copy;2012</h6>
   <h5>&quot;Fresh-i&quot;</h5>
+  <h2 style="background-color: #399C72; text-align:center;">18+</h2>
 </div>
 
 

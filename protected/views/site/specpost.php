@@ -1,9 +1,13 @@
     <?php 
+					$url = $model->preview_url;
+                     if ($url=="" || !file_exists($url)) $url=Post::DEF_URL;
+					 
+					 $link = CHtml::image($url, $data->title);
       echo CHtml::link(
-          CHtml::image($model->preview_url), 
+          $link, 
             array('/post/view', 'id'=>$model->id)); 
     ?>
     <div class="spec">
       <?php echo CHtml::link(CHtml::encode($model->title), 
-            array('/post/view', 'id'=>$model->id), array('class'=>'black-a ellipsis'));?>
+            array('/post/view', 'id'=>$model->id), array('class'=>'black-a'));?>
     </div>

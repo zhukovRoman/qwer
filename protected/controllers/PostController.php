@@ -2,7 +2,6 @@
 
 class PostController extends Controller {
 
-
     public function loadModel($id) {
         $model = Post::model()->findByPk($id);
         if ($model === null)
@@ -12,15 +11,17 @@ class PostController extends Controller {
 
     public function actionIndex() {
         $dataProvider = new CActiveDataProvider('Post', array(
-                    
                     'criteria' => array(
                         #'select'=>''
                         'condition' => 'status_id = 5',
                         'order' => 'time_moder DESC',
-                        'limit' => 8,
-                    )
+                        'limit' => 11,
+                    ),
+					'pagination' => array(
+                        'pageSize' => 11,
+                    ),
                 ));
-        $this->pageTitle="Fresh-i - Главная";
+        $this->pageTitle = "Fresh-i - Главная";
         $this->render('index', array(
             'dataProvider' => $dataProvider,
         ));
@@ -28,22 +29,20 @@ class PostController extends Controller {
 
     public function actionView($id) {
         $model = $this->loadModel($id);
-        Yii::app()->clientScript->registerMetaTag($model->category->name."|".$model->subtitle, 'description');
-        $this->pageTitle=$model->title.'/'.$model->category->name;
+        Yii::app()->clientScript->registerMetaTag($model->category->name . "|" . $model->subtitle, 'description');
+        $this->pageTitle = $model->title . '/' . $model->category->name;
         $this->render('view', array(
             'model' => $model,
         ));
     }
-    
-    
 
     public function actionCreate() {
-        $this->pageTitle="Fresh-i - Создать статью";
+        $this->pageTitle = "Fresh-i - Создать статью";
         if (!Yii::app()->user->checkAccess('createNewPost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
         $model = new Post('create_text');
-        
+
         // Uncomment the following line if AJAX validation is needed
         //$this->performAjaxValidation($model);
 
@@ -160,6 +159,48 @@ class PostController extends Controller {
         ));
     }
 
+    public function actionCreatePoll() {
+
+        if (!Yii::app()->user->checkAccess('createNewPost'))
+            throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
+                            Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
+        $model = new Post('create_poll');
+        $model->is_playlist = true;
+        // Uncomment the following line if AJAX validation is needed
+        //$this->performAjaxValidation($model);
+
+        if (isset($_POST['Post'])) {
+            //print_r($_POST['Post']);die();
+            $model->attributes = $_POST['Post'];
+            $model->author_id = Yii::app()->user->getId(); // изменить на текущего юзера
+            $model->status_id = 1; // изначально статус "на модерации"
+            if (isset($_POST['archive'])) {
+                $model->status_id = 3;
+            }
+            //$model->time_add= time(); // время добавления стат
+            $model->time_add = date('Y-m-d H:i:s');
+            $model->is_video = false;
+            $model->is_photoset = false;
+            $model->is_playlist = true;
+            $model->important_flag = FALSE;
+            $model->order = 0;
+
+            $tags = Post::stripTags($model->tag);
+            $model->tag = $tags[0];
+
+
+
+            if ($model->save()) {
+                $model->modifyTag();
+                $this->redirect(array('view', 'id' => $model->id));
+            }
+        }
+
+        $this->render('form', array(
+            'model' => $model,
+        ));
+    }
+
     public function actionChangeSubCat() {
         if (!Yii::app()->user->checkAccess('createNewPost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
@@ -175,11 +216,11 @@ class PostController extends Controller {
 
     public function actionPhotoItemUpload() {
 
-               if (!Yii::app()->user->checkAccess('createNewPost'))
+        if (!Yii::app()->user->checkAccess('createNewPost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
 
-        
+
         /* if(!empty($_FILES)) { */
         // Файл передан через обычный массив $_FILES
 
@@ -240,12 +281,12 @@ class PostController extends Controller {
     }
 
     public function actionRaiting() {
-        
-            if (!Yii::app()->user->checkAccess('PostActions'))
+
+        if (!Yii::app()->user->checkAccess('PostActions'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
 
-        
+
         if (!isset($_POST['id-post']) || !isset($_POST['delta']) ||
                 Yii::app()->user->isGuest) {
             $return = array(
@@ -288,13 +329,15 @@ class PostController extends Controller {
                 } else {
 
                     if (PostRating::addNewItem($delta, $post)) {
-                        if ($delta > 0)
-                            $post->positive_vote_count++;
-                        $post->all_vote_count++;
+                        #if ($delta > 0)
+                        #    $post->positive_vote_count++;
+                        #$post->all_vote_count++;
                         $return = array(
                             'status' => "success",
                             'description' => "Спасибо за Ваше голос!",
                             'code' => $post->getRaiting(),
+							 'all'=>$post->all_vote_count,
+                            'pos'=>$post->positive_vote_count,
                         );
                         echo json_encode($return);
                         return;
@@ -312,7 +355,7 @@ class PostController extends Controller {
         }
     }
 
-    public function actionFavorite() {
+public function actionFavorite() {
         if (!Yii::app()->user->checkAccess('PostActions'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
@@ -391,12 +434,86 @@ class PostController extends Controller {
     
     
     
+    public function actionPoll() {
+
+        if (!isset($_POST['id_poll']) || !isset($_POST['id_var'])
+                ) {
+            $return = array(
+                'status' => "error",
+                'description' => "Не все данные заданы!",
+            );
+            echo json_encode($return);
+            return;
+        }
+        if (Yii::app()->user->isGuest) {
+            $return = array(
+                'status' => "error",
+                'description' => "Пожалуйста, авторизуйтесь под своим аккаунтом!",
+            );
+            echo json_encode($return);
+            return;
+        }
+        
+
+        if (!Yii::app()->user->checkAccess('PostActions'))
+            throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
+                            Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
+
+
+
+
+        $id_poll = intval($_POST['id_poll']);
+        $poll = Post::model()->findbyPk($id_poll);
+        $user = Yii::app()->user->getId();
+        $var = intval($_POST['id_var']);
+        if ($poll == NULL || count(json_decode($poll->code)) < $var-1) {
+            $return = array(
+                'status' => "error",
+                'description' => "Не все данные заданы корректно!",
+            );
+            echo json_encode($return);
+            return;
+        }
+         
+
+        if (User_Vote::alreadyVote($poll->id)) {
+            $return = array(
+                'status' => "error",
+                'description' => "Вы уже проголосовали!",
+            );
+            echo json_encode($return);
+            return;
+        }
+
+        $vote = new User_Vote();
+        $vote->id_poll = $poll->id;
+        $vote->id_user = $user;
+        $vote->id_var = $var;
+        //print_r($vote->attributes); return;
+        if ($vote->save()) {
+            $return = array(
+                'status' => "success",
+                'description' => "Ваш голосо принят!",
+            );
+            echo json_encode($return);
+            return;
+        } else {
+            $return = array(
+                'status' => "error",
+                'description' => "Ошибка! Попробуйте позже.",
+            );
+            echo json_encode($return);
+            return;
+        }
+    }
+
     public function actionArchive($id) {
         $model = $this->loadModel($id);
-        if (!Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model)) && (!Yii::app()->user->checkAccess('moderatePost')))
-        throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
+        if (!Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model))
+                && (!Yii::app()->user->checkAccess('moderatePost')))
+            throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
-       
+
         $model->status_id = 10;
         $model->save(false);
 
@@ -406,14 +523,14 @@ class PostController extends Controller {
 
     public function actionRestore($id) {
         $model = $this->loadModel($id);
-        
-        if ($model!=null && 
+
+        if ($model != null &&
                 !Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model))
                 && (!Yii::app()->user->checkAccess('moderatePost')))
-        throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
+            throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
-       
-        
+
+
         $model->status_id = 1;
         $model->save(false);
 
@@ -421,16 +538,22 @@ class PostController extends Controller {
             'model' => $model,));
     }
 
-    
     public function actionUpdate($id) {
 
         $model = $this->loadModel($id);
         if (!Yii::app()->user->checkAccess('manageOwnPost', array('Post' => $model)) && (!Yii::app()->user->checkAccess('moderatePost')))
-        throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
+            throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
-       
+
         if ($model->is_photoset) {
             $model->convertCode();
+        }
+		if ($model->is_video)
+		{
+			$model->code=$model->decodeVideLink();
+		}
+        if ($model->is_playlist) {
+            $model->code = implode("\r\n", json_decode($model->code));
         }
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -454,12 +577,12 @@ class PostController extends Controller {
             'model' => $model,
         ));
     }
-    
+
     public function actionApprove($id) {
         if (!Yii::app()->user->checkAccess('moderatePost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
- 
+
         $model = $this->loadModel($id);
         $model->status_id = 5;
 
@@ -471,10 +594,10 @@ class PostController extends Controller {
     }
 
     public function actionApproveTime($id) {
-         if (!Yii::app()->user->checkAccess('moderatePost'))
+        if (!Yii::app()->user->checkAccess('moderatePost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
- 
+
         $model = $this->loadModel($id);
         $model->status_id = 5;
         $model->time_moder = date("Y-m-d H:i:s");
@@ -483,12 +606,12 @@ class PostController extends Controller {
         $this->render('view', array(
             'model' => $model,));
     }
-    
+
     public function actionManage($status = 1) {
-         if (!Yii::app()->user->checkAccess('moderatePost'))
+        if (!Yii::app()->user->checkAccess('moderatePost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
- 
+
         $model = new Post('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Post'])) {
@@ -500,20 +623,18 @@ class PostController extends Controller {
             'status' => $status,
         ));
     }
-    
-    public function actionImportant($id)
-    {
+
+    public function actionImportant($id) {
         if (!Yii::app()->user->checkAccess('moderatePost'))
             throw new CHttpException(403, 'Недостаточно прав для указанного действия. 
                             Авторизуйтесь под своей учетной записью для получения доступа к этой странице.');
         $model = $this->loadModel($id);
         $old = Post::model()->find("important_flag=true");
-        if ($old!=null)
-        {
-            $old->important_flag=false;
+        if ($old != null) {
+            $old->important_flag = false;
             $old->save(false);
         }
-        $model->important_flag=true;
+        $model->important_flag = true;
         $model->save(false);
         $this->render('view', array(
             'model' => $model,));
@@ -538,4 +659,5 @@ class PostController extends Controller {
             Yii::app()->end();
         }
     }
+
 }

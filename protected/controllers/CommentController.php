@@ -119,14 +119,12 @@ class CommentController extends Controller {
                     echo json_encode($return);
                     return;
                 } else {
-
-                    //$post->saveCounters(array('comment_count'=>1));
-                    $this->saveComment($parent_id, $post_id, $_POST['text']);
+                    $this->saveComment($parent_id, $post, $_POST['text']);
                     return;
                 }
             } else {
 
-                $this->saveComment($parent_id, $post_id, $_POST['text']);
+                $this->saveComment($parent_id, $post, $_POST['text']);
                 return;
             }
         } else {
@@ -138,7 +136,7 @@ class CommentController extends Controller {
         }
     }
 
-    private function saveComment($parent_id, $post_id, $text) {
+    private function saveComment($parent_id, $post, $text) {
         // провреряем текст
         $purifier = new CHtmlPurifier();
         $tmp = $purifier->purify($text);
@@ -147,7 +145,7 @@ class CommentController extends Controller {
             $text = CHtml::encode($text);
             if ($parent_id == 0)
                 $parent_id = NULL;
-            if ($comment = Comment::createNewComment($text, $parent_id, $post_id)) {
+            if ($comment = Comment::createNewComment($text, $parent_id, $post)) {
                 $return = array(
                     'status' => "success",
                     'code' => $this->renderPartial("tree_item", array('model' => $comment,), true),

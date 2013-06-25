@@ -39,10 +39,16 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
         }
         ?>
         <?php
-        if (!$model->is_photoset && !$model->is_video) {
+        if ($model->is_playlist) {
+            echo "опрос";
+        }
+        ?>
+        <?php
+        if (!$model->is_photoset && !$model->is_video && !$model->is_playlist) {
             echo "статью";
         }
         ?>
+       
     </legend>
 
     <div id="preview_div" style="display: none; 
@@ -68,7 +74,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     <?php
     echo $form->textFieldRow($model, 'tag', array(
         'class' => 'span5',
-        'hint' => 'Теги, разделенные запятой. Например: fasd, asdf.'
+        'hint' => 'Теги, разделенные запятой. Например: москва, осень, стих'
     ));
     ?>
 

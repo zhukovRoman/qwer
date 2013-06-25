@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-// Cкролл наверх  
+// Cкролл наверх
     $('.arrow-up').click(function () {
         $('.header').ScrollTo();
     });
@@ -14,10 +14,10 @@ jQuery(document).ready(function ($) {
 // Cкрытие списка категорий
     $('.subcat').toggle(
         function () {
-            $('.article-title .description').stop().animate({height: "show"}, 50);
+            $('.description').stop().animate({height: "show"}, 50);
         },
         function () {
-            $('.article-title .description').stop().animate({height: "hide"}, 50);
+            $('.description').stop().animate({height: "hide"}, 50);
         }
     );
 
