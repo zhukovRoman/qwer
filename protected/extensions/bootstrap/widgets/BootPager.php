@@ -32,11 +32,13 @@ class BootPager extends CLinkPager
 	public function init()
 	{
 		if ($this->nextPageLabel === null)
-			$this->nextPageLabel = Yii::t('bootstrap','Next').' &rarr;';
-
+			//$this->nextPageLabel = Yii::t('bootstrap','Next').' &rarr;';
+			$this->nextPageLabel = ' &rarr;';
+			
 		if ($this->prevPageLabel === null)
-			$this->prevPageLabel = '&larr; '.Yii::t('bootstrap','Previous');
-
+			//$this->prevPageLabel = '&larr; '.Yii::t('bootstrap','Previous');
+			$this->prevPageLabel = '&larr; ';
+			
 		if ($this->firstPageLabel === null)
 			$this->firstPageLabel = Yii::t('bootstrap','First');
 

@@ -27,13 +27,14 @@ class Comment extends CActiveRecord {
 
     const APPROVE_STATUS = 4;
     const START_STATUS = 1;
-    const BEST_TIME = 5; // сколько дней для лучшего.
+    const BEST_TIME = 200; // сколько дней для лучшего.
     const COUNT_OF_LAST = 5;
+    
     
     static public function createNewComment($text, $parent, $post) {
         $comment = new Comment();
         $comment->text = $text;
-        $comment->post_id = $post;
+        $comment->post_id = $post->id;
         $comment->parent_id = $parent;
         $comment->author_id = Yii::app()->user->getId();
         $comment->time_add = date('Y-m-d H:i:s');
@@ -41,7 +42,12 @@ class Comment extends CActiveRecord {
         $comment->all_vote_count = 0;
         $comment->positive_vote_count = 0;
         $comment->status_id = 1;
-        return ($comment->save()) ? $comment : false;
+        if ($comment->save())
+        {
+            $post->saveCounters(array('comment_count'=>1));
+            return $comment;
+        }
+        else return false;
     }
 
     public static function alreadyVote($iduser, $idcomment) {
@@ -78,14 +84,17 @@ class Comment extends CActiveRecord {
     {
         $d = Comment::BEST_TIME;
         $criteria = new CDbCriteria;
-        $criteria->addCondition ( "status_id=:status");
-        $criteria->addCondition('status_id=:status1', 'OR');
-        $criteria->addCondition ("time_add > now() - interval $d day");
+		$criteria->with = array ('post');
+        $criteria->addCondition ( "t.status_id=:status");
+		$criteria->addCondition ( "t.positive_vote_count>0");
+        $criteria->addCondition('t.status_id=:status1', 'OR');
+		$criteria->addCondition( "post.status_id=5",'AND');
+        $criteria->addCondition ("t.time_add > now() - interval $d day");
         $criteria->params = array(':status' => Comment::APPROVE_STATUS,
                                     ':status1' => Comment::START_STATUS,
                                    
                                  );
-        $criteria->order="all_vote_count-positive_vote_count";
+        $criteria->order="(t.all_vote_count-t.positive_vote_count) DESC, t.time_add DESC";
         $criteria->limit=5;
         return Comment::model()->findAll ($criteria);
     }
@@ -94,12 +103,15 @@ class Comment extends CActiveRecord {
     {
     $d = Comment::BEST_TIME;
         $criteria = new CDbCriteria;
-        $criteria->addCondition ( "status_id=:status");
-        $criteria->addCondition('status_id=:status1', 'OR');
+        $criteria->with = array ('post');
+        $criteria->addCondition ( "t.status_id=:status");
+        $criteria->addCondition('t.status_id=:status1', 'OR');
+		$criteria->addCondition( "post.status_id=5",'AND');
         $criteria->params = array(':status' => Comment::APPROVE_STATUS,
                                     ':status1' => Comment::START_STATUS,
                                    
                                  );
+		$criteria->order="t.time_add DESC";
         $criteria->limit=Comment::COUNT_OF_LAST;
         return Comment::model()->findAll ($criteria);
     }

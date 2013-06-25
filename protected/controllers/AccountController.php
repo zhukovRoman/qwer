@@ -504,13 +504,15 @@ class AccountController extends Controller
 				Yii::app()->ih
 					->load(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::NEW_AVATAR_NAME)
 					->save(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME);
-				
+				echo "create avatar";
 				unlink(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::NEW_AVATAR_NAME);
-				
+				echo 'delete new';
 				Yii::app()->ih
 					->load(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::AVATAR_NAME)
 					->crop($mass[0],$mass[1],$mass[2],$mass[3])
 					->save(Account::ACCOUNT_DIR . $model->id . DIRECTORY_SEPARATOR  . Account::USERPIC_NAME);
+                                echo 'create pic';
+                                return;
 			}
 		}
 

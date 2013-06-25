@@ -116,6 +116,13 @@
                             'bizRule' => null,
                             'data' => null
 		),
+                'pagesManage' => array(
+                            'type' => CAuthItem::TYPE_OPERATION,
+                            'description' => 'Управление старницами',
+                            'bizRule' => null,
+                            'data' => null
+		),
+                
 /***************************************************************************/
 /*                      	   2. Описание задач                           */
 /***************************************************************************/
@@ -213,6 +220,7 @@
 				'children' => array(
 						'moderator',         // позволим админу всё, что позволено модератору
 						'adminAccount',
+                                                'pagesManage',
 					//	'delete',
 				),
 				'bizRule' => null,

@@ -8,7 +8,11 @@ if ($model->is_photoset) {
     echo $this->renderPartial('create_photo', array('model' => $model,
         'form' => $form));
 }
-if (!$model->is_photoset && !$model->is_video) {
+if ($model->is_playlist) {
+    echo $this->renderPartial('create_poll', array('model' => $model,
+        'form' => $form));
+}
+if (!$model->is_photoset && !$model->is_video && !$model->is_playlist) {
     echo $this->renderPartial('create_text', array('model' => $model,
         'form' => $form));
 }

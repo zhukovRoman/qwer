@@ -7,7 +7,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm'); ?>
 	<br><p><span class="label label-success">Спасибо!</span>
 	Ссылка для восстановления пароля отправлена на адрес Вашей электронной почты.</p>
 	
-	<?php echo CHtml::link(CHtml::encode("Вернуться на главную"), Yii::app()->baseUrl); ?>
+	<?php echo CHtml::link(CHtml::encode("Вернуться на главную"), Yii::app()->createUrl ('post/index')); ?>
 
 </fieldset> 	 
 <?php $this->endWidget(); ?>

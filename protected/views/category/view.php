@@ -13,7 +13,7 @@
             <?php 
                 foreach ($category->getSubCats($category) as $cat)
                {
-                    echo '<li>&emsp;'.CHtml::link('&sect'.$cat->name, 
+                    echo '<li>&emsp;'.CHtml::link('<i class="icon-leaf"></i>'.$cat->name, 
                                Yii::app()->createUrl('category/subcatview',
                                             array ("id"=>$cat->id)));'</li>';
                 }
@@ -24,11 +24,14 @@
     </div>
     
 
-<?php $this->widget('zii.widgets.CListView', array(
+
+<?php 
+
+  $this->widget('bootstrap.widgets.BootListView', array(
   'dataProvider'=>$dataProvider,
   'itemView'=>'/post/_view',
   'itemsTagName'=>'ul',
-  'cssFile'=>false,
   'ajaxUpdate'=>false,
   'baseScriptUrl'=>Yii::app()->request->baseUrl.'/js',
+  'template' => '{items}<div class="clearfix"> </div>{pager}'
 )); ?>

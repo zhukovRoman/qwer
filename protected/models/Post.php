@@ -42,16 +42,20 @@
 class Post extends CActiveRecord {
 
     public $old_tags;
+
     const APPROVE_STATUS = 5;
-    const DAYS_FOR_BEST = 12;
+    const DAYS_FOR_BEST = 30;
     const COUNT_OF_DISSCUS = 5;
     const DAYS_FOR_DISCUSS = 12;
-    const DEF_URL = "images/def_prev.jpg";
-    /**<img src="topics/2012_08_23/5ddb91f24bb76bfab77ca8fa98a4921f_92_crop.jpg" alt="">
+    const COUNT_OF_BEST = 9;
+    const DEF_URL = "images/def_prev.png";
+
+    /*     * <img src="topics/2012_08_23/5ddb91f24bb76bfab77ca8fa98a4921f_92_crop.jpg" alt="">
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Post the static model class
      */
+
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
@@ -85,8 +89,8 @@ class Post extends CActiveRecord {
                 'tooShort' => 'Длинна подзаголовка должна быть больше 2 и меньше 300 символов',
             ),
             array('preview_url', 'length', 'max' => 120),
-            array('tag', 'length', 'max' => 200),
-            array('text', 'length', 'max' => 15000, 'min' => 15,
+            array('tag', 'length', 'max' => 500),
+            array('text', 'length', 'max' => 30000, 'min' => 15,
                 'on' => 'create_text',
                 'tooLong' => 'Длинна текста должна быть меньше 15000 символов',
                 'tooShort' => 'Длинна текста должна быть больше 15',
@@ -97,12 +101,12 @@ class Post extends CActiveRecord {
             array('id, title, text, category_id, sub_cat_id, author_id,
                 status_id, time_add, is_video, is_photoset, is_playlist, subtitle, 
                 author.login, author.id', 'safe', 'on' => 'search'),
-            array('title, subtitle', 'match', 'pattern' => '/^[0-9A-zА-я\s\-\(\)\"\.\,\?\!№%]+$/u',
+            array('title, subtitle', 'match', 'pattern' => '/^[\'":ёЁ0-9A-zА-я\s\-\(\)\"\.\,\?\!№%]+$/u',
                 'message' => 'Поле может содержать только буквы, цифры и символы (-".,?!№%)'),
             array('code', 'match',
                 'pattern' => "/((?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10}))|((?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/)?([\w\-]{6,12})(?:\&.+)?))/i",
                 'message' => 'Неверный формат видео', 'on' => 'create_video'),
-            array ('code', 'required',
+            array('code', 'required',
                 'on' => 'create_video',
                 'message' => 'Поле не может быть пустым. Вставьте сюда код видео')
         );
@@ -138,11 +142,11 @@ class Post extends CActiveRecord {
         $mass_of_tags = explode(",", $tags);
         foreach ($mass_of_tags as $tag) {
             //$tmp = preg_replace("/\+s/", " ", $tag);
-            
+
             $tmp = preg_replace("/[\s]+/", " ", $tag);
             $tmp = trim($tmp);
             if ($tmp != "") {
-                $res [] = mb_strtolower($tmp,"UTF-8");
+                $res [] = mb_strtolower($tmp, "UTF-8");
             }
         }
         $ret[0] = implode(",", $res);
@@ -191,39 +195,37 @@ class Post extends CActiveRecord {
     //  /(?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/))?([\w\-]{6,12})(?:\&.+)?/i
     //  /(?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10})/i
     //  
-    public function decodeVideLink ()
-    {
+    public function decodeVideLink() {
         $start_frame_vimeo = '<iframe class="photo-border" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen src="http://player.vimeo.com/video/';
         $start_frame_youtube = '<iframe class="photo-border" width="560" height="315" frameborder="0" allowfullscreen src="http://www.youtube.com/embed/';
         $end_frame = '" ></iframe>';
-        
+
         $code = json_decode($this->code);
-       
-        if ($code->service=='vimeo')
-                return $start_frame_vimeo . $code->url .$end_frame;
-        if ($code->service=='youtube')
-                return $start_frame_youtube . $code->url .$end_frame;
-        
+
+        if ($code->service == 'vimeo')
+            return $start_frame_vimeo . $code->url . $end_frame;
+        if ($code->service == 'youtube')
+            return $start_frame_youtube . $code->url . $end_frame;
     }
+
     public static function parseVideoLink($link) {
-        
+
         $youtube_patern = "/(?:http:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:(?:watch\?v=)|(?:embed\/))?([\w\-]{6,12})(?:\&.+)?/i";
         $vimeo_patern = "/(?:http:\/\/)?(?:player\.)?(?:www\.)?vimeo\.com\/(?:video\/)?(\d{1,10})/i";
 
         $urls = array();
-        
-        if (preg_match($youtube_patern, $link, $urls)) {      
-            return  json_encode(array(
-                                'service'=>"youtube",
-                                'url' => $urls[1],
+
+        if (preg_match($youtube_patern, $link, $urls)) {
+            return json_encode(array(
+                        'service' => "youtube",
+                        'url' => $urls[1],
                     ));
-            
         }
         if (preg_match($vimeo_patern, $link, $urls)) {
-                    return json_encode(array(
-                                            'service'=>"vimeo",
-                                            'url' => $urls[1],                            
-                    )); 
+            return json_encode(array(
+                        'service' => "vimeo",
+                        'url' => $urls[1],
+                    ));
         }
     }
 
@@ -233,7 +235,7 @@ class Post extends CActiveRecord {
         $z = 1.96;
         $p = $this->positive_vote_count / $this->all_vote_count;
         $n = $this->all_vote_count;
-        return round(($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n), 2)*10 ;
+        return round(($p + $z * $z / (2 * $n) - $z * sqrt(($p * (1 - $p) + $z * $z / (4 * $n)) / $n)) / (1 + $z * $z / $n), 2) * 10;
     }
 
     /**
@@ -291,7 +293,7 @@ class Post extends CActiveRecord {
 
         $purifier = new CHtmlPurifier();
         $purifier->options = array('HTML.SafeIframe' => true,
-            'URI.SafeIframeRegexp'=>'%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player/)%');
+            'URI.SafeIframeRegexp' => '%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player/)%');
         // $purifier->options = array();
         $this->text = $purifier->purify($this->text);
 
@@ -320,9 +322,11 @@ class Post extends CActiveRecord {
 
         if ($this->is_video) {
             $this->code = Post::parseVideoLink($this->code);
-            
         }
 
+        if ($this->is_playlist) {
+            $this->code = Post::parsePoll($this->code);
+        }
         if ($this->is_photoset) {
             $this->code = $this->ParsePhotoSet();
             //echo $this->code; die();
@@ -333,13 +337,21 @@ class Post extends CActiveRecord {
         return parent::afterValidate();
     }
 
+    private function parsePoll($code) {
+        $vars = explode("\r\n", $code);
+        foreach ($vars as $var) {
+            $var = trim($var);
+        }
+        return json_encode($vars);
+    }
+
     public function moveImgFromText() {
         $matches = array();
 
         //$patern = '/<img[^>][\s]*[a-zA-Z0-9\/\=\s\"]*[\s]*src[\s]*=[\s]*\"[a-zA-Z0-9\/]+\.jpg/u';
         $patern = '/<img\\b[^<>]*?src=(?|"([^"]*)"|\'([^\']*)\'|([^"\"]+))[^<>]*>/i';
         preg_match_all($patern, $this->text, $matches);
-
+        //print_r($matches[1]); die();
         $folder = "topics/" . date('Y_m_d') . "/"; // folder for uploaded files
 
         if (!is_dir($folder)) {
@@ -354,10 +366,12 @@ class Post extends CActiveRecord {
 
         foreach ($matches[1] as $img) {
 
-            $new_url = $folder . substr($img, strrpos($img, "/", 6) + 1, -4) . ".jpg";
-
-            if (Post::renamePicture($img, $new_url) != "") {
-                $this->text = str_replace($img, $new_url, $this->text);
+            if (strpos($img, "opics/tmp/")) {
+                //echo $img; die();
+                $new_url = $folder . substr($img, strrpos($img, "/", 6) + 1, -4) . ".jpg";
+                if (Post::renamePicture($img, $new_url) != "") {
+                    $this->text = str_replace($img, $new_url, $this->text);
+                }
             }
             //
         }
@@ -367,13 +381,13 @@ class Post extends CActiveRecord {
         $matches = array();
         preg_match_all('/<img[^>]+src=([\'"])?((?(1).+?|[^\s>]+))(?(1)\1)/', $this->code, $matches);
         $paths = array();
-        
+
         foreach ($matches[2] as $url) {
             $res = Post::moveCropPicture($url, false);
             $paths[] = $res[0];
         }
         return json_encode($paths);
-       
+
         //implode("|", $paths);
     }
 
@@ -381,6 +395,7 @@ class Post extends CActiveRecord {
 
         if (file_exists($old_ulr) && !rename($old_ulr, $new_url)) {
             echo "не удалось скопировать файлы...\n";
+            die();
             return false;
         }
         else
@@ -449,37 +464,40 @@ class Post extends CActiveRecord {
         }
         return array($for_delete, $for_add);
     }
-    
-    public static function getBest ()
-    {
+
+    public static function getBest() {
         $f = Post::DAYS_FOR_BEST;
-       
+
         $criteria = new CDbCriteria;
-        $criteria->addCondition ("status_id=:status");
-        $criteria->addCondition ("time_moder > now() - interval $f day");
-        $criteria->params = array(':status' => Post::APPROVE_STATUS,
-                                 );  
-        $criteria->limit=7;
-        
-        $arr = Post::model()->findAll ($criteria);
+        $criteria->addCondition("status_id=:status");
+        $criteria->addCondition("time_moder > now() - interval $f day");
+        $criteria->params = array(':status' => Post::APPROVE_STATUS,);
+        //$criteria->limit=7;
+
+        $arr = Post::model()->findAll($criteria);
         uasort($arr, "Post::sortByRating");
-        return $arr;
-        
+
+        if (count($arr) <= Post::COUNT_OF_BEST)
+            return $arr;
+        else {
+
+            return array_slice($arr, 0, Post::COUNT_OF_BEST);
+        }
     }
-    
-    public static function getDiscussed()
-    {
+
+    public static function getDiscussed() {
         $f = Post::DAYS_FOR_DISCUSS;
         $criteria = new CDbCriteria;
-        $criteria->addCondition ("status_id=:status");
-        $criteria->addCondition ("time_moder > now() - interval $f day");
-        $criteria->limit = 2;
+        $criteria->addCondition("status_id=:status");
+        $criteria->addCondition("comment_count>0");
+        $criteria->addCondition("time_moder > now() - interval $f day");
+        $criteria->limit = 5;
         $criteria->order = 'comment_count DESC';
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
-                                 );        
-        return Post::model()->findAll ($criteria);
+        );
+        return Post::model()->findAll($criteria);
     }
-    
+
     public function afterSave() {
         parent::afterSave();
     }
@@ -504,18 +522,17 @@ class Post extends CActiveRecord {
         }
     }
 
-    public static function getSpecProj()
-    {
+    public static function getSpecProj() {
         $criteria = new CDbCriteria;
-        $criteria->addCondition ("status_id=:status");
+        $criteria->addCondition("status_id=:status");
         $criteria->addCondition("important_flag=true");
         $criteria->params = array(':status' => Post::APPROVE_STATUS,
-                                 );  
-        
-        
-        return  Post::model()->find($criteria);
-        
+        );
+
+
+        return Post::model()->find($criteria);
     }
+
     /**
      * @return array relational rules.
      */
@@ -525,7 +542,7 @@ class Post extends CActiveRecord {
         return array(
             'postRatings' => array(self::HAS_MANY, 'PostRating', 'post_id'),
             'comments' => array(self::HAS_MANY, 'Comment', 'post_id',
-                'order' => 'Comments.time_add ASC',),
+                'order' => 'time_add ASC',),
             'favourites' => array(self::HAS_MANY, 'Favourites', 'post_id'),
             'subCat' => array(self::BELONGS_TO, 'Category', 'sub_cat_id'),
             'author' => array(self::BELONGS_TO, 'Account', 'author_id'),
@@ -543,7 +560,7 @@ class Post extends CActiveRecord {
             'title' => 'Заголовок',
             'subtitle' => 'Подзаголовок',
             'text' => 'Текст',
-            'code' => 'Код видео:',
+            'code' => $this->is_video ? 'Код видео:' : "Варианты ответов:",
             'category_id' => 'Выберите категорию',
             'sub_cat_id' => 'Выберите подкатегорию',
             'author_id' => 'Автор',
@@ -616,8 +633,8 @@ class Post extends CActiveRecord {
 
         $criteria->params = array(':status' => $status);
 
-       
-        $criteria->compare('lower(title)', mb_strtolower($this->title, "UTF-8") , true);
+
+        $criteria->compare('lower(title)', mb_strtolower($this->title, "UTF-8"), true);
         $criteria->compare('time_add', $this->time_add);
         $criteria->compare('category_id', $this->category_id);
         $criteria->compare('sub_cat_id', $this->sub_cat_id);
@@ -659,24 +676,27 @@ class Post extends CActiveRecord {
                 ));
     }
 
-    public static function inFavorite($post_id)
-        { 
-            $user = Yii::app()->user->getId();
-            $criteria = new CDbCriteria;
-            $criteria->addCondition("post_id=:id");
-            $criteria->addCondition("user_id=:user");
-            $criteria->params = array(':id' => $post_id, ':user' => $user);
-            $c = Favourites::model()->find($criteria);
-            return ($c == null) ? false : $c;
-           
-        }
-        
-    public static function sortByRating ($p1, $p2)
-            {
-                $r1 = $p1->getraiting();
-                $r2 = $p2->getraiting();
-                if($r1>$r2) return -1;
-                elseif($r1<$r2) return 1;
-                else return 0;
-            }
+    public static function inFavorite($post_id) {
+        $user = Yii::app()->user->getId();
+        $criteria = new CDbCriteria;
+        $criteria->addCondition("post_id=:id");
+        $criteria->addCondition("user_id=:user");
+        $criteria->params = array(':id' => $post_id, ':user' => $user);
+        $c = Favourites::model()->find($criteria);
+        return ($c == null) ? false : $c;
+    }
+
+    public static function sortByRating($p1, $p2) {
+
+        $r1 = $p1->getraiting();
+        $r2 = $p2->getraiting();
+        //echo $r1. " " .$r2; die();
+        if ($r1 > $r2)
+            return -1;
+        elseif ($r1 < $r2)
+            return 1;
+        else
+            return 0;
+    }
+
 }

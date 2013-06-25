@@ -25,7 +25,13 @@ class CommentRating extends CActiveRecord {
         $model->comment_id = $comment->id;
         $model->time_add = date('Y-m-d H:i:s');
         $model->delta = $d;
-        return ($model->save(false)) ? $model : false;
+        if ($model->save(false))
+            {
+                $comment->saveCounters(array('all_vote_count'=>1));
+                if ($d>0) $comment->saveCounters(array('positive_vote_count'=>1));
+                return $model;
+            }
+            return false;
         //return true;
     }
 

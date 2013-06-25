@@ -42,4 +42,4 @@ if (Yii::app()->user->getId()) {
                                     title="Чтобы добавить в избранное, авторизуйтесь"></i>';
     ?>
 
-<i class="icon-star" rel="tooltip" title="Рейтинг"><?php echo $model->getraiting();?> </i>
+<i class="icon-star" rel="tooltip" title="Рейтинг"><?php echo $model->getRaiting();?> </i>

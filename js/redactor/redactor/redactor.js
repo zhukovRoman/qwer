@@ -212,6 +212,7 @@ var RLANG = {
 				'<div id="redactor_tabs">' +
 					'<a href="javascript:void(null);" class="redactor_tabs_act">' + RLANG.upload + '</a>' +
 					'<a href="javascript:void(null);">' + RLANG.choose + '</a>' +
+					'<a href="javascript:void(null);">' + RLANG.link + '</a>' +
 					
 				'</div>' +
 				'<form id="redactorInsertImageForm" method="post" action="" enctype="multipart/form-data">' +

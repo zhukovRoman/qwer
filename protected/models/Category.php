@@ -38,7 +38,7 @@ class Category extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('parent_id, description,name', 'required'),
+            array('parent_id,name', 'required'),
             array('parent_id, order', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 50),
             // The following rule is used by search().
@@ -88,7 +88,12 @@ class Category extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
+					'pagination' => array(
+                        'pageSize' => 50,
+                    ),
                 ));
+				
+				
     }
 
     public function getSubCats($cat) {
@@ -102,7 +107,7 @@ class Category extends CActiveRecord {
     public static function getCategories($id_par = 0) {
         $criteria = new CDbCriteria();
         $criteria->addCondition('parent_id=:sel');
-        $criteria->order = "id DESC";
+        $criteria->order = "`order` ASC";
         $criteria->params = array(':sel' => $id_par);
         $cats = Category::model()->findAll($criteria);
         

@@ -321,35 +321,19 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 </fieldset> 	 
 <?php $this->endWidget(); ?>
 
-<?php 
-	/*
-	$this->widget('bootstrap.widgets.BootDetailView', array(
-    'data'=>array(
-    		'id'=>1, 
-    		'firstName'=>'Mark', 
-    		'lastName'=>'Otto', 
-    		'language'=>'CSS'),
-		
-    'attributes'=>array(
-        array('name'=>'firstName', 'label'=>'First name'),
-        array('name'=>'lastName', 'label'=>'Last name'),
-        array('name'=>'language', 'label'=>'Language'),
-    ),
-));
-*/
-?>
 
 <?php 	
 	Yii::app()->clientScript->registerScriptFile("js/datepicker/js/bootstrap-datepicker.js");
 	Yii::app()->getClientScript()->registerCssFile("js/datepicker/css/datepicker.css");
 				
-	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.js");
+Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.Jcrop.min.js", CClientScript::POS_END);
 	Yii::app()->clientScript->registerScriptFile("js/jcrop/js/jquery.color.js");
 	Yii::app()->getClientScript()->registerCssFile('js/jcrop/css/jquery.Jcrop.css');
 	//ntcn
 	Yii::app()->clientScript->registerScriptFile("js/crop.js");
-	Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload.js");
-	Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload-ui.js");
+	//Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload.js");
+	//Yii::app()->clientScript->registerScriptFile("js/fileuploader/jquery.fileupload-ui.js");
+        Yii::app()->clientScript->registerScriptFile("js/fileuploader/uploader.js", CClientScript::POS_HEAD);
 	/*Yii::app()->getClientScript()->registerCssFile('css/fileuploader/jquery.fileupload-ui.css');*/
 ?>	
 
@@ -363,36 +347,46 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     <a class="close" data-dismiss="modal">&times;</a>
     <h3>Загрузка фотографии</h3>
 </div>
- 
-<div class="modal-body">
+
+<div class="modal-body" id="upload-form">
 	<div class="well">
-		Вы можете загрузить фотографию. Поддерживаются форматы JPG, PNG и GIF.
+		Вы можете загрузить фотографию. Поддерживается только формат JPG (JPEG).
 	</div>
-
+    
     <div id="UploadButton" style="align:center;">
-	<?php
-		$id = $model->id;
-		$upload = new XUploadForm;
-		$this->widget('ext.xupload.XUploadWidget', array(
-			'url' => Yii::app()->createUrl('site/upload/', array('parent_id' =>$id ) ),
-			'model' => $upload,
-			'attribute' => 'file',
-			'multiple' => false,
-			'options'=>array(
-				'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) 
-				{		
-					jQuery("#NewUserPic").modal({"show": true});
-					jQuery("#AvatarLoad").modal("hide");
-
-				}'
-			),
-		));
-	?>
+	 <?php
+            $id = $model->id;
+            $this->widget('ext.EAjaxUpload.EAjaxUpload', array(
+                'id' => 'uploadFileButton',
+                'config' => array(
+                    'action' => Yii::app()->createUrl('site/UploadAvatar/', array('parent_id' =>$id ) ),
+                    'allowedExtensions' => array("jpg", "jpeg"), //array("jpg","jpeg","gif","exe","mov" and etc...
+                    'sizeLimit' => 7 * 1024 * 1024, // maximum file size in bytes
+                    'minSizeLimit' => 5 * 1024, // minimum file size in bytes
+                    'onComplete' => 'js:function(id, fileName, responseJSON)
+                        { 
+                           
+                            jQuery("#NewUserPic").modal({"show": true});
+                            jQuery("#AvatarLoad").modal("hide");
+                           
+                       }',
+                    'messages' => array(
+                        'typeError' => "{file} has invalid extension. Only {extensions} are allowed.",
+                        'sizeError' => "{file} is too large, maximum file size is {sizeLimit}.",
+                        'minSizeError' => "{file} is too small, minimum file size is {minSizeLimit}.",
+                        'emptyError' => "{file} is empty, please select files again without it.",
+                        'onLeave' => "The files are being uploaded, if you leave now the upload will be cancelled."
+                    ),
+                    'showMessage' => "js:function(message){ alert(message); }"
+                )
+            ));
+            ?>
 	</div>
 </div>
  
 
-<div class="modal-footer">    
+<div class="modal-footer">  
+  
     <?php $this->widget('bootstrap.widgets.BootButton', array(
         'label'=>'Закрыть',
         'url'=>'#',
@@ -405,6 +399,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     		)
     	)
     )); ?>
+   
 </div>
  
 <?php $this->endWidget(); ?>
@@ -472,14 +467,14 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
  
 <div class="modal-header">
     <a class="close" data-dismiss="modal" onclick='jQuery("#AvatarLoad").modal({"show": true});'>&times;</a>
-    <h3>Изменение миниатюры</h3>
+    <h3>Изменение миниатюры:</h3>
 </div>
  
 <div class="modal-body">
-	<?php echo "<img src='$new_path' id='new_target' style='width: 200px; '>"; ?>
+	 <img src="<?php echo $new_path; ?>"  id='new_target' style='width: 200px; '>
 	
 	<div style="width: 100px; height: 100px; overflow: hidden; margin-left: 5px; float: right;">
-		<?php echo "<img src='$new_path' id='new_preview' style='max-width:none;'>" ; ?>
+		 <img src="<?php echo $new_path; ?>" id='new_preview' style='max-width:none;'>
 	</div>
 	
 	<div id="new_сoordinates" style="display:none"> </div>
@@ -496,7 +491,10 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
     					'type'   => 'POST',
     					'data' => 'js:"params="+$("#new_сoordinates").text()', // тут мы выбираем данные которые нужно передать.
     					'url'    => array('account/userpic/','id'=>$model->id),
-    					'success'=>"js:function() {location.reload();}",// при успехе экшена выполняется это.
+    					'success'=>"js:function(data) {
+                                            //alert (data);
+                                            location.reload();
+                                            }",// при успехе экшена выполняется это.
     			)
     	)
     	)); ?>

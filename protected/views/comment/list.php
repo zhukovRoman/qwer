@@ -7,7 +7,7 @@
 <div class="main-view-bottom">
           <div class="main-user">
 
-        <b><?php echo CHtml::link('<i class="icon-user" rel="tooltip" title="Автор">'.substr($item->author->login, 0, 14),
+        <b><?php echo CHtml::link('<i class="icon-user" rel="tooltip" title="Автор">'.$item->author->login,
             Yii::app()->createUrl('account/view',
             array ("id"=>$item->author->id)), array('class'=>'green-a')); ?></i></b>
       </div>

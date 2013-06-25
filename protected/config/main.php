@@ -14,7 +14,7 @@ return array(
 					 'bootstrap'
 			),
 		
-            'sourceLanguage'=>'en_US',
+            'sourceLanguage'=>'ru_Ru',
             'language'=>'ru',
             'charset'=>'utf-8',
 
@@ -58,7 +58,7 @@ return array(
 				),
 			'password'=>'123',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('192.168.10.31','::1'),
+			//'ipFilters'=>array('172.0.0.1','::1'),
 				
 			'generatorPaths'=>array(
 					'bootstrap.gii', // since 0.9.1
@@ -104,8 +104,10 @@ return array(
 						'vkontakte' => array(
 						// регистрация приложения: http://vkontakte.ru/editapp?act=create&site=1
 								'class' => 'CustomVKontakteService', //'VKontakteOAuthService',
-								'client_id' => '3076550',
-								'client_secret' => 'EwViUPDBpI62c3nRXimQ',
+								'client_id' => //'3136894', //
+											   '3076550',
+								'client_secret' =>//'HlbqfrmNjkQz6iuTZRcQ', //
+													 'EwViUPDBpI62c3nRXimQ',
 								'title' => 'ВКонтакте',
 						),
 						'facebook' => array(
@@ -120,14 +122,16 @@ return array(
 								'key' => 'iWjqxxHmxdLmtjZyJDxsA',
 								'secret' => '5W9cjIlBn2vnDD4J19q88XuysX36qBqxdKGemSbyU',
 						),
-						'odnoklassniki' => array(
+				/*		'odnoklassniki' => array(
 						// регистрация приложения: http://www.odnoklassniki.ru/dk?st.cmd=appsInfoMyDevList&st._aid=Apps_Info_MyDev
 								'class' => 'OdnoklassnikiOAuthService',
 								'client_id' => '...',
 								'client_public' => '...',
 								'client_secret' => '...',
 								'title' => 'Однокл.',
-						),		
+						),	
+				*/
+				
 				/*		'google' => array(
 								'class' => 'GoogleOpenIDService',
 					),

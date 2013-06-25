@@ -13,28 +13,7 @@
             )
     ); }
     ?> 
-    <span id="spam-link-<?php echo $model->id; ?> ">
-        <?php
-        if (Yii::app()->user->checkAccess('commentVote')) {
-            $this->widget('bootstrap.widgets.BootButton', array(
-                'buttonType' => 'button',
-                'type' => 'warning',
-                'size' => 'mini',
-                'label' => 'Спам',
-                'htmlOptions' => array(
-                    'id' => "spam-btn-$model->id",
-                    'class' => 'spam-btn',
-                    'ajax' => array(
-                        'type' => 'GET',
-                        'data' => "js:'id-comment='+$model->id",
-                        'url' => Yii::app()->createUrl('comment/spam'),
-                        'update' => '#commentbody-' . $model->id,
-                    ),
-                )
-            ));
-        }
-        ?>
-    </span>
+    
 
     <?php
     if (Yii::app()->user->checkAccess('commentModeration')) {

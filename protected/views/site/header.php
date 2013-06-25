@@ -46,13 +46,14 @@
 							   			  array('label'=>'Выберите тип:'),
 								          array('label'=>'Статья', 'icon'=>'pencil', 'url'=> Yii::app()->createUrl('/post/create'),),
 								          array('label'=>'Видео', 'icon'=>'film', 'url'=> Yii::app()->createUrl('/post/createvideo')),
-								          array('label'=>'Фотоотчет', 'icon'=>'camera', 'url'=>Yii::app()->createUrl('/post/createphoto')))));
+								          array('label'=>'Фотоотчет', 'icon'=>'camera', 'url'=>Yii::app()->createUrl('/post/createphoto')),
+                                                               array('label'=>'Опрос', 'icon'=>'align-left', 'url'=> Yii::app()->createUrl('/post/createpoll')),)));
 							  
 	}
 	else
 	{
-		array_push($bar, array('label'=>'Войти', // 'url'=>array('/site/login/'),));//modal_login
-							   'url'=>'#modal_login', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary')));
+		array_push($bar, array('label'=>'Войти', 'url'=>array('/site/login/'),));//modal_login
+							   //'url'=>'#modal_login', 'linkOptions'=>array('data-toggle'=>'modal', 'type'=>'primary')));
 		array_push($bar, '---');
 		array_push($bar, array('label'=>'Регистрация', 'url'=>array('/account/signup/'), 'visible'=>Yii::app()->user->isGuest));
 	}
@@ -64,31 +65,35 @@
     'brandUrl'=>Yii::app()->homeUrl,
     'collapse'=>false, // requires bootstrap-responsive.css
     'items'=>array(
-        array(
-            'class'=>'bootstrap.widgets.BootMenu',
-			'htmlOptions'=>array('class'=>'l-nav'),
-            'items'=>array(
-            	'---',
-                array('label'=>'О нас', 'url'=>array('/site/page', 'view'=>'about')), //'active'=>true),
-//                array('label'=>'Правила', 'url'=>'#'),
-//            	array('label'=>'Блоги', 'url'=>'#'),
-//            	array('label'=>'Идеи', 'url'=>'#'),
-               /* array('label'=>'Еще', 'url'=>'#', 'items'=>array(
-                    array('label'=>'Action', 'url'=>'#'),
-                    array('label'=>'Another action', 'url'=>'#'),
-                    array('label'=>'Something else here', 'url'=>'#'),
-                    '---',
-                    array('label'=>'NAV HEADER'),
-                    array('label'=>'Separated link', 'url'=>'#'),
-                    array('label'=>'One more separated link', 'url'=>'#'),
-                )),*/
-            ),
-        ),
+        
     	array(
             'class'=>'bootstrap.widgets.BootMenu',
-            'htmlOptions'=>array('class'=>'pull-right'),
+            'htmlOptions'=>array('class'=>'pull-right user-menu'),
     		'encodeLabel'=>false,
             'items'=> $bar
+        ),
+		array(
+            'class'=>'bootstrap.widgets.BootMenu',
+			'htmlOptions'=>array('class'=>'l-nav ttt'),
+            'items'=>array(
+            	'---',
+                //array('label'=>'О нас', 'url'=>array('/site/page', 'view'=>'about')),
+				'---',
+				array('label'=>'Бабушка Пушкина',
+						'htmlOptions'=>array('class'=>'babushka'),
+						'items'=>array(
+									array('label'=>'Сезон 1', 
+										'url'=>Yii::app()->createUrl ('category/subcatview',array('id' => 6)),
+										),
+									array('label'=>'Сезон 2', 
+											'url'=>Yii::app()->createUrl ('category/subcatview',array('id' => 63)),
+										),
+									),
+									
+					),
+                //array('label'=>'Cезон 1', 'url'=>Yii::app()->createUrl ('category/subcatview',array('id' => 6))),
+
+            ),
         ),
     ),
 )); ?>
@@ -125,7 +130,9 @@
 		
 <!-- Модальное окно логина -->
 
-<?php /** @var BootActiveForm $form */
+<?php
+
+/** @var BootActiveForm $form */
 /*	$this->beginWidget('bootstrap.widgets.BootModal', array('id' => 'mydialog',));
 	$model = new LoginForm;
 
@@ -174,7 +181,7 @@ $form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
 
 <!-- Модальное окно Создания поста -->
 
-<?php 	$this->beginWidget('bootstrap.widgets.BootModal', array('id' => 'postcreate',));
+<?php  	$this->beginWidget('bootstrap.widgets.BootModal', array('id' => 'postcreate',));
 		$model = new LoginForm; ?>
 
 <div class="modal-header">
