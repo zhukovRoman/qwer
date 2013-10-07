@@ -1,0 +1,653 @@
+-- phpMyAdmin SQL Dump
+-- version 3.3.7deb7
+-- http://www.phpmyadmin.net
+--
+-- Хост: localhost
+-- Время создания: Окт 07 2013 г., 20:08
+-- Версия сервера: 5.1.65
+-- Версия PHP: 5.4.7
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- База данных: `u3759018_fresh_new`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `account`
+--
+
+CREATE TABLE IF NOT EXISTS `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(45) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `mail` varchar(45) NOT NULL,
+  `avatar_url` varchar(120) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `country_id` smallint(6) DEFAULT NULL,
+  `region_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `phone` varchar(100) DEFAULT NULL,
+  `about` longtext,
+  `status_id` smallint(6) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `balance` int(11) NOT NULL,
+  `register_date` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `user_ip` varchar(20) DEFAULT NULL,
+  `activate_key` varchar(32) DEFAULT NULL,
+  `newpass_key` varchar(32) DEFAULT NULL,
+  `referral` bigint(20) DEFAULT NULL,
+  `badge` smallint(6) DEFAULT NULL,
+  `vk_url` varchar(100) DEFAULT NULL,
+  `tw_url` varchar(100) DEFAULT NULL,
+  `post_count` int(11) NOT NULL,
+  `comment_count` int(11) NOT NULL,
+  `friend_count` int(11) NOT NULL,
+  `subscribe_count` int(11) NOT NULL,
+  `all_vote_count` int(11) NOT NULL,
+  `positive_vote_count` int(11) NOT NULL,
+  `new_msg_count` int(11) NOT NULL,
+  `new_friend_count` int(11) NOT NULL,
+  `fb_url` varchar(100) DEFAULT NULL,
+  `ok_url` varchar(100) DEFAULT NULL,
+  `site_url` varchar(100) DEFAULT NULL,
+  `icq` varchar(20) DEFAULT NULL,
+  `skype` varchar(20) DEFAULT NULL,
+  `vk_id` bigint(20) DEFAULT NULL,
+  `tw_id` bigint(20) DEFAULT NULL,
+  `fb_id` bigint(20) DEFAULT NULL,
+  `ok_id` bigint(20) DEFAULT NULL,
+  `sex` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=758 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `album`
+--
+
+CREATE TABLE IF NOT EXISTS `album` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `image_count` smallint(6) NOT NULL,
+  `creation_date` datetime NOT NULL,
+  `rating` float NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `alert`
+--
+
+CREATE TABLE IF NOT EXISTS `alert` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `text` text NOT NULL,
+  `type` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `audio`
+--
+
+CREATE TABLE IF NOT EXISTS `audio` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `server_id` smallint(6) NOT NULL,
+  `path` varchar(120) DEFAULT NULL,
+  `title` text,
+  `description` text,
+  `time_add` datetime NOT NULL,
+  `playlist_id` int(11) NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `authassignment`
+--
+
+CREATE TABLE IF NOT EXISTS `authassignment` (
+  `itemname` varchar(0) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
+  `bizrule` varchar(0) DEFAULT NULL,
+  `data` varchar(0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `authitem`
+--
+
+CREATE TABLE IF NOT EXISTS `authitem` (
+  `name` varchar(0) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `description` varchar(0) DEFAULT NULL,
+  `bizrule` varchar(0) DEFAULT NULL,
+  `data` varchar(0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `authitemchild`
+--
+
+CREATE TABLE IF NOT EXISTS `authitemchild` (
+  `parent` varchar(64) NOT NULL,
+  `child` varchar(64) NOT NULL,
+  PRIMARY KEY (`parent`,`child`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `badge`
+--
+
+CREATE TABLE IF NOT EXISTS `badge` (
+  `id` smallint(6) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `min_rate` int(11) NOT NULL,
+  `picture_url` varchar(120) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `category`
+--
+
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `parent_id` smallint(6) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `order` smallint(6) NOT NULL,
+  `description` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=86 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `channel`
+--
+
+CREATE TABLE IF NOT EXISTS `channel` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `video_count` smallint(6) NOT NULL,
+  `creation_date` datetime NOT NULL,
+  `rating` float NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `city`
+--
+
+CREATE TABLE IF NOT EXISTS `city` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `region_id` int(11) NOT NULL,
+  `weather_text` varchar(100) DEFAULT NULL,
+  `picture` varchar(100) DEFAULT NULL,
+  `temperature` varchar(15) DEFAULT NULL,
+  `temperature_feature` varchar(15) DEFAULT NULL,
+  `wind` varchar(20) DEFAULT NULL,
+  `humidity` varchar(10) DEFAULT NULL,
+  `pressure` varchar(20) DEFAULT NULL,
+  `url` varchar(50) DEFAULT NULL,
+  `tube` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `comment`
+--
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `author_id` int(11) NOT NULL,
+  `post_id` bigint(20) NOT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `text` longtext,
+  `time_add` datetime NOT NULL,
+  `rating` int(11) NOT NULL,
+  `all_vote_count` int(11) NOT NULL,
+  `positive_vote_count` int(11) NOT NULL,
+  `status_id` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=301 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `comment_rating`
+--
+
+CREATE TABLE IF NOT EXISTS `comment_rating` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `comment_id` bigint(20) NOT NULL,
+  `time_add` datetime NOT NULL,
+  `delta` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=172 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `comment_status`
+--
+
+CREATE TABLE IF NOT EXISTS `comment_status` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `title` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `country`
+--
+
+CREATE TABLE IF NOT EXISTS `country` (
+  `id` smallint(6) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `coupon`
+--
+
+CREATE TABLE IF NOT EXISTS `coupon` (
+  `id` int(11) NOT NULL,
+  `sale_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `code` varchar(33) NOT NULL,
+  `extra` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `favourites`
+--
+
+CREATE TABLE IF NOT EXISTS `favourites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time_add` datetime NOT NULL,
+  `status` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=144 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `files`
+--
+
+CREATE TABLE IF NOT EXISTS `files` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `server_id` smallint(6) NOT NULL,
+  `path` varchar(120) DEFAULT NULL,
+  `title` text,
+  `description` text,
+  `ext` varchar(4) NOT NULL,
+  `time_add` datetime NOT NULL,
+  `folder_id` int(11) NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `folder`
+--
+
+CREATE TABLE IF NOT EXISTS `folder` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `files_count` smallint(6) NOT NULL,
+  `creation_date` datetime NOT NULL,
+  `rating` float NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `friend`
+--
+
+CREATE TABLE IF NOT EXISTS `friend` (
+  `id` bigint(20) NOT NULL,
+  `source_id` int(11) NOT NULL,
+  `target_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `status` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `image`
+--
+
+CREATE TABLE IF NOT EXISTS `image` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `server_id` smallint(6) NOT NULL,
+  `path` varchar(120) DEFAULT NULL,
+  `title` text,
+  `description` text,
+  `time_add` datetime NOT NULL,
+  `album_id` int(11) NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `message`
+--
+
+CREATE TABLE IF NOT EXISTS `message` (
+  `id` bigint(20) NOT NULL,
+  `text` longtext,
+  `status_id` smallint(6) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `reciever_id` int(11) NOT NULL,
+  `visible_for_sender` varchar(5) NOT NULL,
+  `visible_for_reciever` varchar(5) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `message_status`
+--
+
+CREATE TABLE IF NOT EXISTS `message_status` (
+  `id` smallint(6) NOT NULL,
+  `title` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `pages`
+--
+
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `playlist`
+--
+
+CREATE TABLE IF NOT EXISTS `playlist` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` text NOT NULL,
+  `track_count` smallint(6) NOT NULL,
+  `creation_date` datetime NOT NULL,
+  `rating` float NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `post`
+--
+
+CREATE TABLE IF NOT EXISTS `post` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `text` longtext,
+  `code` longtext,
+  `category_id` smallint(6) NOT NULL,
+  `sub_cat_id` smallint(6) DEFAULT NULL,
+  `author_id` int(11) NOT NULL,
+  `status_id` smallint(6) NOT NULL,
+  `time_add` datetime NOT NULL,
+  `is_video` varchar(5) NOT NULL,
+  `is_photoset` varchar(5) NOT NULL,
+  `is_playlist` varchar(5) NOT NULL,
+  `view_count` int(11) NOT NULL,
+  `favourite_count` int(11) NOT NULL,
+  `comment_count` int(11) NOT NULL,
+  `rating_count` int(11) NOT NULL,
+  `all_vote_count` int(11) NOT NULL,
+  `positive_vote_count` int(11) NOT NULL,
+  `preview_url` varchar(120) DEFAULT NULL,
+  `important_flag` varchar(5) NOT NULL,
+  `landscape` varchar(5) DEFAULT NULL,
+  `order` smallint(6) DEFAULT NULL,
+  `subtitle` text,
+  `tag` varchar(200) DEFAULT NULL,
+  `time_moder` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1028 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `post_rating`
+--
+
+CREATE TABLE IF NOT EXISTS `post_rating` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `post_id` bigint(20) NOT NULL,
+  `time_add` datetime NOT NULL,
+  `delta` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1496 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `post_status`
+--
+
+CREATE TABLE IF NOT EXISTS `post_status` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `region`
+--
+
+CREATE TABLE IF NOT EXISTS `region` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `country_id` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `rights`
+--
+
+CREATE TABLE IF NOT EXISTS `rights` (
+  `itemname` varchar(64) NOT NULL,
+  `type` int(11) NOT NULL,
+  `weight` int(11) NOT NULL,
+  PRIMARY KEY (`itemname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sale`
+--
+
+CREATE TABLE IF NOT EXISTS `sale` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `description` longtext,
+  `date_end` date DEFAULT NULL,
+  `old_price` int(11) DEFAULT NULL,
+  `new_price` int(11) DEFAULT NULL,
+  `bals_price` int(11) DEFAULT NULL,
+  `count_by` int(11) DEFAULT NULL,
+  `picture` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `server`
+--
+
+CREATE TABLE IF NOT EXISTS `server` (
+  `id` smallint(6) NOT NULL,
+  `hostname` varchar(20) NOT NULL,
+  `country_id` smallint(6) NOT NULL,
+  `disabled` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `subscribe`
+--
+
+CREATE TABLE IF NOT EXISTS `subscribe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `tag`
+--
+
+CREATE TABLE IF NOT EXISTS `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `freq` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2876 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_status`
+--
+
+CREATE TABLE IF NOT EXISTS `user_status` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `name` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_vote`
+--
+
+CREATE TABLE IF NOT EXISTS `user_vote` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_poll` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_var` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=283 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `video`
+--
+
+CREATE TABLE IF NOT EXISTS `video` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `server_id` smallint(6) NOT NULL,
+  `path` varchar(120) DEFAULT NULL,
+  `title` text,
+  `description` text,
+  `preview_url` varchar(120) NOT NULL,
+  `time_add` datetime NOT NULL,
+  `channel_id` int(11) NOT NULL,
+  `private` varchar(5) NOT NULL,
+  `deleted` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
